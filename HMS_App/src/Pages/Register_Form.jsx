@@ -13,6 +13,7 @@ const Register_Form = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    pin: "",
     password1: "",
     password2: "",
   });
@@ -24,13 +25,38 @@ const Register_Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(user);
+
+    if (userType === "A") {
+      if (
+        user.name === "" ||
+        user.email === "" ||
+        user.pin === "" ||
+        user.password1 === "" ||
+        user.password2 === ""
+      ) {
+        alert("Please enter all the fields...");
+        return;
+      }
+    } else {
+      if (
+        user.name === "" ||
+        user.email === "" ||
+        user.password1 === "" ||
+        user.password2 === ""
+      ) {
+        alert("Please enter all the fields...");
+        return;
+      }
+    }
+
     if (
-      user.name === "" ||
-      user.email === "" ||
-      user.password1 === "" ||
-      user.password2 === ""
+      !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/.test(
+        user.password1
+      )
     ) {
-      alert("Please enter all the fields...");
+      alert(
+        "Please enter a valid password with minimum 8 to 10 characters with minimum 1 uppercase, lowercase, digit, and special character in it..."
+      );
       return;
     }
 
@@ -102,6 +128,24 @@ const Register_Form = () => {
             className="bg-zinc-200 px-2"
           />
         </div>
+        {userType === "A" ? (
+          <div className="input-container flex flex-col">
+            <label htmlFor="name" className="text-xl font-bold text-black">
+              Admin-Pin:{" "}
+            </label>
+            <input
+              type="number"
+              placeholder="Enter your admin pin..."
+              name="pin"
+              value={user.pin}
+              onChange={inputChangeHandler}
+              className="bg-zinc-200 px-2"
+            />
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="input-container flex flex-col">
           <label htmlFor="name" className="text-xl font-bold text-black">
             Password:{" "}
