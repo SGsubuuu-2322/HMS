@@ -64,11 +64,16 @@ const Register_Form = () => {
     <div className="w-full h-full flex flex-col items-center justify-center pt-20">
       <form
         onSubmit={handleSubmit}
-        className="w-1/4 border-secondary border-4 rounded-md mx-auto  px-2 py-5  "
+        className="shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto  px-2 py-5  "
       >
         <div className="w-full flex justify-center">
-          <h1 className="text-xl font-bold text-black underline border-4 border-secondary bg-[#005CC8] px-2 py-1 rounded-full text-white hover:text-black">
-            {userType == "B" ? "Admin-" : "Doctor-"}Register-Form
+          <h1 className="shadow-lg shadow-[#005CC8] text-xl font-bold text-black underline border-4 border-[#3c97ff] bg-[#005CC8] px-2 py-1 rounded-full text-white hover:text-black">
+            {userType === "A"
+              ? "Admin-"
+              : userType === "D"
+              ? "Doctor-"
+              : "Patient-"}
+            Register-Form
           </h1>
         </div>
         <div className="input-container flex flex-col">
@@ -131,7 +136,13 @@ const Register_Form = () => {
             type="text"
             placeholder="Re-enter your password..."
             name="userType"
-            value={userType == "B" ? "Buyer" : "Seller"}
+            value={
+              userType === "A"
+                ? "Admin"
+                : userType === "D"
+                ? "Doctor"
+                : "Patient"
+            }
             readOnly
             disabled
             onChange={inputChangeHandler}

@@ -35,10 +35,10 @@ const PublicNav = () => {
             {/* This radio input is checked after changing of state value from central redux store */}
             <input
               type="radio"
-              name="seller"
-              value="S"
+              name="admin"
+              value="A"
               onChange={handleOptionChange}
-              checked={userType === "S"}
+              checked={userType === "A"}
             />
           </div>
           <div className="admin-container h-20 w-10 flex flex-col justify-center gap-1">
@@ -51,10 +51,10 @@ const PublicNav = () => {
             </div>
             <input
               type="radio"
-              name="buyer"
-              value="B"
+              name="doctor"
+              value="D"
               onChange={handleOptionChange}
-              checked={userType === "B"}
+              checked={userType === "D"}
             />
           </div>
           <div className="admin-container h-20 w-10 flex flex-col justify-center gap-1">
@@ -67,10 +67,10 @@ const PublicNav = () => {
             </div>
             <input
               type="radio"
-              name="buyer"
-              value="B"
+              name="patient"
+              value="P"
               onChange={handleOptionChange}
-              checked={userType === "B"}
+              checked={userType === "P"}
             />
           </div>
         </div>
@@ -84,7 +84,8 @@ const PublicNav = () => {
             to="/login"
             className={(e) =>
               `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive && "border-white text-white shadow-lg "
+                e.isActive &&
+                "border-slate-100 text-white shadow-md shadow-white "
               }`
             }
           >
@@ -94,7 +95,8 @@ const PublicNav = () => {
             to="/register"
             className={(e) =>
               `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive && "border-white text-white shadow-lg "
+                e.isActive &&
+                "border-slate-100 text-white shadow-md shadow-white "
               }`
             }
           >
