@@ -18,6 +18,9 @@ const Register_Form = () => {
     password2: "",
   });
 
+  const imageUrl =
+    "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
+
   const inputChangeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -92,7 +95,10 @@ const Register_Form = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center pt-20">
+    <div
+      className="w-full h-full flex flex-col items-center justify-center pt-20 bg-cover bg-center"
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    >
       <form
         onSubmit={handleSubmit}
         className="shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto  px-2 py-5  "
@@ -117,7 +123,7 @@ const Register_Form = () => {
             name="name"
             value={user.name}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] text-white font-semibold px-2"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -130,7 +136,7 @@ const Register_Form = () => {
             name="email"
             value={user.email}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2"
           />
         </div>
         {userType === "A" ? (
@@ -144,7 +150,7 @@ const Register_Form = () => {
               name="pin"
               value={user.pin}
               onChange={inputChangeHandler}
-              className="bg-zinc-200 px-2"
+              className="bg-[#0077ff94] px-2"
             />
           </div>
         ) : (
@@ -161,7 +167,7 @@ const Register_Form = () => {
             name="password1"
             value={user.password1}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -174,7 +180,7 @@ const Register_Form = () => {
             name="password2"
             value={user.password2}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -195,7 +201,7 @@ const Register_Form = () => {
             readOnly
             disabled
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2"
           />
         </div>
 
