@@ -37,6 +37,11 @@ const Register_Form = () => {
         alert("Please enter all the fields...");
         return;
       }
+
+      if (user.pin !== "200114") {
+        alert("Please enter your correct admin pin...");
+        return;
+      }
     } else {
       if (
         user.name === "" ||
