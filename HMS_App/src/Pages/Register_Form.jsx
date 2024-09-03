@@ -96,12 +96,16 @@ const Register_Form = () => {
 
   return (
     <div
-      className="w-full h-full flex flex-col items-center justify-center pt-20 bg-cover bg-center"
-      style={{ backgroundImage: `url(${imageUrl})` }}
+      className="relative w-full h-[88%] flex flex-col items-center justify-center  bg-no-repeat bg-cover bg-center"
+      // style={{ backgroundImage: `url(${imageUrl})` }}
     >
+      <div
+        className="absolute inset-0 bg-cover bg-center filter blur-sm"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      ></div>
       <form
         onSubmit={handleSubmit}
-        className="shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto  px-2 py-5  "
+        className="relative z-10 shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto  px-2 py-5  "
       >
         <div className="w-full flex justify-center">
           <h1 className="shadow-lg shadow-[#005CC8] text-xl font-bold text-black underline border-4 border-[#3c97ff] bg-[#005CC8] px-2 py-1 rounded-full text-white hover:text-black">
@@ -123,7 +127,7 @@ const Register_Form = () => {
             name="name"
             value={user.name}
             onChange={inputChangeHandler}
-            className="bg-[#0077ff94] text-white font-semibold px-2"
+            className="bg-[#0077ff94] font-semibold px-2 placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -136,7 +140,7 @@ const Register_Form = () => {
             name="email"
             value={user.email}
             onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
         {userType === "A" ? (
@@ -150,7 +154,7 @@ const Register_Form = () => {
               name="pin"
               value={user.pin}
               onChange={inputChangeHandler}
-              className="bg-[#0077ff94] px-2"
+              className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
             />
           </div>
         ) : (
@@ -167,7 +171,7 @@ const Register_Form = () => {
             name="password1"
             value={user.password1}
             onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -180,7 +184,7 @@ const Register_Form = () => {
             name="password2"
             value={user.password2}
             onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -201,7 +205,7 @@ const Register_Form = () => {
             readOnly
             disabled
             onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
 
@@ -214,7 +218,7 @@ const Register_Form = () => {
       </form>
       <Link
         to="/login"
-        className="text-primary text-sm font-semibold hover:text-black hover:underline hover"
+        className="relative z-10 text-primary text-sm font-semibold hover:text-black hover:underline hover"
       >
         Already have an account ? Login then...
       </Link>

@@ -14,6 +14,9 @@ const Login_Form = () => {
     password: "",
   });
 
+  const imageUrl =
+    "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
+
   const inputChangeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -50,10 +53,18 @@ const Login_Form = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center pt-20">
+    <div
+      className="relative w-full h-[88%] flex flex-col items-center justify-center"
+      // style={{ backgroundImage: `url(${imageUrl})` }}
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center filter blur-sm"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      ></div>
+
       <form
         onSubmit={handleSubmit}
-        className="shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto px-2 py-5 "
+        className="relative z-10 shadow-lg shadow-[#005CC8] w-1/4 border-[#005CC8] border-4 rounded-md mx-auto px-2 py-5 "
       >
         <div className="w-full flex justify-center">
           <h1 className="shadow-lg shadow-[#005CC8] text-xl font-bold text-black underline border-4 border-[#3c97ff] bg-[#005CC8] px-2 py-1 rounded-full text-white hover:text-black">
@@ -70,7 +81,7 @@ const Login_Form = () => {
             name="username"
             value={user.username}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
         <div className="input-container flex flex-col">
@@ -83,7 +94,7 @@ const Login_Form = () => {
             name="password"
             value={user.password}
             onChange={inputChangeHandler}
-            className="bg-zinc-200 px-2"
+            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
 
@@ -96,7 +107,7 @@ const Login_Form = () => {
       </form>
       <Link
         to="/register"
-        className="text-primary text-sm font-semibold hover:text-black hover:underline hover"
+        className="relative z-10 text-primary text-sm font-semibold hover:text-black hover:underline hover"
       >
         Not have an account ? Register then...
       </Link>

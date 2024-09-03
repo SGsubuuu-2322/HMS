@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 
 const PublicLayout = () => {
   return (
-    <>
+    <div className="w-full h-screen">
       <PublicNav />
       <Outlet />
-    </>
+    </div>
   );
 };
 

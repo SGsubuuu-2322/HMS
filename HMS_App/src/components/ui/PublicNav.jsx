@@ -13,7 +13,7 @@ const PublicNav = () => {
     Dispatch(refreshUserType(e.target.value));
   };
   return (
-    <nav className="w-full h-20 bg-[#65adff] flex justify-between items-center px-5">
+    <nav className="w-full h-[12%] bg-[#65adff] flex justify-between items-center px-5">
       <div className="image-container hover:scale-110 w-40 h-20 rounded-md overflow-hidden">
         <img
           src="https://hcmsllc.com/wp-content/uploads/2022/11/HMS-Logo-copy.png"
