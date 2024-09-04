@@ -79,60 +79,75 @@ const PublicNav = () => {
       )}
 
       <div className="nav-content">
-        <ul className="flex justify-between h-10">
+        <ul className="flex justify-between gap-2 h-10">
           <NavLink
             to="/login"
             className={(e) =>
-              `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive &&
-                "border-slate-100 text-white shadow-md shadow-white "
+              `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
+                e.isActive ? "shadow-md shadow-white " : ""
               }`
             }
           >
+            <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-white transition-all duration-200 group-hover:h-full"></span>
             Home
           </NavLink>
           <NavLink
             to="/login"
             className={(e) =>
-              `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive &&
-                "border-slate-100 text-white shadow-md shadow-white "
+              `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
+                e.isActive ? "shadow-md shadow-white " : ""
               }`
             }
           >
-            AboutUs
+            <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            About Us
           </NavLink>
           <NavLink
             to="/login"
             className={(e) =>
-              `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive &&
-                "border-slate-100 text-white shadow-md shadow-white "
+              `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
+                e.isActive ? "shadow-md shadow-white " : ""
               }`
             }
           >
+            <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-white transition-all duration-200 group-hover:h-full"></span>
             Contact
           </NavLink>
           <NavLink
             to="/login"
             className={(e) =>
-              `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive &&
-                "border-slate-100 text-white shadow-md shadow-white "
+              `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
+                e.isActive ? "shadow-md shadow-white " : ""
               }`
             }
           >
+            <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-white transition-all duration-200 group-hover:h-full"></span>
             Login
           </NavLink>
           <NavLink
             to="/register"
             className={(e) =>
-              `rounded-lg bg-[#005CC8] border-4 hover:border-white  border-black px-3  text-xl font-semibold text-black hover:text-white hover:underline hover:underline-offset-2 ${
-                e.isActive &&
-                "border-slate-100 text-white shadow-md shadow-white "
+              `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
+                e.isActive ? "shadow-md shadow-white text-slate-50" : ""
               }`
             }
           >
+            <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-white transition-all duration-200 group-hover:h-full"></span>
+            <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-white transition-all duration-200 group-hover:w-full"></span>
+            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-white transition-all duration-200 group-hover:h-full"></span>
             Register
           </NavLink>
         </ul>
