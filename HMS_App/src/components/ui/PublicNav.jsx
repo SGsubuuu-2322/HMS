@@ -2,7 +2,8 @@
 
 import { refreshUserType } from "@/store/reducers/UserReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import logo from "../../assets/HI2.png";
 
 const PublicNav = () => {
   const Dispatch = useDispatch();
@@ -14,13 +15,12 @@ const PublicNav = () => {
   };
   return (
     <nav className="w-full h-[12%] bg-[#65adff] flex justify-between items-center px-5">
-      <div className="image-container hover:scale-110 w-40 h-20 rounded-md overflow-hidden">
-        <img
-          src="https://hcmsllc.com/wp-content/uploads/2022/11/HMS-Logo-copy.png"
-          alt="logo"
-          className="w-full h-full object-contain"
-        />
-      </div>
+      <Link
+        to={"/home"}
+        className="image-container hover:scale-110 w-44 h-28 rounded-md overflow-hidden"
+      >
+        <img src={logo} alt="logo" className="w-full h-full object-contain" />
+      </Link>
 
       {pathname === "/register" ? (
         <div className="button-holder h-[90%] w-40 ml-[20%] bg-secondarylite rounded-md flex justify-around items-center  border-2 overflow-hidden">
