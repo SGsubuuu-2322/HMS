@@ -81,7 +81,7 @@ const PublicNav = () => {
       <div className="nav-content">
         <ul className="flex justify-between gap-2 h-10">
           <NavLink
-            to="/login"
+            to="/home"
             className={(e) =>
               `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
                 e.isActive ? "shadow-md shadow-white " : ""
@@ -95,7 +95,7 @@ const PublicNav = () => {
             Home
           </NavLink>
           <NavLink
-            to="/login"
+            to="/about-us"
             className={(e) =>
               `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
                 e.isActive ? "shadow-md shadow-white " : ""
@@ -109,7 +109,7 @@ const PublicNav = () => {
             About Us
           </NavLink>
           <NavLink
-            to="/login"
+            to="/contact-us"
             className={(e) =>
               `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
                 e.isActive ? "shadow-md shadow-white " : ""
