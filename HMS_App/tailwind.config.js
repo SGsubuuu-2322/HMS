@@ -6,7 +6,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        hero: 'url("https://images.squarespace-cdn.com/content/v1/579e1b81ff7c50691dbe3a81/1625295308754-43LU2JAH7799FOO9R2HP/DJI_0766.JPG?format=2500w")',
+        // hero: 'url("https://images.squarespace-cdn.com/content/v1/579e1b81ff7c50691dbe3a81/1625295308754-43LU2JAH7799FOO9R2HP/DJI_0766.JPG?format=2500w")',
+        hero: 'url("/SUM.jpg")',
       },
       fontFamily: {
         alice: ["Alice", "serif"],
