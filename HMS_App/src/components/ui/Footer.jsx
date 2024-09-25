@@ -10,11 +10,11 @@ const Footer = () => {
           </h1>
         </div>
         <div className="h-3/4 w-full flex flex-col font-bold text-white">
-          <p className="tracking-wide">K8, KALINGA NAGAR</p>
-          <p className="tracking-wide">BHUBANESWAR, ODISHA</p>
-          <p className="tracking-wide">INDIA</p>
-          <p className="tracking-wide">PIN CODE – 751003</p>
-          <p className="mt-6 tracking-wide">CALL US: 0674-2386281</p>
+          <p className="tracking-wide">MERCY HOSPITAL, ST. LOUIS</p>
+          <p className="tracking-wide">615 SOUTH NEW BALLAS ROAD</p>
+          <p className="tracking-wide">SAINT LOUIS, MISSOURI 63141</p>
+          <p className="tracking-wide">UNITED STATES</p>
+          <p className="mt-6 tracking-wide">CALL US: +1 314-525-1000</p>
         </div>
       </div>
       <div className="h-2/3 w-[20%]">
