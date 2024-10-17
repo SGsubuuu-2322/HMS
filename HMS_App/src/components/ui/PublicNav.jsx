@@ -16,7 +16,7 @@ const PublicNav = () => {
   return (
     <nav className="w-full h-[12%] bg-[#65adff] flex justify-between items-center px-5">
       <Link
-        to={"/home"}
+        to={"/"}
         className="image-container hover:scale-110 w-44 h-28 rounded-md overflow-hidden"
       >
         <img src={logo} alt="logo" className="w-full h-full object-contain" />
@@ -81,7 +81,7 @@ const PublicNav = () => {
       <div className="nav-content">
         <ul className="flex justify-between gap-2 h-10">
           <NavLink
-            to="/home"
+            to="/"
             className={(e) =>
               `group relative inline-block overflow-hidden rounded  px-5 py-3 text-sm font-medium text-slate-800 hover:text-white focus:outline-none ${
                 e.isActive ? "shadow-md shadow-white " : ""

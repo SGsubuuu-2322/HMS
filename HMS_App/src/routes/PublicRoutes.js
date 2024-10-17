@@ -14,7 +14,7 @@ export const PublicRoutes = [
     element: Register_Form,
   },
   {
-    path: "/home",
+    path: "/",
     element: Home,
   },
   {
