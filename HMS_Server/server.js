@@ -1,10 +1,9 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import dotenv from "dotenv";
+import { PORT } from "./configs/config.js";
 import router from "./routes/index.js";
-
-dotenv.config();
+import connectDB from "./configs/dbConnection.js";
 
 const app = express();
 
@@ -13,9 +12,10 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.disable("x-powered-by");
 
-const PORT = process.env.PORT || 7002;
 app.use("/api", router);
 
-app.listen(PORT, () => {
-  console.log(`Server is successfully running at PORT ${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is successfully running at PORT ${PORT}`);
+  });
 });
