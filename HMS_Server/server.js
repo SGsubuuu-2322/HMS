@@ -4,13 +4,14 @@ import cors from "cors";
 import { PORT } from "./configs/config.js";
 import router from "./routes/index.js";
 import connectDB from "./configs/dbConnection.js";
+import helmet from "helmet";
 
 const app = express();
 
+app.use(helmet());
 app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 app.use(morgan("tiny"));
-app.disable("x-powered-by");
 
 app.use("/api", router);
 
