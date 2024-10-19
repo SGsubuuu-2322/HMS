@@ -15,8 +15,16 @@ app.use(morgan("tiny"));
 
 app.use("/api", router);
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is successfully running at PORT ${PORT}`);
+connectDB()
+  .then(() => {
+    try {
+      app.listen(PORT, () => {
+        console.log(`Server is successfully running at PORT ${PORT}`);
+      });
+    } catch (error) {
+      console.log(`Cannot connect to the server...`);
+    }
+  })
+  .catch((error) => {
+    console.log(`Invalid database connection...`);
   });
-});
