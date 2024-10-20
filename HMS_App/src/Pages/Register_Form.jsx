@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { registerAPI } from "@/helper/API/user";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Register_Form = () => {
   const { userType } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  // const Dispatch = useDispatch();
+  const Dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -71,7 +72,8 @@ const Register_Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log(user);
+      // console.log(user);
+      Dispatch(registerAPI(user));
       navigate("/login");
     }
   };

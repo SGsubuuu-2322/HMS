@@ -1,3 +1,4 @@
+import { registerAPI } from "@/helper/API/user";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -12,15 +13,15 @@ const userSlice = createSlice({
       state.userType = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(registerAPI.fulfilled, (state, action) => {
-  //     action.payload.id = nanoid();
-  //     action.payload.profileImg =
-  //       "https://cdn3d.iconscout.com/3d/premium/thumb/user-6332708-5209354.png";
-  //     state.allUsers = [...state.allUsers, action.payload];
-  //     localStorage.setItem("allUsers", JSON.stringify(state.allUsers));
-  //   });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerAPI.fulfilled, (state, action) => {
+        console.log(action.response);
+      })
+      .addCase(registerAPI.rejected, (state, action) => {
+        console.log(action.error.message);
+      });
+  },
 });
 
 export default userSlice.reducer;
