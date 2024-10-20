@@ -85,8 +85,16 @@ const Register_Form = () => {
           email: user.email,
           password: user.password1,
         })
-      );
-      navigate("/login");
+      )
+        .unwrap()
+        .then(() => {
+          navigate("/login", {
+            state: { message: "User registration successful!" },
+          });
+        })
+        .catch((err) => {
+          toast.reject("User registration unsuccessfull. Try again!!!");
+        });
     }
   };
 

@@ -1,13 +1,16 @@
 // import React from 'react'
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login_Form = () => {
   const Dispatch = useDispatch();
   const Navigate = useNavigate();
+  const location = useLocation();
   const { allUsers } = useSelector((state) => state.user);
   const [user, setUser] = useState({
     username: "",
@@ -15,6 +18,13 @@ const Login_Form = () => {
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    // Check if a message was passed via navigate
+    if (location.state?.message) {
+      toast.success(location.state.message);
+    }
+  }, [location]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -125,6 +135,7 @@ const Login_Form = () => {
       >
         Not have an account ? Register then...
       </Link>
+      <ToastContainer />
     </div>
   );
 };
