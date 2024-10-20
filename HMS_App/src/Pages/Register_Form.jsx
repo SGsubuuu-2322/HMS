@@ -18,6 +18,12 @@ const Register_Form = () => {
     password2: "",
   });
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   const imageUrl =
     "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
 
@@ -73,7 +79,13 @@ const Register_Form = () => {
     e.preventDefault();
     if (isFormValid()) {
       // console.log(user);
-      Dispatch(registerAPI(user));
+      Dispatch(
+        registerAPI({
+          name: user.name,
+          email: user.email,
+          password: user.password1,
+        })
+      );
       navigate("/login");
     }
   };
@@ -149,27 +161,44 @@ const Register_Form = () => {
           <label htmlFor="name" className="text-xl font-bold text-black">
             Password:{" "}
           </label>
-          <input
-            type="password"
-            placeholder="Enter your password..."
-            name="password1"
-            value={user.password1}
-            onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
-          />
+          <div className="relative flex">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Enter your password..."
+              name="password1"
+              value={user.password1}
+              onChange={inputChangeHandler}
+              className="w-full bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
+            />
+
+            <div
+              className="absolute right-0 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {passwordVisible ? "🤨" : "😎"}
+            </div>
+          </div>
         </div>
         <div className="input-container flex flex-col">
           <label htmlFor="name" className="text-xl font-bold text-black">
             Re-Enter Password:{" "}
           </label>
-          <input
-            type="password"
-            placeholder="Re-enter your password..."
-            name="password2"
-            value={user.password2}
-            onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
-          />
+          <div className="relative flex">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Re-enter your password..."
+              name="password2"
+              value={user.password2}
+              onChange={inputChangeHandler}
+              className="w-full bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
+            />
+            <div
+              className="absolute right-0 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {passwordVisible ? "🤨" : "😎"}
+            </div>
+          </div>
         </div>
         <div className="input-container flex flex-col">
           <label htmlFor="name" className="text-xl font-bold text-black">

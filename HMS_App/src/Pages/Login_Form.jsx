@@ -14,6 +14,12 @@ const Login_Form = () => {
     password: "",
   });
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   const imageUrl =
     "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
 
@@ -88,14 +94,22 @@ const Login_Form = () => {
           <label htmlFor="name" className="text-xl font-bold text-black">
             Password:{" "}
           </label>
-          <input
-            type="password"
-            placeholder="Enter your password..."
-            name="password"
-            value={user.password}
-            onChange={inputChangeHandler}
-            className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
-          />
+          <div className="relative flex">
+            <input
+              type="password"
+              placeholder="Enter your password..."
+              name="password"
+              value={user.password}
+              onChange={inputChangeHandler}
+              className="w-full bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
+            />
+            <div
+              className="absolute right-0 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {passwordVisible ? "🤨" : "😎"}
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center justify-center mt-4">

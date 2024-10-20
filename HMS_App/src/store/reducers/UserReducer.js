@@ -16,7 +16,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerAPI.fulfilled, (state, action) => {
-        console.log(action.response);
+        console.log(action);
       })
       .addCase(registerAPI.rejected, (state, action) => {
         console.log(action.error.message);
