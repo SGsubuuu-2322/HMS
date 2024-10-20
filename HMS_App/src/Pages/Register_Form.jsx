@@ -1,14 +1,13 @@
-// import React from 'react'
-
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-// import { registerAPI } from "../Api/Auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register_Form = () => {
   const { userType } = useSelector((state) => state.user);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   // const Dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
@@ -22,76 +21,59 @@ const Register_Form = () => {
     "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
 
   const inputChangeHandler = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const isFormValid = () => {
+    const { name, email, password1, password2, pin } = user;
+
+    if (userType === "A") {
+      if (!name || !email || !pin || !password1 || !password2) {
+        toast.error("Enter all the fields!!!");
+        return false;
+      }
+    } else {
+      if (!name || !email || !password1 || !password2) {
+        toast.error("Enter all the fields!!!");
+        return false;
+      }
+    }
+
+    if (userType === "A" && pin !== "200114") {
+      toast.error("Incorrect admin pin.");
+      return false;
+    }
+
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+    if (!passwordRegex.test(password1)) {
+      toast.error(
+        "Invalid password. Must be 8-10 characters with uppercase, lowercase, digit, and special character."
+      );
+      return false;
+    }
+
+    if (password1 !== password2) {
+      toast.error("Passwords do not match.");
+      return false;
+    }
+
+    const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format.");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(user);
-
-    if (userType === "A") {
-      if (
-        user.name === "" ||
-        user.email === "" ||
-        user.pin === "" ||
-        user.password1 === "" ||
-        user.password2 === ""
-      ) {
-        alert("Please enter all the fields...");
-        return;
-      }
-
-      if (user.pin !== "200114") {
-        alert("Please enter your correct admin pin...");
-        return;
-      }
-    } else {
-      if (
-        user.name === "" ||
-        user.email === "" ||
-        user.password1 === "" ||
-        user.password2 === ""
-      ) {
-        alert("Please enter all the fields...");
-        return;
-      }
+    if (isFormValid()) {
+      console.log(user);
+      navigate("/login");
     }
-
-    if (
-      !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/.test(
-        user.password1
-      )
-    ) {
-      alert(
-        "Please enter a valid password with minimum 8 to 10 characters with minimum 1 uppercase, lowercase, digit, and special character in it..."
-      );
-      return;
-    }
-
-    // if (allUsers.filter((u) => u.email == user.email).length > 0) {
-    //   alert("This email is already registered, Try with the new one...");
-    //   return;
-    // }
-
-    if (user.password1 !== user.password2) {
-      alert("Passwords aren't matching, Please enter again...");
-      return;
-    }
-
-    if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(user.email)) {
-      alert("Please enter a valid email address...");
-      return;
-    }
-
-    // Dispatch(
-    //   registerAPI({
-    //     name: user.name,
-    //     email: user.email,
-    //     password: user.password1,
-    //     userType: userType,
-    //   })
-    // );
-    Navigate("/login");
   };
 
   return (
@@ -222,6 +204,7 @@ const Register_Form = () => {
       >
         Already have an account ? Login then...
       </Link>
+      <ToastContainer />
     </div>
   );
 };
