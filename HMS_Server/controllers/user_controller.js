@@ -1,6 +1,5 @@
 import User from "../models/UserModel.js";
 import OTP from "../models/OTPModel.js";
-import mailer from "../controllers/mailer_controller.js";
 import otpGenerator from "otp-generator";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";

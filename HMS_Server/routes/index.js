@@ -3,8 +3,11 @@ import admin from "./admin.js";
 import doctor from "./doctor.js";
 import patient from "./patient.js";
 import user from "./user.js";
+import registerMail from "../controllers/mailer_controller.js";
 
 const router = Router();
+
+router.route("/registermail").post(registerMail);
 
 router.use("/user", user);
 router.use("/admin", admin);

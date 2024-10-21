@@ -32,4 +32,4 @@ const OTPSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("OTP", OTPSchema);
+export default mongoose.model("OTP", OTPSchema);

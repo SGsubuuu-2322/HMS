@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { MAIL_USER, MAIL_PASSKEY } from "../configs/config";
+import { MAIL_USER, MAIL_PASSKEY } from "../configs/config.js";
 import Mailgen from "mailgen";
 
 // Creating the transporter for sending the mail from server end point...
