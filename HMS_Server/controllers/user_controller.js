@@ -1,6 +1,7 @@
 export const registerUser = async (req, res) => {
   try {
-    console.log(req.body);
+    const {name, email, password} = req.body;
+    const user = await 
     return res.status(201).send({
       message: "User registration successfull...",
     });
