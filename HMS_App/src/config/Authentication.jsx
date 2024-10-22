@@ -1,28 +1,41 @@
 // import React from 'react'
 
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout from "../Layout/AuthLayout";
 import { useEffect, useState } from "react";
+import PublicNav from "@/components/ui/PublicNav";
 // import { useSelector } from "react-redux";
 
 const Authentication = () => {
   const Navigate = useNavigate();
-  const [loggedIn, setloggedIn] = useState(false);
+  const location = useLocation();
+  const [verified, setVerified] = useState(false);
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("loggedInUser"))) {
-      setloggedIn(true);
+    if (JSON.parse(localStorage.getItem("token"))) {
+      setVerified(true);
     } else {
-      setloggedIn(false);
+      setVerified(false);
       Navigate("/login");
     }
   }, [Navigate]);
-  return (
-    loggedIn && (
-      <AuthLayout>
-        <Outlet />
-      </AuthLayout>
-    )
-  );
+  if (location.pathname == "/register/otp-verify") {
+    return (
+      verified && (
+        <AuthLayout>
+          <PublicNav />
+          <Outlet />
+        </AuthLayout>
+      )
+    );
+  } else {
+    return (
+      verified && (
+        <AuthLayout>
+          <Outlet />
+        </AuthLayout>
+      )
+    );
+  }
 };
 
 export default Authentication;

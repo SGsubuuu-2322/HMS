@@ -17,7 +17,7 @@ const userSlice = createSlice({
     builder
       .addCase(registerAPI.fulfilled, (state, action) => {
         const token = action?.payload?.token;
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", JSON.stringify(token));
       })
       .addCase(registerAPI.rejected, (state, action) => {
         console.log(action.error.message);

@@ -1,11 +1,9 @@
 // import React from 'react'
 import { Route, Routes } from "react-router-dom";
-// import Authentication from "./Config/Authentication";
 import PublicLayout from "./Layout/PublicLayout";
 import { PublicRoutes } from "./routes/PublicRoutes";
-import Authentication from "./config/Authentication";
 import { AuthRoutes } from "./routes/AuthRoutes";
-// import { AuthRoutes } from "./routes/AuthRoutes";
+import Authentication from "./config/Authentication";
 
 const App = () => {
   return (

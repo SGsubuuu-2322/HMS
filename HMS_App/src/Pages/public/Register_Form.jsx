@@ -88,7 +88,7 @@ const Register_Form = () => {
           })
         ).unwrap();
         if (response) {
-          navigate("/login", {
+          navigate("/register/otp-verify", {
             state: {
               message: "Verification mail has been sent on your mail...",
             },

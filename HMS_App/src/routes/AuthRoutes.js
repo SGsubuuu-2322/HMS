@@ -1,8 +1,8 @@
-import Home from "@/Pages/Home";
+import OTP_Verification from "@/Pages/auth/OTP_Verification";
 
 export const AuthRoutes = [
   {
-    path: "/",
-    element: Home,
+    path: "/register/otp-verify",
+    element: OTP_Verification,
   },
 ];

@@ -1,8 +1,8 @@
-import AboutUs from "@/Pages/AboutUs";
-import Contact from "@/Pages/Contact";
-import Home from "@/Pages/Home";
-import Login_Form from "@/Pages/Login_Form";
-import Register_Form from "@/Pages/Register_Form";
+import AboutUs from "@/Pages/public/AboutUs";
+import Contact from "@/Pages/public/Contact";
+import Home from "@/Pages/public/Home";
+import Login_Form from "@/Pages/public/Login_Form";
+import Register_Form from "@/Pages/public/Register_Form";
 
 export const PublicRoutes = [
   {
