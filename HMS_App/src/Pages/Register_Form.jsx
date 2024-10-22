@@ -76,25 +76,26 @@ const Register_Form = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isFormValid()) {
-      // console.log(user);
-      Dispatch(
-        registerAPI({
-          name: user.name,
-          email: user.email,
-          password: user.password1,
-        })
-      )
-        .unwrap()
-        .then(() => {
-          navigate("/login", {
-            state: { message: "User registration successful!" },
-          });
-        })
-        .catch((err) => {
-          toast.reject("User registration unsuccessfull. Try again!!!");
+    try {
+      e.preventDefault();
+      if (isFormValid()) {
+        Dispatch(
+          registerAPI({
+            name: user.name,
+            email: user.email,
+            password: user.password1,
+            usertype: userType,
+          })
+        ).unwrap();
+
+        navigate("/login", {
+          state: { message: "User registration successful!" },
         });
+      }
+    } catch (error) {
+      // Handle any errors from the API call
+      toast.error("User registration unsuccessfull. Try again!!!");
+      console.log(error);
     }
   };
 

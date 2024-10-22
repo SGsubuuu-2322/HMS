@@ -6,7 +6,7 @@ export const registerAPI = createAsyncThunk(
   async (body) => {
     try {
       const response = await axios.post("/user/register", body);
-      return response.message;
+      return response?.data;
     } catch (error) {
       throw new error(error?.response?.data);
     }
