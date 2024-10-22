@@ -75,11 +75,11 @@ const Register_Form = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       if (isFormValid()) {
-        Dispatch(
+        const response = await Dispatch(
           registerAPI({
             name: user.name,
             email: user.email,
@@ -87,10 +87,13 @@ const Register_Form = () => {
             usertype: userType,
           })
         ).unwrap();
-
-        navigate("/login", {
-          state: { message: "User registration successful!" },
-        });
+        if (response) {
+          navigate("/login", {
+            state: {
+              message: "Verification mail has been sent on your mail...",
+            },
+          });
+        }
       }
     } catch (error) {
       // Handle any errors from the API call
