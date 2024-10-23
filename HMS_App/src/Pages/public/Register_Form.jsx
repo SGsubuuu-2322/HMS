@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { registerAPI } from "@/helper/API/user";
+import { mailerAPI, registerAPI } from "@/helper/API/user";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -79,7 +79,7 @@ const Register_Form = () => {
     try {
       e.preventDefault();
       if (isFormValid()) {
-        const response = await Dispatch(
+        const registerAPIResponse = await Dispatch(
           registerAPI({
             name: user.name,
             email: user.email,
@@ -87,12 +87,23 @@ const Register_Form = () => {
             usertype: userType,
           })
         ).unwrap();
-        if (response) {
-          navigate("/register/otp-verify", {
-            state: {
-              message: "Verification mail has been sent on your mail...",
-            },
-          });
+
+        if (registerAPIResponse) {
+          const registerMailAPIResponse = await Dispatch(
+            mailerAPI({
+              userName: user.name,
+              userEmail: user.email,
+              text: "Your OTP (One-Time Password) for [Your Service Name] is: [OTP] Please enter this OTP within [Time Limit] minutes to complete your verification. If you did not request this OTP, please ignore this email.",
+              subject: "Registration in HMS-MERCY",
+            })
+          );
+          if (registerMailAPIResponse) {
+            navigate("/register/otp-verify", {
+              state: {
+                message: "Verification mail has been sent on your mail...",
+              },
+            });
+          }
         }
       }
     } catch (error) {
@@ -104,7 +115,7 @@ const Register_Form = () => {
 
   return (
     <div
-      className="relative w-full h-[88%] flex flex-col items-center justify-center  bg-no-repeat bg-cover bg-center"
+      className="relative w-full h-[88%] flex flex-col items-center justify-center"
       // style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <div
