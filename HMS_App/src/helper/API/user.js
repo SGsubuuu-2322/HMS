@@ -6,7 +6,6 @@ export const registerAPI = createAsyncThunk(
   async (body) => {
     try {
       const response = await axios.post("/user/register", body);
-      console.log(response);
       if (!response) throw new Error("Failed to fetch");
       return response?.data;
     } catch (error) {

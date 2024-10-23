@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { mailerAPI, registerAPI } from "@/helper/API/user";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -89,20 +90,26 @@ const Register_Form = () => {
         ).unwrap();
 
         if (registerAPIResponse) {
-          const registerMailAPIResponse = await Dispatch(
-            mailerAPI({
-              userName: user.name,
-              userEmail: user.email,
-              text: "Your OTP (One-Time Password) for [Your Service Name] is: [OTP] Please enter this OTP within [Time Limit] minutes to complete your verification. If you did not request this OTP, please ignore this email.",
-              subject: "Registration in HMS-MERCY",
-            })
-          );
-          if (registerMailAPIResponse) {
-            navigate("/register/otp-verify", {
-              state: {
-                message: "Verification mail has been sent on your mail...",
-              },
-            });
+          const token = JSON.parse(localStorage.getItem("token"));
+          if (token) {
+            const decode = jwtDecode(token);
+            if (decode) {
+              const registerMailAPIResponse = await Dispatch(
+                mailerAPI({
+                  userName: user.name,
+                  userEmail: user.email,
+                  text: `Your OTP (One-Time Password) for "Registration-Verification" is: ${decode.otp} Please enter this OTP within 10 minutes to complete your verification. If you did not request this OTP, please ignore this email.`,
+                  subject: "Registration verification in HMS-MERCY Portal",
+                })
+              );
+              if (registerMailAPIResponse) {
+                navigate("/register/otp-verify", {
+                  state: {
+                    message: "Verification mail has been sent on your mail...",
+                  },
+                });
+              }
+            }
           }
         }
       }
