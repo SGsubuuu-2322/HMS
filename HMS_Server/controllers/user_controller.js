@@ -5,6 +5,14 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { JWT_SECRET } from "../configs/config.js";
 
+// POST: http://localhost:7001/api/user/register
+// @param: {
+//   "name": "Subham Pradhan",
+//   "email": "abc@gmail.com",
+//   "password": "Admin@123",
+//   "usertype": "A"
+// }
+
 export const registerUser = async (req, res) => {
   try {
     // Destructuring credentials from req.body
@@ -58,5 +66,19 @@ export const registerUser = async (req, res) => {
     return res.status(400).send({
       message: error.message,
     });
+  }
+};
+
+// POST: http://localhost:7001/api/user/register
+// @param: {
+//   "email": "abc@gmail.com",
+//   "otp": "123456",
+// }
+export const registeredUserOtpVerification = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    console.log(req.body);
+  } catch (error) {
+    return res.status(401).send({ message: error.message });
   }
 };

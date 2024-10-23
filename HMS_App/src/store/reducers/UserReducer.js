@@ -1,4 +1,8 @@
-import { mailerAPI, registerAPI } from "@/helper/API/user";
+import {
+  mailerAPI,
+  registerAPI,
+  registeredUserOtpVerificationAPI,
+} from "@/helper/API/user";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -26,6 +30,12 @@ const userSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(mailerAPI.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
+      .addCase(registeredUserOtpVerificationAPI.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(registeredUserOtpVerificationAPI.rejected, (state, action) => {
         console.log(action.error.message);
       });
   },

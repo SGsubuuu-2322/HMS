@@ -24,11 +24,15 @@ export const mailerAPI = createAsyncThunk("register/mail", async (body) => {
     throw new error(error?.response?.data);
   }
 });
-export const otpVerificationAPI = createAsyncThunk(
+
+export const registeredUserOtpVerificationAPI = createAsyncThunk(
   "otp/verification",
   async (body) => {
     try {
-      console.log(body);
+      const response = await axios.post("/user/register/otp/verify", body);
+      if (!response) throw new Error("Failed to fetch");
+      return response;
+      // console.log(body);
     } catch (error) {
       throw new error(error?.response?.data);
     }

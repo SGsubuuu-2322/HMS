@@ -19,9 +19,10 @@ import {
 } from "@/components/ui/form";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { otpVerificationAPI } from "@/helper/API/user";
+import { registeredUserOtpVerificationAPI } from "@/helper/API/user";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 // import { toast } from "@/components/hooks/use-toast";
 
 const FormSchema = z.object({
@@ -51,9 +52,19 @@ const OTP_Verification = () => {
   });
 
   const onSubmit = async (data) => {
-    toast.success(`You'hv submitted ${data.pin}`);
-
-    await dispatch(otpVerificationAPI({ OTP: data.pin }));
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      const decode = jwtDecode(token);
+      if (decode) {
+        toast.success(`You'hv submitted ${data.pin}`);
+        await dispatch(
+          registeredUserOtpVerificationAPI({
+            OTP: data.pin,
+            email: decode.userEmail,
+          })
+        );
+      }
+    }
   };
 
   return (
