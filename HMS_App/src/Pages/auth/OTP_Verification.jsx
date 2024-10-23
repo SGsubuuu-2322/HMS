@@ -64,12 +64,7 @@ const OTP_Verification = () => {
         ).unwrap();
 
         if (response) {
-          localStorage.removeItem("token");
-          navigate("/", {
-            state: {
-              message: "OTP-Verification successfull...",
-            },
-          });
+          navigate("/");
         }
       }
     } catch (error) {

@@ -33,7 +33,7 @@ const userSlice = createSlice({
         console.log(action.error.message);
       })
       .addCase(registeredUserOtpVerificationAPI.fulfilled, (state, action) => {
-        console.log(action.payload);
+        localStorage.removeItem("token");
       })
       .addCase(registeredUserOtpVerificationAPI.rejected, (state, action) => {
         console.log(action.error);
