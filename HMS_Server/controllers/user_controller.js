@@ -76,9 +76,51 @@ export const registerUser = async (req, res) => {
 // }
 export const registeredUserOtpVerification = async (req, res) => {
   try {
-    const { email, otp } = req.body;
-    console.log(req.body);
+    const { otp, token } = req.body;
+    // Input validation to ensure that required fields are present
+    if (!otp) {
+      return res.status(401).send({ message: "OTP is required." });
+    }
+    if (!token) {
+      return res
+        .status(401)
+        .send({ message: "Validation failed due to absence of token" });
+    }
+
+    // Token verification...
+    const decoded = await jwt.verify(token, JWT_SECRET);
+    if (!decoded) {
+      return res
+        .status(401)
+        .json({ message: "Validation failed due to invalid token" });
+    }
+
+    const { userEmail } = decoded;
+
+    // Fetch OTP record from the database
+    const otpRecord = await OTP.findOne({ otp });
+    if (!otpRecord) {
+      return res.status(401).json({ msg: "OTP expired or invalid" });
+    }
+
+    // Saving the verified user to the database to user collection permanently...
+    const { name, email, password, usertype } = otpRecord;
+    const user = new User({
+      username: name,
+      email,
+      password,
+      usertype,
+      isVerified: true,
+    });
+    await user.save();
+
+    // Clear the OTP record after verification
+    await OTP.deleteOne({ email });
+
+    return res
+      .status(201)
+      .send({ msg: "User verified and registered successfully" });
   } catch (error) {
-    return res.status(401).send({ message: error.message });
+    return res.status(500).send({ message: error.message });
   }
 };

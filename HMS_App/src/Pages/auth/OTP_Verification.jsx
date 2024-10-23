@@ -21,8 +21,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { registeredUserOtpVerificationAPI } from "@/helper/API/user";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useLocation, useNavigate } from "react-router-dom";
 // import { toast } from "@/components/hooks/use-toast";
 
 const FormSchema = z.object({
@@ -34,6 +33,7 @@ const FormSchema = z.object({
 const OTP_Verification = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const imageURL =
     "https://img.freepik.com/premium-photo/hospital-hallway-unfocused-background_786878-6945.jpg?size=626&ext=jpg&ga=GA1.1.1289161518.1725302723&semt=ais_hybrid";
 
@@ -52,18 +52,28 @@ const OTP_Verification = () => {
   });
 
   const onSubmit = async (data) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-      const decode = jwtDecode(token);
-      if (decode) {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (token) {
         toast.success(`You'hv submitted ${data.pin}`);
-        await dispatch(
+        const response = await dispatch(
           registeredUserOtpVerificationAPI({
-            OTP: data.pin,
-            email: decode.userEmail,
+            otp: data.pin,
+            token,
           })
-        );
+        ).unwrap();
+
+        if (response) {
+          localStorage.removeItem("token");
+          navigate("/", {
+            state: {
+              message: "OTP-Verification successfull...",
+            },
+          });
+        }
       }
+    } catch (error) {
+      toast.reject(error.message);
     }
   };
 

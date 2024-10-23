@@ -36,7 +36,7 @@ const userSlice = createSlice({
         console.log(action.payload);
       })
       .addCase(registeredUserOtpVerificationAPI.rejected, (state, action) => {
-        console.log(action.error.message);
+        console.log(action.error);
       });
   },
 });
