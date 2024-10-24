@@ -64,7 +64,11 @@ const OTP_Verification = () => {
         ).unwrap();
 
         if (response) {
-          navigate("/");
+          navigate("/login", {
+            state: {
+              message: "Successfully registration has been done...",
+            },
+          });
         }
       }
     } catch (error) {
