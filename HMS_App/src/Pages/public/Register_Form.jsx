@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 import { mailerAPI, registerAPI } from "@/helper/API/user";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register_Form = () => {
@@ -94,28 +95,34 @@ const Register_Form = () => {
           if (token) {
             const decode = jwtDecode(token);
             if (decode) {
-              const registerMailAPIResponse = await Dispatch(
-                mailerAPI({
-                  userName: user.name,
-                  userEmail: user.email,
-                  text: `Your OTP (One-Time Password) for "Registration-Verification" is: ${decode.otp} Please enter this OTP within 10 minutes to complete your verification. If you did not request this OTP, please ignore this email.`,
-                  subject: "Registration verification in HMS-MERCY Portal",
-                })
+              toast.promise(
+                Dispatch(
+                  mailerAPI({
+                    userName: user.name,
+                    userEmail: user.email,
+                    text: `Your OTP (One-Time Password) for "Registration-Verification" is: ${decode.otp} Please enter this OTP within 10 minutes to complete your verification. If you did not request this OTP, please ignore this email.`,
+                    subject: "Registration verification in HMS-MERCY Portal",
+                  })
+                ),
+                {
+                  loading: "Processing...",
+                  success: "Registration successful.",
+                  error: "Registration failed...",
+                }
               );
-              if (registerMailAPIResponse) {
-                navigate("/register/otp-verify", {
-                  state: {
-                    message: "Verification mail has been sent on your mail...",
-                  },
-                });
-              }
+
+              navigate("/register/otp-verify", {
+                state: {
+                  message: "Verification mail has been sent on your mail...",
+                },
+              });
             }
           }
         }
       }
     } catch (error) {
       // Handle any errors from the API call
-      toast.error("User registration unsuccessfull. Try again!!!");
+      toast.error(`User registration failed. ${error.message}`);
       console.log(error);
     }
   };
@@ -125,6 +132,8 @@ const Register_Form = () => {
       className="relative w-full h-[88%] flex flex-col items-center justify-center"
       // style={{ backgroundImage: `url(${imageUrl})` }}
     >
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
+
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-sm"
         style={{ backgroundImage: `url(${imageUrl})` }}
@@ -265,7 +274,7 @@ const Register_Form = () => {
       >
         Already have an account ? Login then...
       </Link>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };
