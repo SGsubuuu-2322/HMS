@@ -11,7 +11,6 @@ const Login_Form = () => {
   const Dispatch = useDispatch();
   const Navigate = useNavigate();
   const location = useLocation();
-  const { allUsers } = useSelector((state) => state.user);
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -39,33 +38,7 @@ const Login_Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(allUsers);
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (allUsers.length != 0) {
-      const validUser = allUsers.filter((u) => u.email == user.username)[0];
-      if (validUser) {
-        if (validUser.password == user.password) {
-          if (loggedInUser) {
-            localStorage.removeItem("loggedInUser");
-            localStorage.setItem("loggedInUser", JSON.stringify(validUser));
-            Dispatch(refreshLoggedInUser());
-          } else {
-            localStorage.setItem("loggedInUser", JSON.stringify(validUser));
-            Dispatch(refreshLoggedInUser());
-          }
-          Navigate("/");
-        } else {
-          alert("Please enter a valid username and password1");
-          return;
-        }
-      } else {
-        alert("Please enter a valid username and password2");
-        return;
-      }
-    } else {
-      alert("Please register yourself first...");
-      Navigate("/register");
-    }
+    console.log(user);
   };
 
   return (

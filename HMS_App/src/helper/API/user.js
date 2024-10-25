@@ -40,3 +40,15 @@ export const registeredUserOtpVerificationAPI = createAsyncThunk(
     }
   }
 );
+export const logInUserAPI = createAsyncThunk(
+  "user/login",
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/user/login", body);
+      if (!response) throw new Error("Failed to fetch");
+      return response?.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

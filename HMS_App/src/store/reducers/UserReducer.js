@@ -1,4 +1,5 @@
 import {
+  logInUserAPI,
   mailerAPI,
   registerAPI,
   registeredUserOtpVerificationAPI,
@@ -36,6 +37,15 @@ const userSlice = createSlice({
         localStorage.removeItem("token");
       })
       .addCase(registeredUserOtpVerificationAPI.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(logInUserAPI.fulfilled, (state, action) => {
+        const token = action?.payload?.token;
+        if (token) {
+          localStorage.setItem("token", JSON.stringify(token));
+        }
+      })
+      .addCase(logInUserAPI.rejected, (state, action) => {
         console.log(action.error);
       });
   },
