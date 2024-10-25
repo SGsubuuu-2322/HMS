@@ -124,3 +124,51 @@ export const registeredUserOtpVerification = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Input validation to ensure that required fields are present
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+    if (!password) {
+      return res.status(400).json({ message: "Password is required." });
+    }
+    const registeredUser = await User.findOne({ email });
+
+    if (!registeredUser) {
+      return res.status(401).send({ messaeg: "Invalid user credentials!!!" });
+    }
+
+    const validPassword = await bcrypt.compare(
+      password,
+      registeredUser.password
+    );
+
+    if (!validPassword) {
+      return res.status(401).send({ message: "Invalid User credentials..." });
+    }
+
+    const { password: userPassword, ...rest } = Object.assign(
+      {},
+      registeredUser.toJSON()
+    );
+
+    const token = jwt.sign(
+      {
+        id: registeredUser._id,
+        email: registeredUser.email,
+      },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    return res
+      .status(200)
+      .send({ message: "LoggedIn successful...", user: rest, token });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
