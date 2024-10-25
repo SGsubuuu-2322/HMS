@@ -1,6 +1,7 @@
 // import React from 'react'
 
 import { Button } from "@/components/ui/button";
+import { logInUserAPI } from "@/helper/API/user";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -8,8 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login_Form = () => {
-  const Dispatch = useDispatch();
-  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState({
     username: "",
@@ -36,9 +37,35 @@ const Login_Form = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const isFormValid = () => {
+    const { username: email, password } = user;
+    if (!email || !password) {
+      toast.error("Enter all the fields!!!");
+      return false;
+    }
+    const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+    if (isFormValid()) {
+      const loginAPIresponse = await dispatch(
+        logInUserAPI({ email: user.username, password: user.password })
+      ).unwrap();
+
+      if (loginAPIresponse) {
+        navigate("/", {
+          state: {
+            message: "Verification mail has been sent on your mail...",
+          },
+        });
+      }
+    }
   };
 
   return (
