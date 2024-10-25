@@ -3,8 +3,20 @@
 import Footer from "@/components/ui/Footer";
 import Parallax from "@/components/ui/Parallax";
 import ReachUs from "@/components/ui/ReachUs";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const Home = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if a message was passed via navigate
+    if (location.state?.message) {
+      toast.success(location.state.message);
+    }
+  }, [location]);
+
   return (
     <>
       <Parallax />
@@ -151,6 +163,7 @@ const Home = () => {
       <ReachUs />
 
       <Footer />
+      <ToastContainer />
     </>
   );
 };

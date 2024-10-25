@@ -61,7 +61,7 @@ const Login_Form = () => {
       if (loginAPIresponse) {
         navigate("/", {
           state: {
-            message: "Verification mail has been sent on your mail...",
+            message: "You'hv been successfully loggedin...",
           },
         });
       }
