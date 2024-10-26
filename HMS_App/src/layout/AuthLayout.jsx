@@ -1,11 +1,17 @@
 // import React from 'react'
-// import AuthNav from "../Components/AuthNav";
-
+import { AppSidebar } from "@/components/custom/AppSidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 const AuthLayout = ({ children }) => {
   return (
     <div className="h-screen overflow-hidden">
       {/* <AuthNav /> */}
-      {children}
+      <SidebarProvider>
+        <AppSidebar />
+        <main>
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
     </div>
   );
 };
