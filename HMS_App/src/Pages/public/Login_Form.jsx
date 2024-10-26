@@ -59,7 +59,7 @@ const Login_Form = () => {
       ).unwrap();
 
       if (loginAPIresponse) {
-        navigate("/", {
+        navigate("/user/dashboard", {
           state: {
             message: "You'hv been successfully loggedin...",
           },
