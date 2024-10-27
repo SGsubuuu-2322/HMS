@@ -3,12 +3,15 @@ import { AppSidebar } from "@/components/custom/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 const AuthLayout = ({ children }) => {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="w-full h-screen overflow-hidden">
       {/* <AuthNav /> */}
       <SidebarProvider>
         <AppSidebar />
-        <main>
-          <SidebarTrigger />
+        <main className="w-full h-screen overflow-y-auto">
+          <div className="flex">
+            <SidebarTrigger />
+            <h1>Dashboard</h1>
+          </div>
           {children}
         </main>
       </SidebarProvider>
