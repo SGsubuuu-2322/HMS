@@ -367,7 +367,7 @@ const SidebarGroup = React.forwardRef(({ className, ...props }, ref) => {
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
+      className={cn("flex w-full h-screen min-w-0 flex-col p-2", className)}
       {...props}
     />
   );
@@ -420,7 +420,7 @@ const SidebarGroupContent = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     data-sidebar="group-content"
-    className={cn("w-full text-sm", className)}
+    className={cn("w-full h-full text-sm", className)}
     {...props}
   />
 ));

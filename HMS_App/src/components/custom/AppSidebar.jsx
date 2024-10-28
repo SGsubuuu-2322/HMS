@@ -6,7 +6,7 @@ import {
   AlarmClockCheck,
   ShieldAlert,
   ShieldQuestion,
-  Settings,
+  LogOut,
   Wallet,
 } from "lucide-react";
 
@@ -67,9 +67,9 @@ const items = [
     icon: ShieldQuestion,
   },
   {
-    title: "Settings",
+    title: "Logout",
     url: "#",
-    icon: Settings,
+    icon: LogOut,
   },
 ];
 
@@ -102,18 +102,19 @@ export function AppSidebar() {
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="relative h-full">
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className="last:absolute last:bottom-0 last:w-full last:mb-5"
+                >
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
                     isActive={item.url == location.pathname ? "true" : "false"}
+                    className="hover:font-medium hover:text-[#0077ff94]"
                   >
-                    <NavLink
-                      to={item.url}
-                      className="hover:font-medium hover:text-[#0077ff94]"
-                    >
+                    <NavLink to={item.url}>
                       <span className="text-xl">
                         <item.icon />
                       </span>

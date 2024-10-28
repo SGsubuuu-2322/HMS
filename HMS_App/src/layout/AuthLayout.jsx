@@ -7,9 +7,9 @@ const AuthLayout = ({ children }) => {
       {/* <AuthNav /> */}
       <SidebarProvider>
         <AppSidebar />
-        <main className="w-full h-screen overflow-y-auto">
-          <div className="flex">
-            <SidebarTrigger />
+        <main className="relative w-full h-screen overflow-y-auto">
+          <div className="z-100 fixed flex ">
+            <SidebarTrigger className="hover:bg-transparent" />
             <h1>Dashboard</h1>
           </div>
           {children}
