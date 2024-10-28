@@ -68,7 +68,7 @@ const items = [
   },
   {
     title: "Logout",
-    url: "#",
+    url: "/",
     icon: LogOut,
   },
 ];
@@ -103,7 +103,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="relative h-full">
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="last:absolute last:bottom-0 last:w-full last:mb-5"
@@ -113,6 +113,10 @@ export function AppSidebar() {
                     tooltip={item.title}
                     isActive={item.url == location.pathname ? "true" : "false"}
                     className="hover:font-medium hover:text-[#0077ff94]"
+                    onClick={() => {
+                      if (index === items.length - 1)
+                        localStorage.removeItem("token");
+                    }}
                   >
                     <NavLink to={item.url}>
                       <span className="text-xl">
