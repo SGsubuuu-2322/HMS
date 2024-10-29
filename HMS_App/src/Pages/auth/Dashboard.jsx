@@ -2,36 +2,44 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Dashboard = () => {
+  const imageUrl =
+    "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
-    <div className="z-0 w-full h-screen bg p-10 flex items-center justify-center">
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3 w-[80%]">
-        {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
-        <div className="aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
-          <h1 className="font-bold text-[#0077ff94]">Outbreaks</h1>
-          <div className="text-4xl text-red-600 font-bold">1</div>
-          <p>View ➡️</p>
+    <div className="w-full h-screen bg p-10 flex items-center justify-center">
+      <div className="relative w-[80%] p-5">
+        <div
+          className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        ></div>
+        <div className="relative z-10 grid auto-rows-min gap-4 md:grid-cols-3 w-full">
+          {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+            <h1 className="font-bold text-[#0077ff94]">Outbreaks</h1>
+            <div className="text-4xl text-red-600 font-bold">1</div>
+            <p>View ➡️</p>
+          </div>
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+            <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
+            <div className="text-4xl text-red-600 font-bold">1</div>
+            <p>View ➡️</p>
+          </div>
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+            <h1 className="font-bold text-[#0077ff94]">Patients</h1>
+            <div className="text-4xl text-red-600 font-bold">1</div>
+            <p>View ➡️</p>
+          </div>
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+            <h1 className="font-bold text-[#0077ff94]">Appointments</h1>
+            <div className="text-4xl text-red-600 font-bold">1</div>
+            <p>View ➡️</p>
+          </div>
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+            <h1 className="font-bold text-[#0077ff94]">Profile Updation</h1>
+            <div className="text-4xl text-red-600 font-bold">1</div>
+            <p>View ➡️</p>
+          </div>
+          <Skeleton className="aspect-video rounded-xl" />{" "}
         </div>
-        <div className="aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
-          <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
-          <div className="text-4xl text-red-600 font-bold">1</div>
-          <p>View ➡️</p>
-        </div>
-        <div className="aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
-          <h1 className="font-bold text-[#0077ff94]">Patients</h1>
-          <div className="text-4xl text-red-600 font-bold">1</div>
-          <p>View ➡️</p>
-        </div>
-        <div className="aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
-          <h1 className="font-bold text-[#0077ff94]">Appointments</h1>
-          <div className="text-4xl text-red-600 font-bold">1</div>
-          <p>View ➡️</p>
-        </div>
-        <div className="aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
-          <h1 className="font-bold text-[#0077ff94]">Profile Updation</h1>
-          <div className="text-4xl text-red-600 font-bold">1</div>
-          <p>View ➡️</p>
-        </div>
-        <Skeleton className="aspect-video rounded-xl" />{" "}
       </div>
     </div>
   );
