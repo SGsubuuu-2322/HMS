@@ -21,10 +21,10 @@ const Authentication = () => {
   if (location.pathname == "/register/otp-verify") {
     return (
       verified && (
-        <AuthLayout>
+        <div className="w-full h-screen">
           <PublicNav />
           <Outlet />
-        </AuthLayout>
+        </div>
       )
     );
   } else {

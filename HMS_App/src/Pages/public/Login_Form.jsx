@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { logInUserAPI } from "@/helper/API/user";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

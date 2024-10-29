@@ -23,7 +23,7 @@ const AuthLayout = ({ children }) => {
             <div className="bg-[#0077ff3a] w-full h-full flex items-center">
               <Link
                 to={"/user/dashboard"}
-                className="image-container hover:scale-110 duration-300 w-44 h-28 rounded-md overflow-hidden"
+                className="image-container hover:scale-105 duration-300 w-44 h-28 rounded-md overflow-hidden"
               >
                 <img
                   src={logo}

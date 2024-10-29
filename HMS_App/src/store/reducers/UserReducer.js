@@ -1,4 +1,5 @@
 import {
+  getUserDetails,
   logInUserAPI,
   mailerAPI,
   registerAPI,
@@ -8,6 +9,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userType: "A",
+  user: {
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    gender: "",
+    role: "",
+    email: "",
+    phone: "",
+    address: "",
+  },
 };
 
 const userSlice = createSlice({
@@ -40,12 +51,52 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(logInUserAPI.fulfilled, (state, action) => {
+        console.log(action.payload.user.username.split(" "));
         const token = action?.payload?.token;
         if (token) {
           localStorage.setItem("token", JSON.stringify(token));
         }
+        state.user = {
+          ...state.user,
+          firstName: action.payload.user?.username.split(" ")[0],
+          middleName:
+            action.payload.user?.username.split(" ").length == 2
+              ? ""
+              : action.payload.user?.username.split(" ")[1],
+          lastName:
+            action.payload.user?.username.split(" ").length == 3
+              ? action.payload.user?.username.split(" ")[2]
+              : action.payload.user?.username.split(" ")[1],
+          gender: action.payload.user?.gender,
+          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          email: action.payload.user?.email,
+          phone: action.payload.user?.phone,
+          address: action.payload.user?.address,
+        };
       })
       .addCase(logInUserAPI.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.user = {
+          ...state.user,
+          firstName: action.payload.user?.username.split(" ")[0],
+          middleName:
+            action.payload.user?.username.split(" ").length == 2
+              ? ""
+              : action.payload.user?.username.split(" ")[1],
+          lastName:
+            action.payload.user?.username.split(" ").length == 3
+              ? action.payload.user?.username.split(" ")[2]
+              : action.payload.user?.username.split(" ")[1],
+          gender: action.payload.user?.gender,
+          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          email: action.payload.user?.email,
+          phone: action.payload.user?.phone,
+          address: action.payload.user?.address,
+        };
+      })
+      .addCase(getUserDetails.rejected, (state, action) => {
         console.log(action.error);
       });
   },

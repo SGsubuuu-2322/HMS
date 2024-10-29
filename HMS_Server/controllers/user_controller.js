@@ -76,26 +76,14 @@ export const registerUser = async (req, res) => {
 // }
 export const registeredUserOtpVerification = async (req, res) => {
   try {
-    const { otp, token } = req.body;
+    // console.log(req.user);
+    const { otp } = req.body;
     // Input validation to ensure that required fields are present
     if (!otp) {
       return res.status(401).send({ message: "OTP is required." });
     }
-    if (!token) {
-      return res
-        .status(401)
-        .send({ message: "Validation failed due to absence of token" });
-    }
 
-    // Token verification...
-    const decoded = await jwt.verify(token, JWT_SECRET);
-    if (!decoded) {
-      return res
-        .status(401)
-        .json({ message: "Validation failed due to invalid token" });
-    }
-
-    const { userEmail } = decoded;
+    // const { userEmail } = verifiedUser;
 
     // Fetch OTP record from the database
     const otpRecord = await OTP.findOne({ otp });
@@ -168,6 +156,23 @@ export const loginUser = async (req, res) => {
     return res
       .status(200)
       .send({ message: "LoggedIn successful...", user: rest, token });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+export const getUserDetails = async (req, res) => {
+  try {
+    const { email, id } = req.user;
+    const userdetails = await User.findOne({ email });
+    if (!userdetails) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    const { password, ...rest } = Object.assign({}, userdetails.toJSON());
+    return res
+      .status(200)
+      .send({ message: "Successfully found!!!", user: rest });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

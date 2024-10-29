@@ -59,7 +59,6 @@ const OTP_Verification = () => {
         const response = await dispatch(
           registeredUserOtpVerificationAPI({
             otp: data.pin,
-            token,
           })
         ).unwrap();
 

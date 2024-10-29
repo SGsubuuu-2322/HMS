@@ -23,10 +23,16 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    gender: {
+      type: String,
+    },
     mobile: {
       type: Number,
     },
     profilePicture: {
+      type: String,
+    },
+    address: {
       type: String,
     },
   },
