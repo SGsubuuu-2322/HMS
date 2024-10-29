@@ -80,7 +80,7 @@ const UpdateProfile = () => {
         " " +
         userDetails.lastName;
 
-      await dispatch(
+      const profileUpdationResponse = await dispatch(
         updateUserDetails({
           username,
           email: userDetails.email,
@@ -89,7 +89,15 @@ const UpdateProfile = () => {
           gender: userDetails.gender,
           profilePicture: file || userDetails?.profilePicture || "",
         })
-      );
+      ).unwrap();
+
+      if (profileUpdationResponse) {
+        navigate("/user/profile", {
+          state: {
+            message: "Profile successfully updated...",
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }

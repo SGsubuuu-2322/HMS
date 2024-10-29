@@ -4,17 +4,22 @@ import avatar from "../../assets/profile.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetails } from "@/helper/API/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
+    if (location?.state?.message) {
+      toast.success(location.state.message);
+    }
     if (!user.firstName) {
       dispatch(getUserDetails());
     }
-  }, [user]);
+  }, [user, location]);
 
   const updateHandler = () => {
     navigate("/user/profile/update");
@@ -24,6 +29,7 @@ const Profile = () => {
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
+      <ToastContainer />
       <div className="relative w-[60%] p-5 mt-16">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"

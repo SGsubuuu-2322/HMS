@@ -52,7 +52,6 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(logInUserAPI.fulfilled, (state, action) => {
-        console.log(action.payload.user.username.split(" "));
         const token = action?.payload?.token;
         if (token) {
           localStorage.setItem("token", JSON.stringify(token));
@@ -103,7 +102,6 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(updateUserDetails.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.user = {
           ...state.user,
           firstName: action.payload.user?.username.split(" ")[0],
