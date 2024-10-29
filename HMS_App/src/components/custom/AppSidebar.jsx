@@ -21,6 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavLink, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import { useEffect, useState } from "react";
 // import { useState } from "react";
 
@@ -75,6 +76,7 @@ const items = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const { user } = useSelector((state) => state.user);
   // const [route, setRoute] = useState("/user/dashboard");
 
   // useEffect(() => {
@@ -90,7 +92,7 @@ export function AppSidebar() {
             <div className="flex justify-center items-center">
               <span>
                 <img
-                  src={avatar}
+                  src={user.profilePicture || avatar}
                   alt="profile Img"
                   className="border-2 border-gray-100 w-[50px] h-[50px] object-cover rounded-full shadow-lg cursor-pointer"
                 />

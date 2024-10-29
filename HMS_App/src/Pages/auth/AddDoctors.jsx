@@ -255,7 +255,7 @@ const AddDoctors = () => {
             />
           </div>
           <div className="w-full h-10 flex items-center justify-center py-1 mt-2">
-            <Button>Update</Button>
+            <Button>Submit</Button>
           </div>
         </form>
       </div>
