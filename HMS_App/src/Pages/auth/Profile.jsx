@@ -39,7 +39,7 @@ const Profile = () => {
           <div className="w-full h-20 flex justify-center items-center">
             <span>
               <img
-                src={avatar}
+                src={user.profilePicture || avatar}
                 alt="profile Img"
                 className="border-2 border-gray-100 w-[66px] h-[66px] object-cover rounded-full shadow-lg cursor-pointer"
               />
