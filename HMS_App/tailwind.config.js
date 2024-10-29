@@ -24,7 +24,7 @@ export default {
         },
       },
       animation: {
-        opacityFade: "opacityFade 2s ease-in-out", // adjust duration as needed
+        opacityFade: "opacityFade 1s ease-in-out", // adjust duration as needed
       },
       colors: {
         background: "hsl(var(--background))",

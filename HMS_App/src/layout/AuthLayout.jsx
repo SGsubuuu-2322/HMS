@@ -34,7 +34,7 @@ const AuthLayout = ({ children }) => {
               <div className="h-full w-1 bg-[#0077ff]"></div>
               <h1
                 key={route}
-                className="animate-opacityFade font-alice font-bold ml-1 text-[#0077ff94]"
+                className="animate-opacityFade underline-offset-2 rounded-lg shadow-xl shadow-white text-lg font-alice font-bold ml-1 text-[#0077ff94]"
               >
                 {route.toUpperCase()}
               </h1>
