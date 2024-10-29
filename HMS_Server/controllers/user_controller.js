@@ -163,8 +163,8 @@ export const loginUser = async (req, res) => {
 
 export const getUserDetails = async (req, res) => {
   try {
-    const { email, id } = req.user;
-    const userdetails = await User.findOne({ email });
+    const id = req.params.id;
+    const userdetails = await User.findOne({ _id: id });
     if (!userdetails) {
       return res.status(404).send({ message: "User not found" });
     }
@@ -175,5 +175,44 @@ export const getUserDetails = async (req, res) => {
       .send({ message: "Successfully found!!!", user: rest });
   } catch (error) {
     return res.status(500).send({ message: error.message });
+  }
+};
+
+export const updateUserDetails = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(404).send({ message: "User Id not found" });
+    }
+
+    const { username, email, phone, address, gender, profilePicture } =
+      req.body;
+
+    if (!username) {
+      return res.status(404).send({ message: "Username is required" });
+    }
+    if (!email) {
+      return res.status(404).send({ message: "Email is required" });
+    }
+
+    const storedUser = await User.findOne({ _id: id });
+    if (!storedUser) {
+      return res
+        .status(404)
+        .send({ message: "User with this id not found!!!" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: id },
+      { username, email, phone, address, gender, profilePicture },
+      { new: true } // Returns the updated document
+    );
+
+    const { password, ...rest } = updatedUser.toObject(); // Removes the password field
+    return res
+      .status(201)
+      .send({ message: "Successfully updated!!!", user: rest });
+  } catch (error) {
+    return res.status(500).send({ message: error });
   }
 };

@@ -4,6 +4,7 @@ import {
   mailerAPI,
   registerAPI,
   registeredUserOtpVerificationAPI,
+  updateUserDetails,
 } from "@/helper/API/user";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -72,6 +73,7 @@ const userSlice = createSlice({
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
+          profilePicture: action.payload.user?.profilePicture,
         };
       })
       .addCase(logInUserAPI.rejected, (state, action) => {
@@ -94,9 +96,34 @@ const userSlice = createSlice({
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
+          profilePicture: action.payload.user?.profilePicture,
         };
       })
       .addCase(getUserDetails.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(updateUserDetails.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.user = {
+          ...state.user,
+          firstName: action.payload.user?.username.split(" ")[0],
+          middleName:
+            action.payload.user?.username.split(" ").length == 2
+              ? ""
+              : action.payload.user?.username.split(" ")[1],
+          lastName:
+            action.payload.user?.username.split(" ").length == 3
+              ? action.payload.user?.username.split(" ")[2]
+              : action.payload.user?.username.split(" ")[1],
+          gender: action.payload.user?.gender,
+          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          email: action.payload.user?.email,
+          phone: action.payload.user?.phone,
+          address: action.payload.user?.address,
+          profilePicture: action.payload.user?.profilePicture,
+        };
+      })
+      .addCase(updateUserDetails.rejected, (state, action) => {
         console.log(action.error);
       });
   },

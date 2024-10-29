@@ -7,6 +7,7 @@ import LikelyOutbreak from "@/Pages/auth/LikelyOutbreak";
 import OTP_Verification from "@/Pages/auth/OTP_Verification";
 import PatientBook from "@/Pages/auth/PatientBook";
 import Profile from "@/Pages/auth/Profile";
+import UpdateProfile from "@/Pages/auth/UpdateProfile";
 
 export const AuthRoutes = [
   {
@@ -20,6 +21,10 @@ export const AuthRoutes = [
   {
     path: "/user/profile",
     element: Profile,
+  },
+  {
+    path: "/user/profile/update",
+    element: UpdateProfile,
   },
   {
     path: "/user/patients-book",

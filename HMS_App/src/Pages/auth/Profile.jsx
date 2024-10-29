@@ -4,15 +4,21 @@ import avatar from "../../assets/profile.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUserDetails } from "@/helper/API/user";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     if (!user.firstName) {
       dispatch(getUserDetails());
     }
   }, [user]);
+
+  const updateHandler = () => {
+    navigate("/user/profile/update");
+  };
 
   const imageUrl =
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -82,7 +88,7 @@ const Profile = () => {
             </span>
           </div>
           <div className="w-full h-10 flex items-center justify-center py-1 mt-2">
-            <Button>Update</Button>
+            <Button onClick={updateHandler}>Edit</Button>
           </div>
         </div>
       </div>

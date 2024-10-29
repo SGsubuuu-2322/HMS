@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema(
     gender: {
       type: String,
     },
-    mobile: {
+    phone: {
       type: Number,
     },
     profilePicture: {

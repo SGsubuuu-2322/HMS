@@ -81,3 +81,21 @@ export const getUserDetails = createAsyncThunk(
     }
   }
 );
+
+export const updateUserDetails = createAsyncThunk(
+  "update/user",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const { id } = jwtDecode(token);
+      const response = await axios.put(`/user/profile/update/${id}`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Set the authorization bearer token
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
