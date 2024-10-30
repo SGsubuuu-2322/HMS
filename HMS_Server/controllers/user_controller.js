@@ -274,6 +274,7 @@ export const getUserDetails = async (req, res) => {
 export const updateUserDetails = async (req, res) => {
   try {
     const id = req.params.id;
+    const admin_id = req.user.admin_id;
     if (!id) {
       return res.status(404).send({ message: "User Id not found" });
     }
@@ -304,16 +305,16 @@ export const updateUserDetails = async (req, res) => {
         { new: true } // Returns the updated document
       );
       const updatedAdmin = await Admin.findByIdAndUpdate(
-        { email },
+        admin_id,
         { username, email, phone, address, gender, profilePicture },
         { new: true } // Returns the updated document
       );
-    }
 
-    const { password, ...rest } = updatedUser.toObject(); // Removes the password field
-    return res
-      .status(201)
-      .send({ message: "Successfully updated!!!", user: rest });
+      const { password, ...rest } = updatedUser.toObject(); // Removes the password field
+      return res
+        .status(201)
+        .send({ message: "Successfully updated!!!", user: rest });
+    }
   } catch (error) {
     return res.status(500).send({ message: error });
   }
