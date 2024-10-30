@@ -296,8 +296,6 @@ export const updateUserDetails = async (req, res) => {
         .send({ message: "User with this id not found!!!" });
     }
 
-    console.log(req.user);
-
     if (req.user.usertype == "A") {
       const updatedUser = await User.findByIdAndUpdate(
         { _id: id },

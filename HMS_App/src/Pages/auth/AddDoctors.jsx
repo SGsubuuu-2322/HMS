@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { addDoctor } from "@/helper/API/user";
 
 const AddDoctors = () => {
   const navigate = useNavigate();
@@ -58,16 +59,16 @@ const AddDoctors = () => {
 
       console.log(doctorDetails);
 
-      // const profileUpdationResponse = await dispatch(
-      //   updateUserDetails({
-      //     username,
-      //     email: userDetails.email,
-      //     phone: userDetails.phone,
-      //     address: userDetails.address,
-      //     gender: userDetails.gender,
-      //     profilePicture: file || userDetails?.profilePicture || "",
-      //   })
-      // ).unwrap();
+      const profileUpdationResponse = await dispatch(
+        addDoctor({
+          username,
+          email: doctorDetails.email,
+          phone: doctorDetails.phone,
+          address: doctorDetails.address,
+          gender: doctorDetails.gender,
+          profilePicture: file || avatar || "",
+        })
+      ).unwrap();
 
       // if (profileUpdationResponse) {
       //   navigate("/user/profile", {

@@ -67,3 +67,20 @@ export const registeredUserOtpVerification = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const addDoctor = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    console.log(req.body);
+    const admin_id = req.user.admin_id;
+    console.log(req.user);
+
+    const registeredAdmin = await Admin.findOne({ _id: admin_id });
+    if (!registeredAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+    console.log(registeredAdmin);
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};

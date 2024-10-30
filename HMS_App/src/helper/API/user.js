@@ -99,6 +99,7 @@ export const updateUserDetails = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
+      console.log(token);
       const { user_id } = jwtDecode(token);
       const response = await axios.put(
         `/user/profile/update/${user_id}`,
@@ -112,6 +113,37 @@ export const updateUserDetails = createAsyncThunk(
       return response?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const addDoctor = createAsyncThunk(
+  "add/doctor",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) throw new Error("Token not found in localStorage");
+      const { admin_id } = jwtDecode(token);
+      if (!admin_id) throw new Error("Admin ID missing in token");
+      if (token && admin_id) {
+        console.log(token);
+        const response = await axios.post(
+          `/admin/add/doctor/${admin_id}`,
+          body,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Set the authorization bearer token
+            },
+          }
+        );
+
+        return response?.data;
+      }
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
     }
   }
 );
