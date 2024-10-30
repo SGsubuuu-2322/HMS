@@ -62,6 +62,7 @@ export const registeredUserOtpVerificationAPI = createAsyncThunk(
     }
   }
 );
+
 export const logInUserAPI = createAsyncThunk(
   "user/login",
   async (body, { rejectWithValue }) => {
@@ -80,8 +81,8 @@ export const getUserDetails = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const { id } = jwtDecode(token);
-      const response = await axios.get(`/user/details/${id}`, {
+      const { user_id } = jwtDecode(token);
+      const response = await axios.get(`/user/details/${user_id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Set the authorization bearer token
         },
@@ -98,12 +99,16 @@ export const updateUserDetails = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const { id } = jwtDecode(token);
-      const response = await axios.put(`/user/profile/update/${id}`, body, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Set the authorization bearer token
-        },
-      });
+      const { user_id } = jwtDecode(token);
+      const response = await axios.put(
+        `/user/profile/update/${user_id}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        }
+      );
       return response?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

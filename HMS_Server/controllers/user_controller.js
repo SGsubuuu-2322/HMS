@@ -146,36 +146,109 @@ export const loginUser = async (req, res) => {
     const registeredUser = await User.findOne({ email });
 
     if (!registeredUser) {
-      return res.status(401).send({ messaeg: "Invalid user credentials!!!" });
+      return res.status(401).send({ message: "Invalid user credentials!!!" });
     }
 
-    const validPassword = await bcrypt.compare(
-      password,
-      registeredUser.password
-    );
+    if (registeredUser.usertype == "A") {
+      const registeredAdmin = await Admin.findOne({ email });
+      if (!registeredAdmin) {
+        return res.status(401).send({ messaeg: "Invalid user credentials!!!" });
+      }
+      const validPassword = await bcrypt.compare(
+        password,
+        registeredUser.password
+      );
 
-    if (!validPassword) {
-      return res.status(401).send({ message: "Invalid User credentials..." });
+      if (!validPassword) {
+        return res.status(401).send({ message: "Invalid User credentials..." });
+      }
+
+      const { password: userPassword, ...rest } = Object.assign(
+        {},
+        registeredUser.toJSON()
+      );
+
+      const token = jwt.sign(
+        {
+          user_id: registeredUser._id,
+          admin_id: registeredAdmin._id,
+          email: registeredUser.email,
+          usertype: registeredUser.usertype,
+        },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res
+        .status(200)
+        .send({ message: "LoggedIn successful...", user: rest, token });
+    } else if (registeredUser.usertype == "D") {
+      const registeredDoctor = await Doctor.findOne({ email });
+      if (!registeredDoctor) {
+        return res.status(401).send({ messaeg: "Invalid user credentials!!!" });
+      }
+      const validPassword = await bcrypt.compare(
+        password,
+        registeredUser.password
+      );
+
+      if (!validPassword) {
+        return res.status(401).send({ message: "Invalid User credentials..." });
+      }
+
+      const { password: userPassword, ...rest } = Object.assign(
+        {},
+        registeredUser.toJSON()
+      );
+
+      const token = jwt.sign(
+        {
+          user_id: registeredUser._id,
+          doctor_id: registeredDoctor._id,
+          email: registeredUser.email,
+          usertype: registeredUser.usertype,
+        },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res
+        .status(200)
+        .send({ message: "LoggedIn successful...", user: rest, token });
+    } else if (registeredUser.usertype == "P") {
+      const registeredPatient = await Patient.findOne({ email });
+      if (!registeredPatient) {
+        return res.status(401).send({ messaeg: "Invalid user credentials!!!" });
+      }
+      const validPassword = await bcrypt.compare(
+        password,
+        registeredUser.password
+      );
+
+      if (!validPassword) {
+        return res.status(401).send({ message: "Invalid User credentials..." });
+      }
+
+      const { password: userPassword, ...rest } = Object.assign(
+        {},
+        registeredUser.toJSON()
+      );
+
+      const token = jwt.sign(
+        {
+          user_id: registeredUser._id,
+          patient_id: registeredPatient._id,
+          email: registeredUser.email,
+          usertype: registeredUser.usertype,
+        },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res
+        .status(200)
+        .send({ message: "LoggedIn successful...", user: rest, token });
     }
-
-    const { password: userPassword, ...rest } = Object.assign(
-      {},
-      registeredUser.toJSON()
-    );
-
-    const token = jwt.sign(
-      {
-        id: registeredUser._id,
-        email: registeredUser.email,
-        usertype: registeredUser.usertype,
-      },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    return res
-      .status(200)
-      .send({ message: "LoggedIn successful...", user: rest, token });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -222,11 +295,20 @@ export const updateUserDetails = async (req, res) => {
         .send({ message: "User with this id not found!!!" });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-      { _id: id },
-      { username, email, phone, address, gender, profilePicture },
-      { new: true } // Returns the updated document
-    );
+    console.log(req.user);
+
+    if (req.user.usertype == "A") {
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: id },
+        { username, email, phone, address, gender, profilePicture },
+        { new: true } // Returns the updated document
+      );
+      const updatedAdmin = await Admin.findByIdAndUpdate(
+        { email },
+        { username, email, phone, address, gender, profilePicture },
+        { new: true } // Returns the updated document
+      );
+    }
 
     const { password, ...rest } = updatedUser.toObject(); // Removes the password field
     return res
