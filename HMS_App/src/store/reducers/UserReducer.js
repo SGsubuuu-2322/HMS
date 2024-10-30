@@ -128,7 +128,7 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(addDoctor.fulfilled, (state, action) => {
-        console.log(action.error);
+        console.log(action.payload);
       })
       .addCase(addDoctor.rejected, (state, action) => {
         console.log(action.error);

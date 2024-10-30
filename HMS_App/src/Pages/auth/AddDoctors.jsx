@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { addDoctor } from "@/helper/API/user";
+import { addDoctor, mailerAPI } from "@/helper/API/user";
 import { toast, ToastContainer } from "react-toastify";
 
 const AddDoctors = () => {
@@ -42,7 +42,7 @@ const AddDoctors = () => {
       ...doctorDetails,
       password: newPassword + generateRandomNumber(4),
     });
-  }, []);
+  }, [navigate]);
 
   const [file, setFile] = useState();
 
@@ -123,11 +123,34 @@ const AddDoctors = () => {
         ).unwrap();
 
         if (profileUpdationResponse) {
-          navigate("/user/add-doctor", {
-            state: {
-              message: "Doctor profile added successfully...",
-            },
-          });
+          dispatch(
+            mailerAPI({
+              userName: doctorDetails.name,
+              userEmail: doctorDetails.email,
+              text: `Dear ${username},
+
+Welcome to HMS_MERCY! We’re excited to have you on board.
+
+Your account has been successfully created, and you can now access all our features. Here are your account details:
+
+Account Details:
+
+Username: ${username}
+Email: ${doctorDetails.email}
+Role: ${doctorDetails.role}
+Password: ${doctorDetails.password}
+To get started, please log in to your account using the credentials you provided during registration. Should you need any assistance, our support team is here to help.
+
+Thank you for joining us, and we look forward to providing you with the best experience possible.`,
+              subject:
+                "Welcome to HMS_MERCY Portal - Account Created Successfully!",
+            })
+          ),
+            navigate("/user/dashboard", {
+              state: {
+                message: "Doctor profile added successfully...",
+              },
+            });
         }
       }
     } catch (error) {
