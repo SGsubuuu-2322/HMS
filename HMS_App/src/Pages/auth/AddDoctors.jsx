@@ -39,8 +39,11 @@ const AddDoctors = () => {
   const inputChangeHandler = (e) => {
     setdoctorDetails({ ...doctorDetails, [e.target.name]: e.target.value });
   };
-  const selectChangeHandler = (e) => {
-    setdoctorDetails({ ...doctorDetails, gender: e });
+  const selectGenderChangeHandler = (data) => {
+    setdoctorDetails({ ...doctorDetails, gender: data });
+  };
+  const selectRoleChangeHandler = (data) => {
+    setdoctorDetails({ ...doctorDetails, role: data });
   };
 
   const submitHandler = async (e) => {
@@ -147,7 +150,7 @@ const AddDoctors = () => {
             <label className="text-lg font-alice font-bold">Gender</label>
             <div className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden">
               <Select
-                onValueChange={selectChangeHandler}
+                onValueChange={selectGenderChangeHandler}
                 defaultValue={doctorDetails?.gender || ""}
               >
                 <SelectTrigger className="pl-0 text-base h-full rounded-none border-none bg-[#d0cdcdb6]">
@@ -165,7 +168,7 @@ const AddDoctors = () => {
             <label className="text-lg font-alice font-bold">Role</label>
             <div className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden">
               <Select
-                onValueChange={selectChangeHandler}
+                onValueChange={selectRoleChangeHandler}
                 defaultValue={doctorDetails?.gender || ""}
               >
                 <SelectTrigger className="pl-0 text-base h-full rounded-none border-none bg-[#d0cdcdb6]">

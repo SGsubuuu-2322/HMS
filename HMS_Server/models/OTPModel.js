@@ -19,7 +19,7 @@ const OTPSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    name: {
+    username: {
       type: String,
       required: true,
     },

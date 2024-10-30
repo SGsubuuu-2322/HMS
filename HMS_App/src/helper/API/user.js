@@ -39,13 +39,24 @@ export const registeredUserOtpVerificationAPI = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const response = await axios.post("/user/register/otp/verify", body, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Set the authorization bearer token
-        },
-      });
-      if (!response) throw new Error("Failed to fetch");
-      return response?.data;
+      const decode = jwtDecode(token);
+      if (decode.usertype == "A") {
+        const response = await axios.post("/admin/register/otp/verify", body, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        if (!response) throw new Error("Failed to fetch");
+        return response?.data;
+      } else if (decode.usertype == "D") {
+        const response = await axios.post("/doctor/register/otp/verify", body, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        if (!response) throw new Error("Failed to fetch");
+        return response?.data;
+      }
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

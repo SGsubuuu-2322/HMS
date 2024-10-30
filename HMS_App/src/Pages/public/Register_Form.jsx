@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { mailerAPI, registerAPI } from "@/helper/API/user";
 import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
+import { Pin } from "lucide-react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +21,20 @@ const Register_Form = () => {
     password2: "",
   });
 
+  function generateRandomNumber(digits) {
+    const min = Math.pow(10, digits - 1);
+    const max = Math.pow(10, digits) - 1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  useEffect(() => {
+    if (userType === "P") {
+      setUser({ ...user, pin: generateRandomNumber(6) });
+    } else {
+      setUser({ ...user, pin: "" });
+    }
+  }, [userType]);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -37,13 +52,8 @@ const Register_Form = () => {
   const isFormValid = () => {
     const { name, email, password1, password2, pin } = user;
 
-    if (userType === "A") {
+    if (userType === "A" || userType === "D" || userType === "P") {
       if (!name || !email || !pin || !password1 || !password2) {
-        toast.error("Enter all the fields!!!");
-        return false;
-      }
-    } else {
-      if (!name || !email || !password1 || !password2) {
         toast.error("Enter all the fields!!!");
         return false;
       }
@@ -51,6 +61,9 @@ const Register_Form = () => {
 
     if (userType === "A" && pin !== "200114") {
       toast.error("Incorrect admin pin.");
+      return false;
+    } else if (userType === "D" && pin !== "411002") {
+      toast.error("Incorrect doctor pin.");
       return false;
     }
 
@@ -81,42 +94,63 @@ const Register_Form = () => {
     try {
       e.preventDefault();
       if (isFormValid()) {
-        const registerAPIResponse = await Dispatch(
-          registerAPI({
-            name: user.name,
-            email: user.email,
-            password: user.password1,
-            usertype: userType,
-          })
-        ).unwrap();
+        if (userType == "A" || userType == "D") {
+          const registerAPIResponse = await Dispatch(
+            registerAPI({
+              username: user.name,
+              email: user.email,
+              password: user.password1,
+              usertype: userType,
+            })
+          ).unwrap();
 
-        if (registerAPIResponse) {
-          const token = JSON.parse(localStorage.getItem("token"));
-          if (token) {
-            const decode = jwtDecode(token);
-            if (decode) {
-              toast.promise(
-                Dispatch(
-                  mailerAPI({
-                    userName: user.name,
-                    userEmail: user.email,
-                    text: `Your OTP (One-Time Password) for "Registration-Verification" is: ${decode.otp} Please enter this OTP within 10 minutes to complete your verification. If you did not request this OTP, please ignore this email.`,
-                    subject: "Registration verification in HMS-MERCY Portal",
-                  })
-                ),
-                {
-                  loading: "Processing...",
-                  success: "Registration successful.",
-                  error: "Registration failed...",
-                }
-              );
+          if (registerAPIResponse) {
+            const token = JSON.parse(localStorage.getItem("token"));
+            if (token) {
+              const decode = jwtDecode(token);
+              if (decode) {
+                toast.promise(
+                  Dispatch(
+                    mailerAPI({
+                      userName: user.name,
+                      userEmail: user.email,
+                      text: `Your OTP (One-Time Password) for "Registration-Verification" is: ${decode.otp} Please enter this OTP within 10 minutes to complete your verification. If you did not request this OTP, please ignore this email.`,
+                      subject: "Registration verification in HMS-MERCY Portal",
+                    })
+                  ),
+                  {
+                    loading: "Processing...",
+                    success: "Registration successful.",
+                    error: "Registration failed...",
+                  }
+                );
 
-              navigate("/register/otp-verify", {
-                state: {
-                  message: "Verification mail has been sent on your mail...",
-                },
-              });
+                navigate("/register/otp-verify", {
+                  state: {
+                    message: "Verification mail has been sent on your mail...",
+                  },
+                });
+              }
             }
+          }
+        } else if (userType == "P") {
+          // console.log(user);
+          const registerAPIResponse = await Dispatch(
+            registerAPI({
+              username: user.name,
+              email: user.email,
+              patientId: user.pin,
+              password: user.password1,
+              usertype: userType,
+            })
+          ).unwrap();
+
+          if (registerAPIResponse) {
+            navigate("/login", {
+              state: {
+                message: "Welcome mail has been sent on your mail...",
+              },
+            });
           }
         }
       }
@@ -178,12 +212,30 @@ const Register_Form = () => {
             className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
-        {userType === "A" ? (
+        {userType === "A" || userType === "D" ? (
           <div className="input-container flex flex-col">
             <label htmlFor="name" className="text-xl font-bold text-black">
-              Admin-Pin:{" "}
+              {userType == "A" ? "Admin" : "Doctor"}-Pin:{" "}
             </label>
             <input
+              type="number"
+              placeholder="Enter your admin pin..."
+              name="pin"
+              value={user.pin}
+              onChange={inputChangeHandler}
+              className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
+            />
+          </div>
+        ) : (
+          ""
+        )}
+        {userType === "P" ? (
+          <div className="input-container flex flex-col">
+            <label htmlFor="name" className="text-xl font-bold text-black">
+              Patient-Id:{" "}
+            </label>
+            <input
+              readOnly
               type="number"
               placeholder="Enter your admin pin..."
               name="pin"
