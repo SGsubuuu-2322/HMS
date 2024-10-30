@@ -126,7 +126,6 @@ export const addDoctor = createAsyncThunk(
       const { admin_id } = jwtDecode(token);
       if (!admin_id) throw new Error("Admin ID missing in token");
       if (token && admin_id) {
-        console.log(token);
         const response = await axios.post(
           `/admin/add/doctor/${admin_id}`,
           body,

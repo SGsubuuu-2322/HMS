@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { mailerAPI, registerAPI } from "@/helper/API/user";
 import { jwtDecode } from "jwt-decode";
-import { Pin } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";

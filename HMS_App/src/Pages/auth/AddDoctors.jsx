@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/select";
 import avatar from "../../assets/profile.png";
 import convertToBase64 from "@/helper/convert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { addDoctor } from "@/helper/API/user";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddDoctors = () => {
   const navigate = useNavigate();
@@ -26,8 +27,22 @@ const AddDoctors = () => {
     email: "",
     phone: "",
     address: "",
-    profilePicture: "",
+    password: "",
   });
+
+  function generateRandomNumber(digits) {
+    const min = Math.pow(10, digits - 1);
+    const max = Math.pow(10, digits) - 1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  useEffect(() => {
+    let newPassword = "Doc@";
+    setdoctorDetails({
+      ...doctorDetails,
+      password: newPassword + generateRandomNumber(4),
+    });
+  }, []);
 
   const [file, setFile] = useState();
 
@@ -47,36 +62,74 @@ const AddDoctors = () => {
     setdoctorDetails({ ...doctorDetails, role: data });
   };
 
+  const isFormValid = () => {
+    const { firstName, gender, role, phone, address, email, password } =
+      doctorDetails;
+    if (
+      !firstName?.trim() ||
+      !email?.trim() ||
+      !password?.trim() ||
+      !gender?.trim() ||
+      !role?.trim() ||
+      !phone?.trim() ||
+      !address?.trim()
+    ) {
+      toast.error("Enter all the fields!!!");
+      return false;
+    }
+
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Invalid password. Must be 8-10 characters with uppercase, lowercase, digit, and special character."
+      );
+      return false;
+    }
+
+    const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format.");
+      return false;
+    }
+
+    return true;
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      let username =
-        doctorDetails.firstName +
-        " " +
-        doctorDetails.middleName +
-        " " +
-        doctorDetails.lastName;
+      if (isFormValid()) {
+        let username =
+          doctorDetails.firstName +
+          " " +
+          doctorDetails.middleName +
+          " " +
+          doctorDetails.lastName;
 
-      console.log(doctorDetails);
+        // console.log(doctorDetails);
 
-      const profileUpdationResponse = await dispatch(
-        addDoctor({
-          username,
-          email: doctorDetails.email,
-          phone: doctorDetails.phone,
-          address: doctorDetails.address,
-          gender: doctorDetails.gender,
-          profilePicture: file || avatar || "",
-        })
-      ).unwrap();
+        const profileUpdationResponse = await dispatch(
+          addDoctor({
+            username,
+            email: doctorDetails.email,
+            password: doctorDetails.password,
+            phone: doctorDetails.phone,
+            address: doctorDetails.address,
+            gender: doctorDetails.gender,
+            role: doctorDetails.role,
+            profilePicture: file || "",
+          })
+        ).unwrap();
 
-      // if (profileUpdationResponse) {
-      //   navigate("/user/profile", {
-      //     state: {
-      //       message: "Profile successfully updated...",
-      //     },
-      //   });
-      // }
+        if (profileUpdationResponse) {
+          navigate("/user/add-doctor", {
+            state: {
+              message: "Doctor profile added successfully...",
+            },
+          });
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -86,6 +139,7 @@ const AddDoctors = () => {
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
+      <ToastContainer />
       <div className="relative w-[60%] p-5 mt-16">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
