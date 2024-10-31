@@ -27,15 +27,15 @@ export const AuthRoutes = [
     element: UpdateProfile,
   },
   {
-    path: "/user/patients-book",
+    path: "/user/patients/record",
     element: PatientBook,
   },
   {
-    path: "/user/add-doctor",
+    path: "/user/add/doctor",
     element: AddDoctors,
   },
   {
-    path: "/user/doctors-record",
+    path: "/user/doctors/record",
     element: DoctorsRecord,
   },
   {
@@ -43,11 +43,11 @@ export const AuthRoutes = [
     element: Appointment,
   },
   {
-    path: "/user/add-outbreak",
+    path: "/user/add/outbreak",
     element: AddOutbreak,
   },
   {
-    path: "/user/likely-outbreaks",
+    path: "/user/likely/outbreaks",
     element: LikelyOutbreak,
   },
 ];

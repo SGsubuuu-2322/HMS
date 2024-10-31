@@ -21,7 +21,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavLink, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { getUserDetails } from "@/helper/API/user";
 // import { useEffect, useState } from "react";
 // import { useState } from "react";
 
@@ -38,18 +41,18 @@ const items = [
     icon: SquareUser,
   },
   {
-    title: "Patient's Book",
-    url: "/user/patients-book",
+    title: "Patient's Record",
+    url: "/user/patients/record",
     icon: BookUser,
   },
   {
     title: "Add Doctor",
-    url: "/user/add-doctor",
+    url: "/user/add/doctor",
     icon: UserRoundPlus,
   },
   {
     title: "Doctor's Record",
-    url: "/user/doctors-record",
+    url: "/user/doctors/record",
     icon: BookUser,
   },
   {
@@ -59,12 +62,12 @@ const items = [
   },
   {
     title: "Add Outbreak",
-    url: "/user/add-outbreak",
+    url: "/user/add/outbreak",
     icon: ShieldAlert,
   },
   {
     title: "Likely Outbreaks",
-    url: "/user/likely-outbreaks",
+    url: "/user/likely/outbreaks",
     icon: ShieldQuestion,
   },
   {
@@ -75,14 +78,15 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
-  // const [route, setRoute] = useState("/user/dashboard");
 
-  // useEffect(() => {
-  //   setRoute(location.pathname);
-  //   console.log(route);
-  // }, [location]);
+  useEffect(() => {
+    if (!user?.firstName) {
+      dispatch(getUserDetails());
+    }
+  }, [user]);
 
   return (
     <Sidebar collapsible="icon">
@@ -98,8 +102,10 @@ export function AppSidebar() {
                 />
               </span>
               <span className="ml-2">
-                <h2 className="font-semibold text-lg text-black">Hritik</h2>
-                <h2 className="text-sm font-medium">Admin</h2>
+                <h2 className="font-semibold text-lg text-black">
+                  {user?.firstName}
+                </h2>
+                <h2 className="text-sm font-medium">{user?.role}</h2>
               </span>
             </div>
           </SidebarGroupLabel>
