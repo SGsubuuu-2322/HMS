@@ -5,7 +5,7 @@ import {
 } from "../controllers/admin_controller.js";
 import * as middleware from "../middlewares/auth.js";
 import authorizeRoles from "../middlewares/role.js";
-import { registeredUserOtpVerification } from "../controllers/user_controller.js";
+import { addOutbreak, registeredUserOtpVerification } from "../controllers/user_controller.js";
 
 const router = Router();
 
@@ -17,4 +17,6 @@ router
 router
   .route("/add/doctor/:id")
   .post(middleware.auth, authorizeRoles("A"), addDoctor);
+
+router.route("/add/outbreak").post(middleware.auth, authorizeRoles("A"), addOutbreak);
 export default router;

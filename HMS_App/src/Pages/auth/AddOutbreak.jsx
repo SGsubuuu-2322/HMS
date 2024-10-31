@@ -1,10 +1,11 @@
 // import React from 'react'
 
 import { Button } from "@/components/ui/button";
+import { addOutbreak } from "@/helper/API/user";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddOutbreak = () => {
   const navigate = useNavigate();
@@ -16,12 +17,43 @@ const AddOutbreak = () => {
     obmeasures: "",
   });
 
+  const isFormValid = () => {
+    const { obname, obcomments, oblocation, obmeasures } = outbreak;
+
+    if (
+      !obname?.trim() ||
+      !obcomments?.trim() ||
+      !oblocation?.trim() ||
+      !obmeasures?.trim()
+    ) {
+      toast.error("Enter all the fields...");
+      return false;
+    }
+
+    return true;
+  };
+
   const inputChangeHandler = (e) => {
     setOutbreak({ ...outbreak, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    try {
+      if (isFormValid()) {
+        const response = await dispatch(addOutbreak(outbreak)).unwrap();
+
+        if (response) {
+          navigate("/user/dashboard", {
+            state: {
+              message: "Outbreak added successfully...",
+            },
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const imageUrl =
