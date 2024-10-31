@@ -5,6 +5,7 @@ import Dashboard from "@/Pages/auth/Dashboard";
 import DoctorsRecord from "@/Pages/auth/DoctorsRecord";
 import LikelyOutbreak from "@/Pages/auth/LikelyOutbreak";
 import OTP_Verification from "@/Pages/auth/OTP_Verification";
+import PasswordChange from "@/Pages/auth/PasswordChange";
 import PatientBook from "@/Pages/auth/PatientBook";
 import Profile from "@/Pages/auth/Profile";
 import UpdateProfile from "@/Pages/auth/UpdateProfile";
@@ -49,5 +50,9 @@ export const AuthRoutes = [
   {
     path: "/user/likely/outbreaks",
     element: LikelyOutbreak,
+  },
+  {
+    path: "/user/password/change",
+    element: PasswordChange,
   },
 ];
