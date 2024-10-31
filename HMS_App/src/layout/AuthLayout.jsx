@@ -10,7 +10,7 @@ const AuthLayout = ({ children }) => {
   const [route, setRoute] = useState("Dashboard");
   useEffect(() => {
     // console.log(location.pathname.split("/")[2]);
-    setRoute(location.pathname.split("/")[2]);
+    setRoute(location.pathname.split("/").slice(2).join("-"));
   }, [location]);
   return (
     <div className="w-full h-screen overflow-hidden">

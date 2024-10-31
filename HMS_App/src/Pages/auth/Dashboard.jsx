@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
       <ToastContainer />
-      <div className="relative w-[80%] p-5">
+      <div className="relative w-[80%] p-5 shadow-lg shadow-black">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
           style={{ backgroundImage: `url(${imageUrl})` }}

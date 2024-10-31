@@ -30,7 +30,7 @@ const Profile = () => {
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
       <ToastContainer />
-      <div className="relative w-[60%] p-5 mt-16">
+      <div className="relative w-[60%] p-5 mt-16 shadow-lg shadow-black">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
           style={{ backgroundImage: `url(${imageUrl})` }}

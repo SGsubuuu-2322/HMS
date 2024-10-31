@@ -163,7 +163,7 @@ Thank you for joining us, and we look forward to providing you with the best exp
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
       <ToastContainer />
-      <div className="relative w-[60%] p-5 mt-16">
+      <div className="relative w-[60%] p-5 mt-16 shadow-lg shadow-black">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
           style={{ backgroundImage: `url(${imageUrl})` }}
@@ -232,7 +232,7 @@ Thank you for joining us, and we look forward to providing you with the best exp
                 defaultValue={doctorDetails?.gender || ""}
               >
                 <SelectTrigger className="pl-0 text-base h-full rounded-none border-none bg-[#d0cdcdb6]">
-                  <SelectValue placeholder="Select your gender" />
+                  <SelectValue placeholder="Select doctor's gender" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Male">Male</SelectItem>

@@ -20,13 +20,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
 import { getUserDetails } from "@/helper/API/user";
-// import { useEffect, useState } from "react";
-// import { useState } from "react";
 
 // Menu items.
 const items = [
@@ -80,13 +77,25 @@ const items = [
 export function AppSidebar() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
+  // const history = useHistory();
+
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (!user?.firstName) {
-      dispatch(getUserDetails());
-    }
-  }, [user]);
+    const fetchUserDetails = async () => {
+      try {
+        if (!user?.firstName) {
+          await dispatch(getUserDetails()).unwrap();
+        }
+      } catch (error) {
+        console.log(`Failed to fetch user details: ${error}`);
+        localStorage.removeItem("token");
+        navigate("/");
+      }
+    };
+    fetchUserDetails();
+  }, [user, dispatch, history]);
 
   return (
     <Sidebar collapsible="icon">
