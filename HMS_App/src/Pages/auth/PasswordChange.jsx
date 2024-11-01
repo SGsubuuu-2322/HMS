@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { changeUserPassword, mailerAPI } from "@/helper/API/user";
+import { mailerAPI, updateUserPassword } from "@/helper/API/user";
 
 const PasswordChange = () => {
   const { user } = useSelector((state) => state.user);
@@ -63,7 +63,7 @@ const PasswordChange = () => {
     try {
       if (isFormValid()) {
         const response = await dispatch(
-          changeUserPassword({
+          updateUserPassword({
             oldPassword: password.oldPassword,
             newPassword: password.newPassword1,
           })
@@ -85,7 +85,7 @@ For the security of your account, we recommend:
 Choosing a strong, unique password,
 Not sharing your password with anyone,
 
-Thank you for being part of [Portal Name].
+Thank you for being part of HMS_Mercy.
 
 Best regards,
 HMS_Mercy`,
@@ -95,7 +95,7 @@ HMS_Mercy`,
 
           navigate("/user/dashboard", {
             state: {
-              message: "Outbreak added successfully...",
+              message: "Password updated successfully...",
             },
           });
         }

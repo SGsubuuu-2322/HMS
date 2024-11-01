@@ -1,13 +1,15 @@
 import {
   addDoctor,
   addOutbreak,
-  changeUserPassword,
   getUserDetails,
+  loggedOutUserOtpVerification,
   logInUserAPI,
   mailerAPI,
   registerAPI,
   registeredUserOtpVerificationAPI,
+  searchUsername,
   updateUserDetails,
+  updateUserPassword,
 } from "@/helper/API/user";
 import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
@@ -129,10 +131,23 @@ const userSlice = createSlice({
       .addCase(updateUserDetails.rejected, (state, action) => {
         console.log(action.error);
       })
-      .addCase(changeUserPassword.fulfilled, (state, action) => {
+      .addCase(searchUsername.fulfilled, (state, action) => {
+        localStorage.setItem("token", JSON.stringify(action.payload.token));
+        // console.log(action.payload);
+      })
+      .addCase(searchUsername.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(loggedOutUserOtpVerification.fulfilled, (state, action) => {
         console.log(action.payload);
       })
-      .addCase(changeUserPassword.rejected, (state, action) => {
+      .addCase(loggedOutUserOtpVerification.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(updateUserPassword.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(updateUserPassword.rejected, (state, action) => {
         console.log(action.error);
       })
       .addCase(addDoctor.fulfilled, (state, action) => {

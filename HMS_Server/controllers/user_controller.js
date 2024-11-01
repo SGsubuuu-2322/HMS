@@ -45,12 +45,22 @@ export const registerUser = async (req, res) => {
     }
 
     if (usertype == "A" || usertype == "D") {
-      // Checking for existing user in DB...
-      const existingUser = await Admin.findOne({ email });
-      if (existingUser) {
-        return res
-          .status(404)
-          .send({ message: "User found with this email. Try with new one!!!" });
+      if (usertype == "A") {
+        // Checking for existing user in DB...
+        const existingAdmin = await Admin.findOne({ email });
+        if (existingAdmin) {
+          return res.status(404).send({
+            message: "User found with this email. Try with new one!!!",
+          });
+        }
+      } else if (usertype == "D") {
+        // Checking for existing user in DB...
+        const existingDoctor = await Doctor.findOne({ email });
+        if (existingDoctor) {
+          return res.status(404).send({
+            message: "User found with this email. Try with new one!!!",
+          });
+        }
       }
 
       // Generating OTP...
@@ -62,6 +72,7 @@ export const registerUser = async (req, res) => {
 
       const token = jwt.sign(
         {
+          purpose: "User Registration",
           username,
           userEmail: email,
           otp: otp,
@@ -209,7 +220,37 @@ export const registeredUserOtpVerification = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const loggedOutUserOtpVerification = async (req, res) => {
+  try {
+    const { otp } = req.body;
+    // Input validation to ensure that required fields are present
+    if (!otp) {
+      return res.status(401).send({ message: "OTP is required." });
+    }
+    // Fetch OTP record from the database
+    const otpRecord = await OTP.findOne({ email: req.user.userEmail });
+    if (!otpRecord) {
+      return res.status(401).json({ msg: "OTP expired or invalid" });
+    }
+
+    if (otpRecord.otp == otp) {
+      // Clear the OTP record after verification
+      await OTP.deleteOne({ email: otpRecord.email });
+
+      return res.status(201).send({
+        msg: "OTP verified successfully...",
+      });
+    } else {
+      return res.status(401).json({ msg: "You'hv entered Wrong OTP..." });
+    }
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
   }
 };
 
@@ -399,7 +440,110 @@ export const updateUserDetails = async (req, res) => {
   }
 };
 
-export const changeUserPassword = async (req, res) => {
+export const searchUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    if (!username) {
+      return res.status(404).send({ message: "Username not found" });
+    }
+
+    const storedUser = await User.findOne({ email: username });
+    if (!storedUser) {
+      return res
+        .status(404)
+        .send({ message: "User with this username not found" });
+    }
+
+    // Generating OTP...
+    const otp = await otpGenerator.generate(6, {
+      lowerCaseAlphabets: false,
+      upperCaseAlphabets: false,
+      specialChars: false,
+    });
+
+    let token;
+
+    if (storedUser.usertype == "A") {
+      const storedAdmin = await Admin.findOne({ email: username });
+      if (!storedAdmin) {
+        return res
+          .status(404)
+          .send({ message: "User with this username not found" });
+      }
+      token = jwt.sign(
+        {
+          purpose: "Password Change",
+          userName: storedUser.username.split(" ")[0],
+          userEmail: storedUser.email,
+          otp: otp,
+          usertype: storedUser.usertype,
+          user_id: storedUser._id,
+          admin_id: storedAdmin._id,
+        },
+        JWT_SECRET,
+        { expiresIn: "10m" }
+      );
+    } else if (storedUser.usertype == "D") {
+      const storedDoctor = await Doctor.findOne({ email: username });
+      if (!storedDoctor) {
+        return res
+          .status(404)
+          .send({ message: "User with this username not found" });
+      }
+      token = jwt.sign(
+        {
+          purpose: "Password Change",
+          userName: storedUser.username.split(" ")[0],
+          userEmail: storedUser.email,
+          otp: otp,
+          usertype: storedUser.usertype,
+          user_id: storedUser._id,
+          doctor_id: storedDoctor._id,
+        },
+        JWT_SECRET,
+        { expiresIn: "10m" }
+      );
+    } else if (storedUser.usertype == "P") {
+      const storedPatient = await Patient.findOne({ email: username });
+      if (!storedPatient) {
+        return res
+          .status(404)
+          .send({ message: "User with this username not found" });
+      }
+      token = jwt.sign(
+        {
+          purpose: "Password Change",
+          userName: storedUser.username.split(" ")[0],
+          userEmail: storedUser.email,
+          otp: otp,
+          usertype: storedUser.usertype,
+          user_id: storedUser._id,
+          Patient_id: storedPatient._id,
+        },
+        JWT_SECRET,
+        { expiresIn: "10m" }
+      );
+    }
+
+    await OTP.create({
+      username: storedUser.username,
+      otp,
+      email: storedUser.email,
+      password: storedUser.password,
+    });
+
+    return res.status(200).send({
+      message: "User found with this username...",
+      token,
+    });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const updateLoggedInUserPassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const id = req.params.id;
@@ -521,6 +665,14 @@ export const changeUserPassword = async (req, res) => {
         .status(201)
         .send({ message: "Password updated successfully..." });
     }
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const changeLoggedOutUserPassword = async (req, res) => {
+  try {
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

@@ -1,5 +1,6 @@
 // import React from 'react'
-
+import { ImEye } from "react-icons/im";
+import { RiEyeCloseFill } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import { logInUserAPI } from "@/helper/API/user";
 import { useEffect, useState } from "react";
@@ -120,24 +121,30 @@ const Login_Form = () => {
               className="w-full bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
             />
             <div
-              className="absolute right-0 cursor-pointer"
+              className="absolute right-0 cursor-pointer text-xl m-[2px] mr-1"
               onClick={togglePasswordVisibility}
             >
-              {passwordVisible ? "🤨" : "😎"}
+              {passwordVisible ? <ImEye /> : <RiEyeCloseFill />}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-center mt-4">
+        <div className="flex flex-col items-center justify-center mt-4">
           {/* <button className="hover:bg-white hover:border-secondary active:scale-110 hover:text-black rounded-3xl px-5 py-1 border-2 bg-secondary text-white text-xl font-bold">
             Login
           </button> */}
           <Button>Login</Button>
+          <Link
+            to="/search/username"
+            className="relative z-10 text-black text-sm font-semibold hover:text-primary hover:underline hover"
+          >
+            Forgotten password?
+          </Link>
         </div>
       </form>
       <Link
         to="/register"
-        className="relative z-10 text-primary text-sm font-semibold hover:text-black hover:underline hover"
+        className="relative z-10 text-black text-sm font-semibold hover:text-primary hover:underline hover"
       >
         Not have an account ? Register then...
       </Link>

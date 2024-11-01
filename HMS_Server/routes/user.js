@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
-  changeUserPassword,
   getUserDetails,
+  loggedOutUserOtpVerification,
   loginUser,
   registerUser,
+  searchUsername,
+  updateLoggedInUserPassword,
   updateUserDetails,
 } from "../controllers/user_controller.js";
 import * as middleware from "../middlewares/auth.js";
@@ -22,8 +24,24 @@ router
   .route("/profile/update/:id")
   .put(middleware.auth, authorizeRoles("A", "D", "P"), updateUserDetails);
 
+router.route("/search/username").post(searchUsername);
+
 router
-  .route("/change/password/:id")
-  .patch(middleware.auth, authorizeRoles("A", "D", "P"), changeUserPassword);
+  .route("/otp/verification")
+  .post(
+    middleware.auth,
+    authorizeRoles("A", "D", "P"),
+    loggedOutUserOtpVerification
+  );
+
+router
+  .route("/update/password/:id")
+  .patch(
+    middleware.auth,
+    authorizeRoles("A", "D", "P"),
+    updateLoggedInUserPassword
+  );
+
+router.route("/");
 
 export default router;

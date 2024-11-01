@@ -117,14 +117,50 @@ export const updateUserDetails = createAsyncThunk(
   }
 );
 
-export const changeUserPassword = createAsyncThunk(
-  "change/password",
+export const searchUsername = createAsyncThunk(
+  "search/username",
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/user/search/username", body);
+      return response?.data;
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
+export const loggedOutUserOtpVerification = createAsyncThunk(
+  "loggedoutuser/otpverification",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const response = await axios.post("/user/otp/verification", body, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Set the authorization bearer token
+        },
+      });
+
+      return response?.data;
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
+export const updateUserPassword = createAsyncThunk(
+  "update/password",
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const { user_id } = jwtDecode(token);
       const response = await axios.patch(
-        `/user/change/password/${user_id}`,
+        `/user/update/password/${user_id}`,
         body,
         {
           headers: {

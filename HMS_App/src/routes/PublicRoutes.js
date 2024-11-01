@@ -3,6 +3,7 @@ import Contact from "@/Pages/public/Contact";
 import Home from "@/Pages/public/Home";
 import Login_Form from "@/Pages/public/Login_Form";
 import Register_Form from "@/Pages/public/Register_Form";
+import username from "@/Pages/public/Username";
 
 export const PublicRoutes = [
   {
@@ -24,5 +25,9 @@ export const PublicRoutes = [
   {
     path: "/contact-us",
     element: Contact,
+  },
+  {
+    path: "/search/username",
+    element: username,
   },
 ];

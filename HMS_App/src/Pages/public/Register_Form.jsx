@@ -1,3 +1,5 @@
+import { ImEye } from "react-icons/im";
+import { RiEyeCloseFill } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import { mailerAPI, registerAPI } from "@/helper/API/user";
 import { jwtDecode } from "jwt-decode";
@@ -262,10 +264,10 @@ const Register_Form = () => {
             />
 
             <div
-              className="absolute right-0 cursor-pointer"
+              className="absolute right-0 cursor-pointer text-xl m-[2px] mr-1"
               onClick={togglePasswordVisibility}
             >
-              {passwordVisible ? "🤨" : "😎"}
+              {passwordVisible ? <ImEye /> : <RiEyeCloseFill />}
             </div>
           </div>
         </div>
@@ -283,10 +285,10 @@ const Register_Form = () => {
               className="w-full bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
             />
             <div
-              className="absolute right-0 cursor-pointer"
+              className="absolute right-0 cursor-pointer text-xl m-[2px] mr-1"
               onClick={togglePasswordVisibility}
             >
-              {passwordVisible ? "🤨" : "😎"}
+              {passwordVisible ? <ImEye /> : <RiEyeCloseFill />}
             </div>
           </div>
         </div>
@@ -321,7 +323,7 @@ const Register_Form = () => {
       </form>
       <Link
         to="/login"
-        className="relative z-10 text-primary text-sm font-semibold hover:text-black hover:underline hover"
+        className="relative z-10 text-black text-sm font-semibold hover:text-primary hover:underline hover"
       >
         Already have an account ? Login then...
       </Link>

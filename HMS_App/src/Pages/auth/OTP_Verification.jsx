@@ -19,7 +19,11 @@ import {
 } from "@/components/ui/form";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { mailerAPI, registeredUserOtpVerificationAPI } from "@/helper/API/user";
+import {
+  loggedOutUserOtpVerification,
+  mailerAPI,
+  registeredUserOtpVerificationAPI,
+} from "@/helper/API/user";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -58,36 +62,53 @@ const OTP_Verification = () => {
       if (token) {
         const decode = await jwtDecode(token);
         toast.success(`You'hv submitted ${data.pin}`);
-        const response = await dispatch(
-          registeredUserOtpVerificationAPI({
-            otp: data.pin,
-          })
-        ).unwrap();
 
-        if (response) {
-          const today = new Date();
-          const day = today.getDate();
-          const month = today.getMonth() + 1; // Months are zero-indexed (January is 0)
-          const year = today.getFullYear();
-          const date = day + "." + month + "." + year;
-          dispatch(
-            mailerAPI({
-              userName: decode.username,
-              userEmail: decode.userEmail,
-              text: `Thank you for registering with HMS_MERCY Portal! We’re excited to have you onboard. Your account has been successfully verified, and you now have full access to all our features and services.Account Details
-Username: ${decode.userEmail}
-Registration Date: ${date}`,
-              subject:
-                "Welcome to HMS_MERCY! Your Account is Successfully Verified",
+        if (decode.purpose == "User Registration") {
+          const response = await dispatch(
+            registeredUserOtpVerificationAPI({
+              otp: data.pin,
             })
           ).unwrap();
-          localStorage.removeItem("token");
-          navigate("/login", {
-            state: {
-              message: "Successfully registration has been done...",
-            },
-          });
+
+          if (response) {
+            const today = new Date();
+            const day = today.getDate();
+            const month = today.getMonth() + 1; // Months are zero-indexed (January is 0)
+            const year = today.getFullYear();
+            const date = day + "." + month + "." + year;
+            dispatch(
+              mailerAPI({
+                userName: decode.username,
+                userEmail: decode.userEmail,
+                text: `Thank you for registering with HMS_MERCY Portal! We’re excited to have you onboard. Your account has been successfully verified, and you now have full access to all our features and services.Account Details
+  Username: ${decode.userEmail}
+  Registration Date: ${date}`,
+                subject:
+                  "Welcome to HMS_MERCY! Your Account is Successfully Verified",
+              })
+            ).unwrap();
+            localStorage.removeItem("token");
+            navigate("/login", {
+              state: {
+                message: "Successfully registration has been done...",
+              },
+            });
+          }
+        } else if (decode.purpose == "Password Change") {
+          const response = await dispatch(
+            loggedOutUserOtpVerification({ otp: data.pin })
+          ).unwrap();
+
+          if (response) {
+            navigate("/login", {
+              state: {
+                message: "OTP Verified, now enter passwords...",
+              },
+            });
+          }
         }
+      } else {
+        toast.error("Please register first...");
       }
     } catch (error) {
       // toast.reject(error.message);
