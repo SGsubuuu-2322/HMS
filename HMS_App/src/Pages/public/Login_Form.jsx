@@ -53,18 +53,23 @@ const Login_Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isFormValid()) {
-      const loginAPIresponse = await dispatch(
-        logInUserAPI({ email: user.username, password: user.password })
-      ).unwrap();
+    try {
+      if (isFormValid()) {
+        const loginAPIresponse = await dispatch(
+          logInUserAPI({ email: user.username, password: user.password })
+        ).unwrap();
 
-      if (loginAPIresponse) {
-        navigate("/user/dashboard", {
-          state: {
-            message: "You'hv been successfully loggedin...",
-          },
-        });
+        if (loginAPIresponse) {
+          navigate("/user/dashboard", {
+            state: {
+              message: "You'hv been successfully loggedin...",
+            },
+          });
+        }
       }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Invalid credentials");
     }
   };
 
@@ -73,6 +78,7 @@ const Login_Form = () => {
       className="relative w-full h-[88%] flex flex-col items-center justify-center"
       // style={{ backgroundImage: `url(${imageUrl})` }}
     >
+      <ToastContainer />
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-sm"
         style={{ backgroundImage: `url(${imageUrl})` }}

@@ -1,6 +1,7 @@
 import {
   addDoctor,
   addOutbreak,
+  changeUserPassword,
   getUserDetails,
   logInUserAPI,
   mailerAPI,
@@ -126,6 +127,12 @@ const userSlice = createSlice({
         };
       })
       .addCase(updateUserDetails.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(changeUserPassword.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(changeUserPassword.rejected, (state, action) => {
         console.log(action.error);
       })
       .addCase(addDoctor.fulfilled, (state, action) => {

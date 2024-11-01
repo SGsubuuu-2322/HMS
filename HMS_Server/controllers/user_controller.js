@@ -399,6 +399,134 @@ export const updateUserDetails = async (req, res) => {
   }
 };
 
+export const changeUserPassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const id = req.params.id;
+
+    if (!id) {
+      return res.status(404).send({ message: "User Id not found" });
+    }
+
+    if (!oldPassword) {
+      return res.status(404).send({ message: "Old Password is required" });
+    }
+    if (!newPassword) {
+      return res.status(404).send({ message: "New Password is required" });
+    }
+
+    const storedUser = await User.findOne({ _id: id });
+
+    if (!storedUser) {
+      return res.status(404).send({ message: "User not found!!!" });
+    }
+
+    if (req.user.usertype == "A") {
+      const storedAdmin = await Admin.findOne({ _id: req.user.admin_id });
+      if (!storedAdmin) {
+        return res.status(404).send({ message: "User not found!!!" });
+      }
+      const validUserPassword = await bcrypt.compare(
+        oldPassword,
+        storedUser.password
+      );
+      const validAdminPassword = await bcrypt.compare(
+        oldPassword,
+        storedAdmin.password
+      );
+      if (!validUserPassword || !validAdminPassword) {
+        return res.status(404).send({
+          message:
+            "User doesn't have this old password. Try with correct one!!!",
+        });
+      }
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await User.updateOne(
+        { _id: req.user.user_id },
+        { password: hashedPassword }
+      );
+      await Admin.updateOne(
+        { _id: req.user.admin_id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(201)
+        .send({ message: "Password updated successfully..." });
+    } else if (req.user.usertype == "D") {
+      const storedDoctor = await Doctor.findOne({ _id: req.user.doctor_id });
+      if (!storedDoctor) {
+        return res.status(404).send({ message: "User not found!!!" });
+      }
+      const validUserPassword = await bcrypt.compare(
+        oldPassword,
+        storedUser.password
+      );
+      const validDoctorPassword = await bcrypt.compare(
+        oldPassword,
+        storedDoctor.password
+      );
+      if (!validUserPassword || !validDoctorPassword) {
+        return res.status(404).send({
+          message:
+            "User doesn't have this old password. Try with correct one!!!",
+        });
+      }
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await User.updateOne(
+        { _id: req.user.user_id },
+        { password: hashedPassword }
+      );
+      await Doctor.updateOne(
+        { _id: req.user.doctor_id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(201)
+        .send({ message: "Password updated successfully..." });
+    } else if (req.user.usertype == "P") {
+      const storedPatient = await Patient.findOne({ _id: req.user.patient_id });
+      if (!storedPatient) {
+        return res.status(404).send({ message: "User not found!!!" });
+      }
+      const validUserPassword = await bcrypt.compare(
+        oldPassword,
+        storedUser.password
+      );
+      const validPatientPassword = await bcrypt.compare(
+        oldPassword,
+        storedPatient.password
+      );
+      if (!validUserPassword || !validPatientPassword) {
+        return res.status(404).send({
+          message:
+            "User doesn't have this old password. Try with correct one!!!",
+        });
+      }
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await User.updateOne(
+        { _id: req.user.user_id },
+        { password: hashedPassword }
+      );
+      await Patient.updateOne(
+        { _id: req.user.patient_id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(201)
+        .send({ message: "Password updated successfully..." });
+    }
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
 export const addOutbreak = async (req, res) => {
   try {
     const { obname, obcomments, oblocation, obmeasures } = req.body;

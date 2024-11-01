@@ -117,6 +117,31 @@ export const updateUserDetails = createAsyncThunk(
   }
 );
 
+export const changeUserPassword = createAsyncThunk(
+  "change/password",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const { user_id } = jwtDecode(token);
+      const response = await axios.patch(
+        `/user/change/password/${user_id}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
 export const addDoctor = createAsyncThunk(
   "add/doctor",
   async (body, { rejectWithValue }) => {
