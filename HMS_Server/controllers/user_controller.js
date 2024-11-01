@@ -673,6 +673,86 @@ export const updateLoggedInUserPassword = async (req, res) => {
 
 export const changeLoggedOutUserPassword = async (req, res) => {
   try {
+    const { newPassword } = req.body;
+    if (!newPassword) {
+      return res.status(400).send({ message: "Password is required!!!" });
+    }
+    const { usertype, user_id } = req.user;
+
+    const storedUser = User.findOne({ _id: user_id });
+    if (!storedUser) {
+      return res
+        .status(400)
+        .send({ message: "User with this id not found..." });
+    }
+
+    if (usertype == "A") {
+      const storedAdmin = Admin.findOne({ _id: req.user.admin_id });
+      if (!storedAdmin) {
+        return res
+          .status(400)
+          .send({ message: "User with this id not found..." });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await Admin.updateOne(
+        { _id: storedAdmin._id },
+        { password: hashedPassword }
+      );
+
+      await User.updateOne(
+        { _id: storedUser._id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(401)
+        .send({ message: "Password updated successfully!!!" });
+    } else if (usertype == "D") {
+      const storedDoctor = Admin.findOne({ _id: req.user.doctor_id });
+      if (!storedDoctor) {
+        return res
+          .status(400)
+          .send({ message: "User with this id not found..." });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await Doctor.updateOne(
+        { _id: storedDoctor._id },
+        { password: hashedPassword }
+      );
+
+      await User.updateOne(
+        { _id: storedUser._id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(401)
+        .send({ message: "Password updated successfully!!!" });
+    } else if (usertype == "P") {
+      const storedPatient = Patient.findOne({ _id: req.user.patient_id });
+      if (!storedPatient) {
+        return res
+          .status(400)
+          .send({ message: "User with this id not found..." });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await Patient.updateOne(
+        { _id: storedPatient._id },
+        { password: hashedPassword }
+      );
+
+      await User.updateOne(
+        { _id: storedUser._id },
+        { password: hashedPassword }
+      );
+
+      return res
+        .status(401)
+        .send({ message: "Password updated successfully!!!" });
+    }
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

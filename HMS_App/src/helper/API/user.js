@@ -178,6 +178,27 @@ export const updateUserPassword = createAsyncThunk(
   }
 );
 
+export const changeLoggedOutUserPassword = createAsyncThunk(
+  "change/password",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const response = await axios.post("/user/change/password", body, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Set the authorization bearer token
+        },
+      });
+
+      return response?.data;
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
 export const addDoctor = createAsyncThunk(
   "add/doctor",
   async (body, { rejectWithValue }) => {

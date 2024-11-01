@@ -148,7 +148,6 @@ const Login_Form = () => {
       >
         Not have an account ? Register then...
       </Link>
-      <ToastContainer />
     </div>
   );
 };

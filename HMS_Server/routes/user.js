@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  changeLoggedOutUserPassword,
   getUserDetails,
   loggedOutUserOtpVerification,
   loginUser,
@@ -42,6 +43,12 @@ router
     updateLoggedInUserPassword
   );
 
-router.route("/");
+router
+  .route("/change/password")
+  .patch(
+    middleware.auth,
+    authorizeRoles("A", "D", "P"),
+    changeLoggedOutUserPassword
+  );
 
 export default router;
