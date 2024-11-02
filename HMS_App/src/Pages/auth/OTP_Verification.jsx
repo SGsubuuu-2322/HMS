@@ -100,7 +100,7 @@ const OTP_Verification = () => {
           ).unwrap();
 
           if (response) {
-            navigate("/login", {
+            navigate("/user/password/change", {
               state: {
                 message: "OTP Verified, now enter passwords...",
               },
@@ -111,7 +111,7 @@ const OTP_Verification = () => {
         toast.error("Please register first...");
       }
     } catch (error) {
-      // toast.reject(error.message);
+      toast.error(error.message);
       console.log(error);
     }
   };

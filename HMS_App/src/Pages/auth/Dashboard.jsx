@@ -103,7 +103,7 @@ const Dashboard = () => {
               </span>
             </div>
             <NavLink
-              to={"/user/password/change"}
+              to={"/user/password/update"}
               className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
             >
               View ➡️

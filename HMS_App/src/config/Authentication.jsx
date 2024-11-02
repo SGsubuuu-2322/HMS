@@ -27,6 +27,15 @@ const Authentication = () => {
         </div>
       )
     );
+  } else if (location.pathname == "/user/password/change") {
+    return (
+      verified && (
+        <div className="w-full h-screen">
+          <PublicNav />
+          <Outlet />
+        </div>
+      )
+    );
   } else {
     return (
       verified && (

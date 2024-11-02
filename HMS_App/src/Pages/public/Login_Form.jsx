@@ -113,7 +113,7 @@ const Login_Form = () => {
           </label>
           <div className="relative flex">
             <input
-              type="password"
+              type={passwordVisible ? "text" : "password"}
               placeholder="Enter your password..."
               name="password"
               value={user.password}

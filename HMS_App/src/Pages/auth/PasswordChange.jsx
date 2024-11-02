@@ -89,7 +89,7 @@ Thank you for being part of HMS_Mercy.
 
 Best regards,
 HMS_Mercy`,
-              subject: "Your Password Has Been Successfully Changed",
+              subject: "Your Password Has Been Successfully updated...",
             })
           ).unwrap();
 

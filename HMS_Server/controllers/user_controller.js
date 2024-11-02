@@ -679,7 +679,7 @@ export const changeLoggedOutUserPassword = async (req, res) => {
     }
     const { usertype, user_id } = req.user;
 
-    const storedUser = User.findOne({ _id: user_id });
+    const storedUser = await User.findOne({ _id: user_id });
     if (!storedUser) {
       return res
         .status(400)
@@ -687,7 +687,7 @@ export const changeLoggedOutUserPassword = async (req, res) => {
     }
 
     if (usertype == "A") {
-      const storedAdmin = Admin.findOne({ _id: req.user.admin_id });
+      const storedAdmin = await Admin.findOne({ _id: req.user.admin_id });
       if (!storedAdmin) {
         return res
           .status(400)
@@ -706,7 +706,7 @@ export const changeLoggedOutUserPassword = async (req, res) => {
       );
 
       return res
-        .status(401)
+        .status(201)
         .send({ message: "Password updated successfully!!!" });
     } else if (usertype == "D") {
       const storedDoctor = Admin.findOne({ _id: req.user.doctor_id });
@@ -728,7 +728,7 @@ export const changeLoggedOutUserPassword = async (req, res) => {
       );
 
       return res
-        .status(401)
+        .status(201)
         .send({ message: "Password updated successfully!!!" });
     } else if (usertype == "P") {
       const storedPatient = Patient.findOne({ _id: req.user.patient_id });
@@ -750,7 +750,7 @@ export const changeLoggedOutUserPassword = async (req, res) => {
       );
 
       return res
-        .status(401)
+        .status(201)
         .send({ message: "Password updated successfully!!!" });
     }
   } catch (error) {

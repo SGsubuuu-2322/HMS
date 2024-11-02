@@ -1,6 +1,7 @@
 import AddDoctors from "@/Pages/auth/AddDoctors";
 import AddOutbreak from "@/Pages/auth/AddOutbreak";
 import Appointment from "@/Pages/auth/Appointment";
+import ChangePassword from "@/Pages/auth/ChangePassword";
 import Dashboard from "@/Pages/auth/Dashboard";
 import DoctorsRecord from "@/Pages/auth/DoctorsRecord";
 import LikelyOutbreak from "@/Pages/auth/LikelyOutbreak";
@@ -52,7 +53,11 @@ export const AuthRoutes = [
     element: LikelyOutbreak,
   },
   {
-    path: "/user/password/change",
+    path: "/user/password/update",
     element: PasswordChange,
+  },
+  {
+    path: "/user/password/change",
+    element: ChangePassword,
   },
 ];

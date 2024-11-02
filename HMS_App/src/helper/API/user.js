@@ -183,7 +183,7 @@ export const changeLoggedOutUserPassword = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const response = await axios.post("/user/change/password", body, {
+      const response = await axios.patch("/user/change/password", body, {
         headers: {
           Authorization: `Bearer ${token}`, // Set the authorization bearer token
         },
