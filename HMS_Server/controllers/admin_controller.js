@@ -1,6 +1,7 @@
 import Admin from "../models/AdminModel.js";
 import Doctor from "../models/DoctorModel.js";
 import OTP from "../models/OTPModel.js";
+import Outbreak from "../models/OutbreakModel.js";
 import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 
@@ -101,12 +102,36 @@ export const getDoctors = async (req, res) => {
     }
 
     const allDoctors = await Doctor.find({}).select(
-      "username email role gender phone"
+      "_id username email role gender phone"
     );
 
     return res
       .status(200)
       .send({ message: "All Doctors found...", doctors: allDoctors });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+export const getOutbreaks = async (req, res) => {
+  try {
+    const { user_id, admin_id } = req.user;
+    if (!user_id && !admin_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedAdmin = await Admin.findOne({ _id: admin_id });
+
+    if (!storedUser && !storedAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const allOutbreaks = await Outbreak.find({});
+
+    return res
+      .status(200)
+      .send({ message: "All outbreaks found...", outbreaks: allOutbreaks });
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });
