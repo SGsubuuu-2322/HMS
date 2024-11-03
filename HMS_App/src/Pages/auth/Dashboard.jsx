@@ -33,9 +33,11 @@ const Dashboard = () => {
         ></div>
         <div className="relative z-10 grid auto-rows-min gap-4 md:grid-cols-3 w-full">
           {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
-            <div className="text-4xl text-red-600 font-bold">1</div>
+            <div className="text-4xl text-red-600 font-bold">
+              {user?.doctorsNum}
+            </div>
             <NavLink
               to={"/user/doctors/record"}
               className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
@@ -43,9 +45,11 @@ const Dashboard = () => {
               View ➡️
             </NavLink>
           </div>
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Patients</h1>
-            <div className="text-4xl text-red-600 font-bold">1</div>
+            <div className="text-4xl text-red-600 font-bold">
+              {user?.patientsNum}
+            </div>
             <NavLink
               to={"/user/patients/record"}
               className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
@@ -53,7 +57,7 @@ const Dashboard = () => {
               View ➡️
             </NavLink>
           </div>
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Appointments</h1>
             <div className="text-4xl text-red-600 font-bold">1</div>
             <NavLink
@@ -63,9 +67,11 @@ const Dashboard = () => {
               View ➡️
             </NavLink>
           </div>
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Outbreaks</h1>
-            <div className="text-4xl text-red-600 font-bold">1</div>
+            <div className="text-4xl text-red-600 font-bold">
+              {user?.outbreaksNum}
+            </div>
             <NavLink
               to={"/user/likely/outbreaks"}
               className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
@@ -73,7 +79,7 @@ const Dashboard = () => {
               View ➡️
             </NavLink>
           </div>
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Profile Updation</h1>
             <div className="relative text-4xl text-red-600 font-bold">
               <span>
@@ -95,7 +101,7 @@ const Dashboard = () => {
             </NavLink>
           </div>
           {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around">
+          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Change Password</h1>
             <div className="text-4xl text-red-600 font-bold">
               <span className="text-black text-5xl font-black">

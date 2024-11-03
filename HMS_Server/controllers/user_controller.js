@@ -285,10 +285,21 @@ export const loginUser = async (req, res) => {
         return res.status(401).send({ message: "Invalid User credentials..." });
       }
 
-      const { password: userPassword, ...rest } = Object.assign(
+      let { password: userPassword, ...rest } = Object.assign(
         {},
         registeredUser.toJSON()
       );
+
+      const doctors = await Doctor.find({});
+      const patients = await Patient.find({});
+      const outbreaks = await Outbreak.find({});
+
+      rest = {
+        ...rest,
+        doctorsNum: doctors.length,
+        patientsNum: patients.length,
+        outbreaksNum: outbreaks.length,
+      };
 
       const token = jwt.sign(
         {
@@ -384,7 +395,27 @@ export const getUserDetails = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    const { password, ...rest } = Object.assign({}, userdetails.toJSON());
+    let { password, ...rest } = Object.assign({}, userdetails.toJSON());
+
+    if (userdetails.usertype == "A") {
+      const doctors = await Doctor.find({});
+      const patients = await Patient.find({});
+      const outbreaks = await Outbreak.find({});
+      rest = {
+        ...rest,
+        doctorsNum: doctors.length,
+        patientsNum: patients.length,
+        outbreaksNum: outbreaks.length,
+      };
+    } else if (userdetails.usertype == "D") {
+      const patients = await Patient.find({});
+      const outbreaks = await Outbreak.find({});
+      rest = {
+        ...rest,
+        patientsNum: patients.length,
+        outbreaksNum: outbreaks.length,
+      };
+    }
     return res
       .status(200)
       .send({ message: "Successfully found!!!", user: rest });

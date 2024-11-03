@@ -26,6 +26,9 @@ const initialState = {
     email: "",
     phone: "",
     address: "",
+    doctorsNum: "",
+    patientsNum: "",
+    outbreaksNum: "",
   },
 };
 
@@ -81,6 +84,9 @@ const userSlice = createSlice({
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
           profilePicture: action.payload.user?.profilePicture,
+          doctorsNum: action?.payload?.user?.doctorsNum,
+          patientsNum: action?.payload?.user?.patientsNum,
+          outbreaksNum: action?.payload?.user?.outbreaksNum,
         };
       })
       .addCase(logInUserAPI.rejected, (state, action) => {
@@ -104,6 +110,9 @@ const userSlice = createSlice({
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
           profilePicture: action.payload.user?.profilePicture,
+          doctorsNum: action?.payload?.user?.doctorsNum,
+          patientsNum: action?.payload?.user?.patientsNum,
+          outbreaksNum: action?.payload?.user?.outbreaksNum,
         };
       })
       .addCase(getUserDetails.rejected, (state, action) => {
