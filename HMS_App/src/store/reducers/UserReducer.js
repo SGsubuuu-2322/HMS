@@ -178,7 +178,7 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(getDoctors.fulfilled, (state, action) => {
-        state.doctors = [...state.outbreaks, ...action.payload.doctors];
+        state.doctors = [...action.payload.doctors];
       })
       .addCase(getDoctors.rejected, (state, action) => {
         console.log(action.error);
@@ -191,7 +191,7 @@ const userSlice = createSlice({
       })
       .addCase(getOutbreaks.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.outbreaks = [...state.outbreaks, ...action.payload.outbreaks];
+        state.outbreaks = [...action.payload.outbreaks];
       })
       .addCase(getOutbreaks.rejected, (state, action) => {
         console.log(action.error);
