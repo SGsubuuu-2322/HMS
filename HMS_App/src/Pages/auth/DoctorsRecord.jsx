@@ -1,9 +1,16 @@
 // import React from 'react'
 
-const DoctorsRecord = () => {
-  return (
-    <div>DoctorsRecord</div>
-  )
-}
+import { getDoctors } from "@/helper/API/user";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-export default DoctorsRecord
+const DoctorsRecord = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDoctors());
+  }, []);
+  return <div>DoctorsRecord</div>;
+};
+
+export default DoctorsRecord;

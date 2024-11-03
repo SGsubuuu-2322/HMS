@@ -8,7 +8,6 @@ export async function auth(req, res, next) {
     if (authHeader && authHeader.startsWith("Bearer ")) {
       // Extract token after "Bearer "
       const token = authHeader.split(" ")[1];
-
       if (!token) {
         return res
           .status(401)
@@ -25,11 +24,9 @@ export async function auth(req, res, next) {
         return res.status(401).json({ message: "Invalid or expired token" });
       }
     } else {
-      return res
-        .status(401)
-        .json({
-          message: "Authorization header is missing or improperly formatted",
-        });
+      return res.status(401).json({
+        message: "Authorization header is missing or improperly formatted",
+      });
     }
   } catch (error) {
     console.error("Authorization Middleware Error:", error.message); // Log backend error for debugging
