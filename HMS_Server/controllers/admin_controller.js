@@ -90,14 +90,14 @@ export const addDoctor = async (req, res) => {
 export const getDoctors = async (req, res) => {
   try {
     const { user_id, admin_id } = req.user;
-    if (!user_id && !admin_id) {
+    if (!user_id || !admin_id) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 
     const storedUser = await User.findOne({ _id: user_id });
     const storedAdmin = await Admin.findOne({ _id: admin_id });
 
-    if (!storedUser && !storedAdmin) {
+    if (!storedUser || !storedAdmin) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 
@@ -113,17 +113,18 @@ export const getDoctors = async (req, res) => {
     return res.status(500).send({ message: "Internal server error...", error });
   }
 };
+
 export const getOutbreaks = async (req, res) => {
   try {
     const { user_id, admin_id } = req.user;
-    if (!user_id && !admin_id) {
+    if (!user_id || !admin_id) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 
     const storedUser = await User.findOne({ _id: user_id });
     const storedAdmin = await Admin.findOne({ _id: admin_id });
 
-    if (!storedUser && !storedAdmin) {
+    if (!storedUser || !storedAdmin) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 

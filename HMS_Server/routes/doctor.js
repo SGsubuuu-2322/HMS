@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { getDocDashboardDetails } from "../controllers/doctor_controller.js";
+import {
+  getDocDashboardDetails,
+  getOutbreaks,
+} from "../controllers/doctor_controller.js";
 import * as middleware from "../middlewares/auth.js";
 import authorizeRoles from "../middlewares/role.js";
 import {
@@ -18,5 +21,9 @@ router
 router
   .route("/add/outbreak")
   .post(middleware.auth, authorizeRoles("D"), addOutbreak);
+
+router
+  .route("/get/outbreaks")
+  .post(middleware.auth, authorizeRoles("D"), getOutbreaks);
 
 export default router;
