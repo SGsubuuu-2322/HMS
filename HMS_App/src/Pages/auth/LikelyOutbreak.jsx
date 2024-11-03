@@ -1,15 +1,84 @@
 // import React from 'react'
-
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { getOutbreaks } from "@/helper/API/user";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 const LikelyOutbreak = () => {
   const dispatch = useDispatch();
+  const { outbreaks } = useSelector((state) => state.user);
+  const [ob, setOb] = useState([]);
   useEffect(() => {
-    dispatch(getOutbreaks());
-  }, []);
-  return <div>LikelyOutbreak</div>;
+    const fetchOutbreaks = async () => {
+      try {
+        await dispatch(getOutbreaks()).unwrap();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchOutbreaks();
+  }, [dispatch]);
+
+  useEffect(() => {
+    setOb([...outbreaks]);
+  }, [outbreaks]);
+
+  const imageUrl =
+    "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  return (
+    <div className="w-full h-screen bg p-10 flex items-center justify-center">
+      <ToastContainer />
+      <div className="relative w-[90%] h-[70%] p-5 mt-16 shadow-lg shadow-black">
+        <div
+          className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        ></div>
+        <div className="relative w-full h-full overflow-hidden overflow-y-auto border-[3px] border-[#0077ff94] bg-[#ffffff88] p-4">
+          <Table>
+            <TableCaption>A list of recent outbreaks in the city.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="">Outbreak</TableHead>
+                <TableHead>Comments</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead className="">Recorded</TableHead>
+                <TableHead className="">Measures</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {ob?.map((o, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell className="font-medium">{o?.obname}</TableCell>
+                    <TableCell>{o?.obcomments}</TableCell>
+                    <TableCell>{o?.oblocation}</TableCell>
+                    <TableCell className="">
+                      {o?.updatedAt.split("T")[0]}
+                    </TableCell>
+                    <TableCell className="">{o?.obmeasures}</TableCell>
+                    <TableCell className="text-right">
+                      <Button className="px-3 py-5">Edit</Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LikelyOutbreak;
