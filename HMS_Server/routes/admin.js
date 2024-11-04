@@ -3,6 +3,7 @@ import {
   addDoctor,
   getDoctors,
   getOutbreaks,
+  removeDoctors,
   //   getAdDashboardDetails,
 } from "../controllers/admin_controller.js";
 import * as middleware from "../middlewares/auth.js";
@@ -24,12 +25,17 @@ router
   .post(middleware.auth, authorizeRoles("A"), addDoctor);
 
 router
+  .route("/get/doctors")
+  .get(middleware.auth, authorizeRoles("A"), getDoctors);
+
+router
+  .route("/delete/doctor/:id")
+  .delete(middleware.auth, authorizeRoles("A"), removeDoctors);
+
+router
   .route("/add/outbreak")
   .post(middleware.auth, authorizeRoles("A"), addOutbreak);
 
-router
-  .route("/get/doctors")
-  .get(middleware.auth, authorizeRoles("A"), getDoctors);
 router
   .route("/get/outbreaks")
   .get(middleware.auth, authorizeRoles("A"), getOutbreaks);

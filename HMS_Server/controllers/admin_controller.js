@@ -114,6 +114,45 @@ export const getDoctors = async (req, res) => {
   }
 };
 
+export const removeDoctors = async (req, res) => {
+  try {
+    const { user_id, admin_id } = req.user;
+    const { id: doctor_id } = req.params;
+
+    console.log(doctor_id);
+
+    if (!user_id || !admin_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    if (!doctor_id) {
+      return res.status(404).send({ messaeg: "Doctors id is required..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedAdmin = await Admin.findOne({ _id: admin_id });
+    const storedDoctor = await Doctor.findOne({ _id: doctor_id });
+
+    if (!storedUser || !storedAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    if (!storedDoctor) {
+      return res
+        .status(400)
+        .send({ message: "Doctor with this doctor_id not found..." });
+    }
+
+    await User.deleteOne({ email: storedDoctor.email });
+    await Doctor.deleteOne({ _id: doctor_id });
+
+    return res.status(200).send({ message: "Doctor deletion successfull..." });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
 export const getOutbreaks = async (req, res) => {
   try {
     const { user_id, admin_id } = req.user;

@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { getDoctors } from "@/helper/API/user";
+import { toast, ToastContainer } from "react-toastify";
+import { getDoctors, removeDoctor } from "@/helper/API/user";
 
 const DoctorsRecord = () => {
   const dispatch = useDispatch();
@@ -32,6 +32,19 @@ const DoctorsRecord = () => {
   useEffect(() => {
     setDoc([...doctors]);
   }, [doctors]);
+
+  const handleDeletion = async (id) => {
+    try {
+      console.log(id);
+      const response = await dispatch(removeDoctor({ doctor_id: id }));
+      if (response) {
+        toast.success("Doctor deleted successfully...");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const imageUrl =
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
@@ -65,7 +78,12 @@ const DoctorsRecord = () => {
                     <TableCell>{d?.gender}</TableCell>
                     <TableCell className="">{d?.role}</TableCell>
                     <TableCell className="text-right">
-                      <Button className="px-3 py-5">Edit</Button>
+                      <Button
+                        className="px-3 py-5"
+                        onClick={() => handleDeletion(d._id)}
+                      >
+                        Delete
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );

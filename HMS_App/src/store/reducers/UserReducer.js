@@ -10,6 +10,7 @@ import {
   mailerAPI,
   registerAPI,
   registeredUserOtpVerificationAPI,
+  removeDoctor,
   searchUsername,
   updateUserDetails,
   updateUserPassword,
@@ -181,6 +182,12 @@ const userSlice = createSlice({
         state.doctors = [...action.payload.doctors];
       })
       .addCase(getDoctors.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(removeDoctor.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(removeDoctor.rejected, (state, action) => {
         console.log(action.error);
       })
       .addCase(addOutbreak.fulfilled, (state, action) => {
