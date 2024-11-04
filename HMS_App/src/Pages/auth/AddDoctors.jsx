@@ -146,7 +146,7 @@ Thank you for joining us, and we look forward to providing you with the best exp
                 "Welcome to HMS_MERCY Portal - Account Created Successfully!",
             })
           ),
-            navigate("/user/dashboard", {
+            navigate("/user/doctors/record", {
               state: {
                 message: "Doctor profile added successfully...",
               },

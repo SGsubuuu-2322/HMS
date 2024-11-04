@@ -13,13 +13,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { getDoctors, removeDoctor } from "@/helper/API/user";
+import { doctorDeletion } from "@/store/reducers/UserReducer";
+import { useLocation } from "react-router-dom";
 
 const DoctorsRecord = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { doctors } = useSelector((state) => state.user);
   const [doc, setDoc] = useState([]);
   useEffect(() => {
     const fetchDoctors = async () => {
+      if (location?.state?.message) {
+        toast.success(location.state.message);
+      }
       try {
         await dispatch(getDoctors()).unwrap();
       } catch (error) {
@@ -27,7 +33,7 @@ const DoctorsRecord = () => {
       }
     };
     fetchDoctors();
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   useEffect(() => {
     setDoc([...doctors]);
@@ -35,8 +41,8 @@ const DoctorsRecord = () => {
 
   const handleDeletion = async (id) => {
     try {
-      console.log(id);
       const response = await dispatch(removeDoctor({ doctor_id: id }));
+      await dispatch(doctorDeletion(id));
       if (response) {
         toast.success("Doctor deleted successfully...");
       }

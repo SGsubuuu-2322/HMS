@@ -16,7 +16,7 @@ import {
   updateUserPassword,
 } from "@/helper/API/user";
 import { createSlice } from "@reduxjs/toolkit";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 
 const initialState = {
   userType: "A",
@@ -44,6 +44,12 @@ const userSlice = createSlice({
   reducers: {
     refreshUserType: (state, action) => {
       state.userType = action.payload;
+    },
+
+    doctorDeletion: (state, action) => {
+      state.doctors = state.doctors.filter(
+        (doctor) => doctor._id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
@@ -207,10 +213,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const {
-  refreshLoggedInUser,
-  refreshAllUsers,
-  refreshUserType,
-  deleteUser,
-  updateUser,
-} = userSlice.actions;
+export const { refreshUserType, doctorDeletion } = userSlice.actions;

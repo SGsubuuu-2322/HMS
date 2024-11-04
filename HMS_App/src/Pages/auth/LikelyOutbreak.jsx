@@ -12,14 +12,19 @@ import {
 import { getOutbreaks } from "@/helper/API/user";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const LikelyOutbreak = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { outbreaks } = useSelector((state) => state.user);
   const [ob, setOb] = useState([]);
   useEffect(() => {
     const fetchOutbreaks = async () => {
+      if (location?.state?.message) {
+        toast.success(location.state.message);
+      }
       try {
         await dispatch(getOutbreaks()).unwrap();
       } catch (error) {
@@ -27,7 +32,7 @@ const LikelyOutbreak = () => {
       }
     };
     fetchOutbreaks();
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   useEffect(() => {
     setOb([...outbreaks]);

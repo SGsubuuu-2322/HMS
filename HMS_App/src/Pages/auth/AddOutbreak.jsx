@@ -44,7 +44,7 @@ const AddOutbreak = () => {
         const response = await dispatch(addOutbreak(outbreak)).unwrap();
 
         if (response) {
-          navigate("/user/dashboard", {
+          navigate("/user/likely/outbreaks", {
             state: {
               message: "Outbreak added successfully...",
             },
