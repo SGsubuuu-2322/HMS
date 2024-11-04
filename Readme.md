@@ -1,6 +1,6 @@
 # Welcome to MERN Login System
 
-Hello everyone, In this project, I'm going to creating **MERN Stack App with Login System**.
+Hello everyone, In this project, I'm going to creating **HMS_MERCY Portal**.
 
 ## Working with the Project
 
@@ -15,9 +15,7 @@ In the Client Folder create .env file and put this code inside it.
 REACT_APP_SERVER_DOMAIN='<server_domain>' # example 'http://localhost:8080'
 ```
 
-After that create a file in the Server Folder with the name config.js and put the below code inside it.
-
-config.js
+After that create a file in the Server Folder with the name .env and put the below code inside it.
 
 ```
 export default {
