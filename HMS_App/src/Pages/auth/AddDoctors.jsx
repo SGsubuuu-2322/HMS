@@ -9,7 +9,7 @@ import {
 import avatar from "../../assets/profile.png";
 import convertToBase64 from "@/helper/convert";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { addDoctor, mailerAPI } from "@/helper/API/user";
@@ -18,6 +18,7 @@ import { toast, ToastContainer } from "react-toastify";
 const AddDoctors = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const [doctorDetails, setdoctorDetails] = useState({
     firstName: "",
     middleName: "",
@@ -37,6 +38,9 @@ const AddDoctors = () => {
   }
 
   useEffect(() => {
+    if (user.usertype != "A") {
+      navigate(-1);
+    }
     let newPassword = "Doc@";
     setdoctorDetails({
       ...doctorDetails,

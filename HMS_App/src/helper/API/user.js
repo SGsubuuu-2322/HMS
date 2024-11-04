@@ -99,7 +99,7 @@ export const updateUserDetails = createAsyncThunk(
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      console.log(token);
+      // console.log(token);
       const { user_id } = jwtDecode(token);
       const response = await axios.put(
         `/user/profile/update/${user_id}`,

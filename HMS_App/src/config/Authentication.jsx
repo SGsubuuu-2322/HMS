@@ -4,9 +4,11 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout from "../Layout/AuthLayout";
 import { useEffect, useState } from "react";
 import PublicNav from "@/components/ui/PublicNav";
+import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 
 const Authentication = () => {
+  const { user } = useSelector((state) => state.user);
   const Navigate = useNavigate();
   const location = useLocation();
   const [verified, setVerified] = useState(false);

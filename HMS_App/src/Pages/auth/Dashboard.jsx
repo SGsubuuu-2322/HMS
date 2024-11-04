@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Check if a message was passed via navigate
-    console.log(user.usertype);
+    // console.log(user.usertype);
     if (location?.state?.message) {
       toast.success(location.state.message);
     }

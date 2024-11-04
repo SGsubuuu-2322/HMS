@@ -14,15 +14,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { getDoctors, removeDoctor } from "@/helper/API/user";
 import { doctorDeletion } from "@/store/reducers/UserReducer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const DoctorsRecord = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const { doctors } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const [doc, setDoc] = useState([]);
   useEffect(() => {
     const fetchDoctors = async () => {
+      if (user.usertype != "A") {
+        navigate(-1);
+      }
       if (location?.state?.message) {
         toast.success(location.state.message);
       }

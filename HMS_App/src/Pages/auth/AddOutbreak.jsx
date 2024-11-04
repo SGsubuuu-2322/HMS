@@ -2,20 +2,28 @@
 
 import { Button } from "@/components/ui/button";
 import { addOutbreak } from "@/helper/API/user";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 const AddOutbreak = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { user } = useSelector((state) => state.user);
   const [outbreak, setOutbreak] = useState({
     obname: "",
     obcomments: "",
     oblocation: "",
     obmeasures: "",
   });
+
+  useEffect(() => {
+    if (user.usertype != "A") {
+      navigate(-1);
+    }
+  }, [location]);
 
   const isFormValid = () => {
     const { obname, obcomments, oblocation, obmeasures } = outbreak;
