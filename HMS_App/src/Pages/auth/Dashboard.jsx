@@ -3,7 +3,7 @@ import { FaCog } from "react-icons/fa";
 import { TbLockCog } from "react-icons/tb";
 
 import avatar from "../../assets/profile.png";
-import { Skeleton } from "@/components/ui/skeleton";
+// import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
@@ -16,6 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Check if a message was passed via navigate
+    console.log(user.usertype);
     if (location?.state?.message) {
       toast.success(location.state.message);
     }
@@ -33,18 +34,23 @@ const Dashboard = () => {
         ></div>
         <div className="relative z-10 grid auto-rows-min gap-4 md:grid-cols-3 w-full">
           {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
-          <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
-            <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
-            <div className="text-4xl text-red-600 font-bold">
-              {user?.doctorsNum}
+          {user.usertype == "A" ? (
+            <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
+              <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
+              <div className="text-4xl text-red-600 font-bold">
+                {user?.doctorsNum}
+              </div>
+              <NavLink
+                to={"/user/doctors/record"}
+                className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
+              >
+                View ➡️
+              </NavLink>
             </div>
-            <NavLink
-              to={"/user/doctors/record"}
-              className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"
-            >
-              View ➡️
-            </NavLink>
-          </div>
+          ) : (
+            <></>
+          )}
+
           <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Patients</h1>
             <div className="text-4xl text-red-600 font-bold">

@@ -1,5 +1,6 @@
 import AddDoctors from "@/Pages/auth/AddDoctors";
 import AddOutbreak from "@/Pages/auth/AddOutbreak";
+import AddPatients from "@/Pages/auth/AddPatients";
 import Appointment from "@/Pages/auth/Appointment";
 import ChangePassword from "@/Pages/auth/ChangePassword";
 import Dashboard from "@/Pages/auth/Dashboard";
@@ -28,6 +29,11 @@ export const AuthRoutes = [
     path: "/user/profile/update",
     element: UpdateProfile,
   },
+  {
+    path: "/user/add/patient",
+    element: AddPatients,
+  },
+
   {
     path: "/user/patients/record",
     element: PatientBook,

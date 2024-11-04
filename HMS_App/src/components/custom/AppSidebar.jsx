@@ -26,7 +26,7 @@ import { useEffect } from "react";
 import { getUserDetails } from "@/helper/API/user";
 
 // Menu items.
-const items = [
+const adminItems = [
   {
     title: "Dashboard",
     url: "/user/dashboard",
@@ -61,6 +61,44 @@ const items = [
     title: "Add Outbreak",
     url: "/user/add/outbreak",
     icon: ShieldAlert,
+  },
+  {
+    title: "Likely Outbreaks",
+    url: "/user/likely/outbreaks",
+    icon: ShieldQuestion,
+  },
+  {
+    title: "Logout",
+    url: "/",
+    icon: LogOut,
+  },
+];
+
+const doctorItems = [
+  {
+    title: "Dashboard",
+    url: "/user/dashboard",
+    icon: Wallet,
+  },
+  {
+    title: "Profile",
+    url: "/user/profile",
+    icon: SquareUser,
+  },
+  {
+    title: "Add Patient",
+    url: "/user/add/patient",
+    icon: UserRoundPlus,
+  },
+  {
+    title: "Patient's Book",
+    url: "/user/patients/record",
+    icon: BookUser,
+  },
+  {
+    title: "Appointments",
+    url: "/user/appointments",
+    icon: AlarmClockCheck,
   },
   {
     title: "Likely Outbreaks",
@@ -120,30 +158,59 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="relative h-full">
-              {items.map((item, index) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className="last:absolute last:bottom-0 last:w-full last:mb-5"
-                >
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    isActive={item.url == location.pathname ? "true" : "false"}
-                    className="hover:font-medium hover:text-[#0077ff94]"
-                    onClick={() => {
-                      if (index === items.length - 1)
-                        localStorage.removeItem("token");
-                    }}
-                  >
-                    <NavLink to={item.url}>
-                      <span className="text-xl">
-                        <item.icon />
-                      </span>
-                      <span className="text-base">{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {user?.usertype == "A"
+                ? adminItems.map((item, index) => (
+                    <SidebarMenuItem
+                      key={item.title}
+                      className="last:absolute last:bottom-0 last:w-full last:mb-5"
+                    >
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.title}
+                        isActive={
+                          item.url == location.pathname ? "true" : "false"
+                        }
+                        className="hover:font-medium hover:text-[#0077ff94]"
+                        onClick={() => {
+                          if (index === adminItems.length - 1)
+                            localStorage.removeItem("token");
+                        }}
+                      >
+                        <NavLink to={item.url}>
+                          <span className="text-xl">
+                            <item.icon />
+                          </span>
+                          <span className="text-base">{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))
+                : doctorItems.map((item, index) => (
+                    <SidebarMenuItem
+                      key={item.title}
+                      className="last:absolute last:bottom-0 last:w-full last:mb-5"
+                    >
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.title}
+                        isActive={
+                          item.url == location.pathname ? "true" : "false"
+                        }
+                        className="hover:font-medium hover:text-[#0077ff94]"
+                        onClick={() => {
+                          if (index === doctorItems.length - 1)
+                            localStorage.removeItem("token");
+                        }}
+                      >
+                        <NavLink to={item.url}>
+                          <span className="text-xl">
+                            <item.icon />
+                          </span>
+                          <span className="text-base">{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

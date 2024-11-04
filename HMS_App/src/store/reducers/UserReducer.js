@@ -24,6 +24,7 @@ const initialState = {
     firstName: "",
     middleName: "",
     lastName: "",
+    usertype: "",
     gender: "",
     role: "",
     email: "",
@@ -90,6 +91,7 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
+          usertype: action.payload?.user?.usertype,
           gender: action.payload.user?.gender,
           role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
           email: action.payload.user?.email,
@@ -116,6 +118,7 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
+          usertype: action.payload?.user?.usertype,
           gender: action.payload.user?.gender,
           role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
           email: action.payload.user?.email,
@@ -142,6 +145,7 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
+          usertype: action.payload?.user?.usertype,
           gender: action.payload.user?.gender,
           role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
           email: action.payload.user?.email,
