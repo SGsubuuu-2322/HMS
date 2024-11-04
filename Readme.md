@@ -1,4 +1,4 @@
-# Welcome to MERN Login System
+# Welcome to HMS_MERCY Portal
 
 Hello everyone, In this project, I'm going to creating **HMS_MERCY Portal**.
 
