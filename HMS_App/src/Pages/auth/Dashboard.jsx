@@ -34,7 +34,7 @@ const Dashboard = () => {
         ></div>
         <div className="relative z-10 grid auto-rows-min gap-4 md:grid-cols-3 w-full">
           {/* <Skeleton className="aspect-video rounded-xl" />{" "} */}
-          {user.usertype == "A" ? (
+          {user.usertype == "Admin" ? (
             <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
               <h1 className="font-bold text-[#0077ff94]">Doctors</h1>
               <div className="text-4xl text-red-600 font-bold">

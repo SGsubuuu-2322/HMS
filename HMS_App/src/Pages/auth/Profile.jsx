@@ -72,7 +72,7 @@ const Profile = () => {
           <div className="w-full h-10 flex items-center justify-between py-1">
             <span className="text-lg font-alice font-bold">Role</span>
             <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm">
-              {user?.role}
+              {user?.usertype === "Admin" ? user?.usertype : user?.role}
             </span>
           </div>
           <div className="w-full h-10 flex items-center justify-between py-1">
@@ -89,7 +89,7 @@ const Profile = () => {
           </div>
           <div className="w-full h-10 flex items-center justify-between py-1">
             <span className="text-lg font-alice font-bold">Address</span>
-            <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm">
+            <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden overflow-x-scroll">
               {user?.address}
             </span>
           </div>

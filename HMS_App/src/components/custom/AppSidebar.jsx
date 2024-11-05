@@ -150,15 +150,19 @@ export function AppSidebar() {
               </span>
               <span className="ml-2">
                 <h2 className="font-semibold text-lg text-black">
-                  {user?.firstName}
+                  {user?.usertype === "Doctor"
+                    ? `Dr. ${user?.firstName || ""} `
+                    : user?.firstName || ""}
                 </h2>
-                <h2 className="text-sm font-medium">{user?.role}</h2>
+                <h2 className="text-sm font-medium">
+                  {user?.usertype === "Doctor" ? user?.role : user?.usertype}
+                </h2>
               </span>
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="relative h-full">
-              {user?.usertype == "A"
+              {user?.usertype == "Admin"
                 ? adminItems.map((item, index) => (
                     <SidebarMenuItem
                       key={item.title}

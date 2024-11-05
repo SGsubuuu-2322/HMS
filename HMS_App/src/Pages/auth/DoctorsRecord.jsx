@@ -25,7 +25,7 @@ const DoctorsRecord = () => {
   const [doc, setDoc] = useState([]);
   useEffect(() => {
     const fetchDoctors = async () => {
-      if (user.usertype != "A") {
+      if (user.usertype != "Admin") {
         navigate(-1);
       }
       if (location?.state?.message) {

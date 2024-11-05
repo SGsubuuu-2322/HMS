@@ -20,7 +20,7 @@ const AddOutbreak = () => {
   });
 
   useEffect(() => {
-    if (user.usertype != "A") {
+    if (user.usertype != "Admin") {
       navigate(-1);
     }
   }, [location]);

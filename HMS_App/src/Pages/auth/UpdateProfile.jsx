@@ -67,8 +67,11 @@ const UpdateProfile = () => {
   const inputChangeHandler = (e) => {
     setuserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
-  const selectChangeHandler = (e) => {
-    setuserDetails({ ...userDetails, gender: e });
+  const selectGenderChangeHandler = (data) => {
+    setdoctorDetails({ ...doctorDetails, gender: data });
+  };
+  const selectRoleChangeHandler = (data) => {
+    setdoctorDetails({ ...doctorDetails, role: data });
   };
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -171,7 +174,7 @@ const UpdateProfile = () => {
             <label className="text-lg font-alice font-bold">Gender</label>
             <div className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden">
               <Select
-                onValueChange={selectChangeHandler}
+                onValueChange={selectGenderChangeHandler}
                 defaultValue={userDetails?.gender || ""}
               >
                 <SelectTrigger className="pl-0 text-base h-full rounded-none border-none bg-[#d0cdcdb6]">
@@ -185,18 +188,86 @@ const UpdateProfile = () => {
               </Select>
             </div>
           </div>
-          <div className="w-full h-10 flex items-center justify-between py-1">
-            <label className="text-lg font-alice font-bold">Role</label>
-            <input
-              readOnly
-              type="text"
-              placeholder="Enter your role..."
-              name="role"
-              value={userDetails?.role}
-              onChange={inputChangeHandler}
-              className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm"
-            />
-          </div>
+          {user.usertype === "Admin" ? (
+            <div className="w-full h-10 flex items-center justify-between py-1">
+              <label className="text-lg font-alice font-bold">Role</label>
+              <input
+                readOnly
+                type="text"
+                placeholder="Enter your role..."
+                name="role"
+                value={userDetails?.usertype}
+                onChange={inputChangeHandler}
+                className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm"
+              />
+            </div>
+          ) : (
+            <div className="w-full h-10 flex items-center justify-between py-1">
+              <label className="text-lg font-alice font-bold">Role</label>
+              <div className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden">
+                <Select
+                  onValueChange={selectRoleChangeHandler}
+                  defaultValue={userDetails?.role || ""}
+                >
+                  <SelectTrigger className="pl-0 text-base h-full rounded-none border-none bg-[#d0cdcdb6]">
+                    <SelectValue placeholder="Select doctor's role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="General Practitioners (GPs) / Primary Care Physicians">
+                      General Practitioners (GPs) / Primary Care Physicians
+                    </SelectItem>
+                    <SelectItem value="Emergency Medicine Physicians">
+                      Emergency Medicine Physicians
+                    </SelectItem>
+                    <SelectItem value="Surgeons">Surgeons</SelectItem>
+                    <SelectItem value="Anesthesiologists">
+                      Anesthesiologists
+                    </SelectItem>
+                    <SelectItem value="Radiologists">Radiologists</SelectItem>
+                    <SelectItem value="Cardiologists">Cardiologists</SelectItem>
+                    <SelectItem value="Neurologists">Neurologists</SelectItem>
+                    <SelectItem value="Obstetricians and Gynecologists (OB-GYN)">
+                      Obstetricians and Gynecologists (OB-GYN)
+                    </SelectItem>
+                    <SelectItem value="Pediatricians">Pediatricians</SelectItem>
+                    <SelectItem value="Oncologists">Oncologists</SelectItem>
+                    <SelectItem value="Endocrinologists">
+                      Endocrinologists
+                    </SelectItem>
+                    <SelectItem value="Gastroenterologists">
+                      Gastroenterologists
+                    </SelectItem>
+                    <SelectItem value="Nephrologists">Nephrologists</SelectItem>
+                    <SelectItem value="Pulmonologists">
+                      Pulmonologists
+                    </SelectItem>
+                    <SelectItem value="Infectious Disease Specialists">
+                      Infectious Disease Specialists
+                    </SelectItem>
+                    <SelectItem value="Pathologists">Pathologists</SelectItem>
+                    <SelectItem value="Critical Care/Intensivists">
+                      Critical Care/Intensivists
+                    </SelectItem>
+                    <SelectItem value="Dermatologists">
+                      Dermatologists
+                    </SelectItem>
+                    <SelectItem value="Orthopedic Surgeons">
+                      Orthopedic Surgeons
+                    </SelectItem>
+                    <SelectItem value="Urologists">Urologists</SelectItem>
+                    <SelectItem value="Hematologists">Hematologists</SelectItem>
+                    <SelectItem value="Rehabilitation Physicians (Physiatrists)">
+                      Rehabilitation Physicians (Physiatrists)
+                    </SelectItem>
+                    <SelectItem value="Palliative Care Physicians">
+                      Palliative Care Physicians
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+
           <div className="w-full h-10 flex items-center justify-between py-1">
             <label className="text-lg font-alice font-bold">Email</label>
             <input

@@ -91,9 +91,9 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype,
+          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
           gender: action.payload.user?.gender,
-          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          role: action.payload.user?.role,
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
@@ -118,9 +118,9 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype,
+          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
           gender: action.payload.user?.gender,
-          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          role: action.payload.user?.role,
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
@@ -145,9 +145,9 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype,
+          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
           gender: action.payload.user?.gender,
-          role: action.payload.user?.usertype == "A" ? "Admin" : "Doctor",
+          role: action.payload.user?.usertype.role,
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,
