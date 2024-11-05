@@ -1,5 +1,6 @@
 import Doctor from "../models/DoctorModel.js";
 import OTP from "../models/OTPModel.js";
+import Outbreak from "../models/OutbreakModel.js";
 import User from "../models/UserModel.js";
 
 export const getDocDashboardDetails = async (req, res) => {

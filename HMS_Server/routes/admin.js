@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addDoctor,
+  addOutbreak,
   getDoctors,
   getOutbreaks,
   removeDoctors,
@@ -8,10 +9,7 @@ import {
 } from "../controllers/admin_controller.js";
 import * as middleware from "../middlewares/auth.js";
 import authorizeRoles from "../middlewares/role.js";
-import {
-  addOutbreak,
-  registeredUserOtpVerification,
-} from "../controllers/user_controller.js";
+import { registeredUserOtpVerification } from "../controllers/user_controller.js";
 
 const router = Router();
 

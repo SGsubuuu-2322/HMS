@@ -806,37 +806,3 @@ export const changeLoggedOutUserPassword = async (req, res) => {
     return res.status(500).send({ message: "Internal server error...", error });
   }
 };
-
-export const addOutbreak = async (req, res) => {
-  try {
-    const { obname, obcomments, oblocation, obmeasures } = req.body;
-    const { user_id } = req.user;
-    const storedUser = await User.findOne({ _id: user_id });
-    if (!storedUser) {
-      return res
-        .status(403)
-        .send({ message: "You're unauthorized for this action..." });
-    }
-
-    if (req.user.usertype == "A" || req.user.usertype == "D") {
-      const outbreak = new Outbreak({
-        obname,
-        obcomments,
-        oblocation,
-        obmeasures,
-      });
-
-      outbreak.save();
-      return res
-        .status(201)
-        .send({ message: "Outbreak added successfully!!!" });
-    } else {
-      return res
-        .status(403)
-        .send({ message: "You're unauthorized for this action..." });
-    }
-  } catch (error) {
-    console.log(`System error happens: ${error.message}`);
-    return res.status(500).send({ message: "Internal server error...", error });
-  }
-};

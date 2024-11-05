@@ -214,53 +214,53 @@ const UpdateProfile = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="General Practitioners (GPs) / Primary Care Physicians">
-                      General Practitioners (GPs) / Primary Care Physicians
+                      General Practitioner (GP) / Primary Care Physician
                     </SelectItem>
                     <SelectItem value="Emergency Medicine Physicians">
-                      Emergency Medicine Physicians
+                      Emergency Medicine Physician
                     </SelectItem>
-                    <SelectItem value="Surgeons">Surgeons</SelectItem>
+                    <SelectItem value="Surgeons">Surgeon</SelectItem>
                     <SelectItem value="Anesthesiologists">
-                      Anesthesiologists
+                      Anesthesiologist
                     </SelectItem>
-                    <SelectItem value="Radiologists">Radiologists</SelectItem>
-                    <SelectItem value="Cardiologists">Cardiologists</SelectItem>
-                    <SelectItem value="Neurologists">Neurologists</SelectItem>
+                    <SelectItem value="Radiologists">Radiologist</SelectItem>
+                    <SelectItem value="Cardiologists">Cardiologist</SelectItem>
+                    <SelectItem value="Neurologists">Neurologist</SelectItem>
                     <SelectItem value="Obstetricians and Gynecologists (OB-GYN)">
-                      Obstetricians and Gynecologists (OB-GYN)
+                      Obstetrician and Gynecologist (OB-GYN)
                     </SelectItem>
-                    <SelectItem value="Pediatricians">Pediatricians</SelectItem>
-                    <SelectItem value="Oncologists">Oncologists</SelectItem>
+                    <SelectItem value="Pediatricians">Pediatrician</SelectItem>
+                    <SelectItem value="Oncologists">Oncologist</SelectItem>
                     <SelectItem value="Endocrinologists">
-                      Endocrinologists
+                      Endocrinologist
                     </SelectItem>
                     <SelectItem value="Gastroenterologists">
-                      Gastroenterologists
+                      Gastroenterologist
                     </SelectItem>
-                    <SelectItem value="Nephrologists">Nephrologists</SelectItem>
+                    <SelectItem value="Nephrologists">Nephrologist</SelectItem>
                     <SelectItem value="Pulmonologists">
-                      Pulmonologists
+                      Pulmonologist
                     </SelectItem>
                     <SelectItem value="Infectious Disease Specialists">
-                      Infectious Disease Specialists
+                      Infectious Disease Specialist
                     </SelectItem>
-                    <SelectItem value="Pathologists">Pathologists</SelectItem>
+                    <SelectItem value="Pathologists">Pathologist</SelectItem>
                     <SelectItem value="Critical Care/Intensivists">
-                      Critical Care/Intensivists
+                      Critical Care/Intensivist
                     </SelectItem>
                     <SelectItem value="Dermatologists">
-                      Dermatologists
+                      Dermatologist
                     </SelectItem>
                     <SelectItem value="Orthopedic Surgeons">
-                      Orthopedic Surgeons
+                      Orthopedic Surgeon
                     </SelectItem>
-                    <SelectItem value="Urologists">Urologists</SelectItem>
-                    <SelectItem value="Hematologists">Hematologists</SelectItem>
+                    <SelectItem value="Urologists">Urologist</SelectItem>
+                    <SelectItem value="Hematologists">Hematologist</SelectItem>
                     <SelectItem value="Rehabilitation Physicians (Physiatrists)">
-                      Rehabilitation Physicians (Physiatrists)
+                      Rehabilitation Physician (Physiatrist)
                     </SelectItem>
                     <SelectItem value="Palliative Care Physicians">
-                      Palliative Care Physicians
+                      Palliative Care Physician
                     </SelectItem>
                   </SelectContent>
                 </Select>

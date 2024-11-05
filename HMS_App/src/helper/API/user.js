@@ -315,10 +315,8 @@ export const getOutbreaks = createAsyncThunk(
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) throw new Error("Token not found in localStorage");
-      const { admin_id } = jwtDecode(token);
-      if (!admin_id) throw new Error("Admin ID missing in token");
-      if (token && admin_id) {
-        const response = await axios.get(`/admin/get/outbreaks`, {
+      if (token) {
+        const response = await axios.get(`/doctor/get/outbreaks`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set the authorization bearer token
           },
