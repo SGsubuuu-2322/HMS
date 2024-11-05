@@ -12,6 +12,7 @@ import {
   registeredUserOtpVerificationAPI,
   removeDoctor,
   searchUsername,
+  updateOutbreak,
   updateUserDetails,
   updateUserPassword,
 } from "@/helper/API/user";
@@ -206,8 +207,24 @@ const userSlice = createSlice({
       .addCase(addOutbreak.rejected, (state, action) => {
         console.log(action.error);
       })
+      .addCase(updateOutbreak.fulfilled, (state, action) => {
+        // console.log(action.payload);
+        const index = state.outbreaks.findIndex(
+          (item) => item._id == action.payload._id
+        );
+
+        if (index != -1) {
+          state.outbreaks[index] = {
+            ...state.outbreaks[index],
+            ...action.payload,
+          };
+        }
+      })
+      .addCase(updateOutbreak.rejected, (state, action) => {
+        console.log(action.error);
+      })
       .addCase(getOutbreaks.fulfilled, (state, action) => {
-        console.log(action.payload);
+        // console.log(action.payload);
         state.outbreaks = [...action.payload.outbreaks];
       })
       .addCase(getOutbreaks.rejected, (state, action) => {

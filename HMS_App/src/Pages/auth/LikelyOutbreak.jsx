@@ -12,11 +12,12 @@ import {
 import { getOutbreaks } from "@/helper/API/user";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 const LikelyOutbreak = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const { outbreaks } = useSelector((state) => state.user);
   const [ob, setOb] = useState([]);
@@ -37,6 +38,17 @@ const LikelyOutbreak = () => {
   useEffect(() => {
     setOb([...outbreaks]);
   }, [outbreaks]);
+
+  const handleEdit = (id) => {
+    // console.log(id);
+    if (id) {
+      navigate("/user/edit/outbreak", {
+        state: {
+          id,
+        },
+      });
+    }
+  };
 
   const imageUrl =
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -73,7 +85,12 @@ const LikelyOutbreak = () => {
                     </TableCell>
                     <TableCell className="">{o?.obmeasures}</TableCell>
                     <TableCell className="text-right">
-                      <Button className="px-3 py-5">Edit</Button>
+                      <Button
+                        className="px-3 py-5"
+                        onClick={() => handleEdit(o?._id)}
+                      >
+                        Edit
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );

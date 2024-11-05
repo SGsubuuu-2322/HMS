@@ -211,3 +211,34 @@ export const getOutbreaks = async (req, res) => {
     return res.status(500).send({ message: "Internal server error...", error });
   }
 };
+
+export const updateOutbreak = async (req, res) => {
+  try {
+    const { obid, obname, obcomments, oblocation, obmeasures } = req.body;
+    const { user_id } = req.user;
+    const storedUser = await User.findOne({ _id: user_id });
+    if (!storedUser) {
+      return res
+        .status(403)
+        .send({ message: "You're unauthorized for this action..." });
+    }
+
+    if (req.user.usertype == "A") {
+      const updatedOutbreak = await Outbreak.findByIdAndUpdate(
+        { _id: obid },
+        { obname, obcomments, oblocation, obmeasures },
+        { new: true }
+      );
+      return res
+        .status(201)
+        .send({ message: "Outbreak updated successfully!!!", updatedOutbreak });
+    } else {
+      return res
+        .status(403)
+        .send({ message: "You're unauthorized for this action..." });
+    }
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};

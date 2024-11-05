@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getDocDashboardDetails,
   getOutbreaks,
+  updateOutbreak,
 } from "../controllers/doctor_controller.js";
 import * as middleware from "../middlewares/auth.js";
 import authorizeRoles from "../middlewares/role.js";
@@ -18,5 +19,9 @@ router
 router
   .route("/get/outbreaks")
   .get(middleware.auth, authorizeRoles("D"), getOutbreaks);
+
+router
+  .route("/update/outbreak")
+  .put(middleware.auth, authorizeRoles("D"), updateOutbreak);
 
 export default router;

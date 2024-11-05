@@ -309,13 +309,57 @@ export const addOutbreak = createAsyncThunk(
   }
 );
 
+export const updateOutbreak = createAsyncThunk(
+  "update/outbreak",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) throw new Error("Token not found in localStorage");
+      const { admin_id, doctor_id } = jwtDecode(token);
+      if (token && admin_id) {
+        const response = await axios.put(`/admin/update/outbreak`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+
+        return response?.data;
+      } else if (token && doctor_id) {
+        const response = await axios.put(`/doctor/update/outbreak`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+
+        return response?.data;
+      } else {
+        console.log("You're unauthorized to do this action...");
+      }
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
 export const getOutbreaks = createAsyncThunk(
   "get/outbreaks",
   async (body, { rejectWithValue }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) throw new Error("Token not found in localStorage");
-      if (token) {
+      const { admin_id, doctor_id } = jwtDecode(token);
+      if (token && admin_id) {
+        const response = await axios.get(`/admin/get/outbreaks`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+
+        return response?.data;
+      } else if (token && doctor_id) {
         const response = await axios.get(`/doctor/get/outbreaks`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set the authorization bearer token
@@ -323,6 +367,8 @@ export const getOutbreaks = createAsyncThunk(
         });
 
         return response?.data;
+      } else {
+        console.log("You're unauthorized to do this action...");
       }
     } catch (error) {
       console.error("Client Error:", error.message); // Log client-side errors

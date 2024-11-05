@@ -5,6 +5,7 @@ import {
   getDoctors,
   getOutbreaks,
   removeDoctors,
+  updateOutbreak,
   //   getAdDashboardDetails,
 } from "../controllers/admin_controller.js";
 import * as middleware from "../middlewares/auth.js";
@@ -37,4 +38,9 @@ router
 router
   .route("/get/outbreaks")
   .get(middleware.auth, authorizeRoles("A"), getOutbreaks);
+
+router
+  .route("/update/outbreak")
+  .put(middleware.auth, authorizeRoles("A"), updateOutbreak);
+
 export default router;
