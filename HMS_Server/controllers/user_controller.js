@@ -329,10 +329,18 @@ export const loginUser = async (req, res) => {
         return res.status(401).send({ message: "Invalid User credentials..." });
       }
 
-      const { password: userPassword, ...rest } = Object.assign(
+      let { password: userPassword, ...rest } = Object.assign(
         {},
         registeredUser.toJSON()
       );
+
+      const patients = await Patient.find({});
+      const outbreaks = await Outbreak.find({});
+      rest = {
+        ...rest,
+        patientsNum: patients.length,
+        outbreaksNum: outbreaks.length,
+      };
 
       const token = jwt.sign(
         {
