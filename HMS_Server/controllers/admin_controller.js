@@ -119,8 +119,6 @@ export const removeDoctors = async (req, res) => {
     const { user_id, admin_id } = req.user;
     const { id: doctor_id } = req.params;
 
-    console.log(doctor_id);
-
     if (!user_id || !admin_id) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
@@ -237,6 +235,42 @@ export const updateOutbreak = async (req, res) => {
         .status(403)
         .send({ message: "You're unauthorized for this action..." });
     }
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const deleteOutbreak = async (req, res) => {
+  try {
+    const { user_id, admin_id } = req.user;
+    const { id } = req.params;
+
+    if (!user_id || !admin_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    if (!id) {
+      return res.status(404).send({ messaeg: "Outbreak id is required..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedAdmin = await Admin.findOne({ _id: admin_id });
+    const storedOutbreak = await Outbreak.findOne({ _id: id });
+
+    if (!storedUser || !storedAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    if (!storedOutbreak) {
+      return res
+        .status(400)
+        .send({ message: "Outbreak with this outbreak_id not found..." });
+    }
+
+    await Outbreak.deleteOne({ _id: id });
+
+    return res.status(200).send({ message: "Outbreak deletion successfull..." });
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

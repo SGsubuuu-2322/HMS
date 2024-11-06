@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getOutbreaks } from "@/helper/API/user";
+import { deleteOutbreak, getOutbreaks } from "@/helper/API/user";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -50,12 +50,28 @@ const LikelyOutbreak = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await dispatch(deleteOutbreak({ outbreak_id: id }));
+
+      if (response) {
+        navigate("/user/likely/outbreaks", {
+          state: {
+            message: "Outbreak deleted successfully...",
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const imageUrl =
     "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
       <ToastContainer />
-      <div className="relative w-[90%] h-[70%] p-5 mt-16 shadow-lg shadow-black">
+      <div className="relative h-[70%] p-5 mt-16 shadow-lg shadow-black">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
           style={{ backgroundImage: `url(${imageUrl})` }}
@@ -84,12 +100,18 @@ const LikelyOutbreak = () => {
                       {o?.updatedAt.split("T")[0]}
                     </TableCell>
                     <TableCell className="">{o?.obmeasures}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right flex gap-4">
                       <Button
                         className="px-3 py-5"
                         onClick={() => handleEdit(o?._id)}
                       >
                         Edit
+                      </Button>
+                      <Button
+                        className="px-3 py-5"
+                        onClick={() => handleDelete(o?._id)}
+                      >
+                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>

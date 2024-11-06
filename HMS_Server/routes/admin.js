@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addDoctor,
   addOutbreak,
+  deleteOutbreak,
   getDoctors,
   getOutbreaks,
   removeDoctors,
@@ -42,5 +43,9 @@ router
 router
   .route("/update/outbreak")
   .put(middleware.auth, authorizeRoles("A"), updateOutbreak);
+
+router
+  .route("/delete/outbreak/:id")
+  .delete(middleware.auth, authorizeRoles("A"), deleteOutbreak);
 
 export default router;
