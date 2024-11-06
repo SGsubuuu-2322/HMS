@@ -149,7 +149,7 @@ const userSlice = createSlice({
               : action.payload.user?.username.split(" ")[1],
           usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
           gender: action.payload.user?.gender,
-          role: action.payload.user?.usertype.role,
+          role: action.payload.user?.role,
           email: action.payload.user?.email,
           phone: action.payload.user?.phone,
           address: action.payload.user?.address,

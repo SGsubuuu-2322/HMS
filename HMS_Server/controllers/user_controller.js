@@ -431,7 +431,7 @@ export const updateUserDetails = async (req, res) => {
       return res.status(404).send({ message: "User Id not found" });
     }
 
-    const { username, email, phone, address, gender, profilePicture } =
+    const { username, email, phone, address, gender, role, profilePicture } =
       req.body;
 
     if (!username) {
@@ -469,12 +469,12 @@ export const updateUserDetails = async (req, res) => {
       const doctor_id = req.user.doctor_id;
       const updatedUser = await User.findByIdAndUpdate(
         { _id: id },
-        { username, email, phone, address, gender, profilePicture },
+        { username, email, phone, address, role, gender, profilePicture },
         { new: true } // Returns the updated document
       );
       const updatedDoctor = await Doctor.findByIdAndUpdate(
         doctor_id,
-        { username, email, phone, address, gender, profilePicture },
+        { username, email, phone, address, role, gender, profilePicture },
         { new: true } // Returns the updated document
       );
 
@@ -484,6 +484,7 @@ export const updateUserDetails = async (req, res) => {
         .send({ message: "Successfully updated!!!", user: rest });
     }
   } catch (error) {
+    console.log(error.message);
     return res.status(500).send({ message: error });
   }
 };

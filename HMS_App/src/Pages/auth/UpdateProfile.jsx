@@ -68,10 +68,10 @@ const UpdateProfile = () => {
     setuserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
   const selectGenderChangeHandler = (data) => {
-    setdoctorDetails({ ...doctorDetails, gender: data });
+    setuserDetails({ ...userDetails, gender: data });
   };
   const selectRoleChangeHandler = (data) => {
-    setdoctorDetails({ ...doctorDetails, role: data });
+    setuserDetails({ ...userDetails, role: data });
   };
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -90,6 +90,7 @@ const UpdateProfile = () => {
           phone: userDetails.phone,
           address: userDetails.address,
           gender: userDetails.gender,
+          role: userDetails.role,
           profilePicture: file || userDetails?.profilePicture || "",
         })
       ).unwrap();

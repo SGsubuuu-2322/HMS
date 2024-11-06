@@ -19,7 +19,7 @@ const LikelyOutbreak = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { outbreaks } = useSelector((state) => state.user);
+  const { user, outbreaks } = useSelector((state) => state.user);
   const [ob, setOb] = useState([]);
   useEffect(() => {
     const fetchOutbreaks = async () => {
@@ -101,18 +101,29 @@ const LikelyOutbreak = () => {
                     </TableCell>
                     <TableCell className="">{o?.obmeasures}</TableCell>
                     <TableCell className="text-right flex gap-4">
-                      <Button
-                        className="px-3 py-5"
-                        onClick={() => handleEdit(o?._id)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        className="px-3 py-5"
-                        onClick={() => handleDelete(o?._id)}
-                      >
-                        Delete
-                      </Button>
+                      {user.usertype === "Admin" ? (
+                        <>
+                          <Button
+                            className="px-3 py-5"
+                            onClick={() => handleEdit(o?._id)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            className="px-3 py-5"
+                            onClick={() => handleDelete(o?._id)}
+                          >
+                            Delete
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          className="px-3 py-5"
+                          onClick={() => handleEdit(o?._id)}
+                        >
+                          Edit
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 );
