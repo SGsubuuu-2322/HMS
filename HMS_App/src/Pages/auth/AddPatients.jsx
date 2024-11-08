@@ -24,7 +24,7 @@ const AddPatients = () => {
     phone: "",
     address: "",
     diagnosis: "",
-    prescribtion: "",
+    prescription: "",
     condition: "",
     password: "",
   });
@@ -51,16 +51,31 @@ const AddPatients = () => {
   };
 
   const isFormValid = () => {
-    const { firstName, gender, role, phone, address, email, password } =
-      patientDetails;
+    const {
+      fullName,
+      gender,
+      phone,
+      address,
+      email,
+      password,
+      dob,
+      age,
+      diagnosis,
+      prescription,
+      condition,
+    } = patientDetails;
     if (
-      !firstName?.trim() ||
+      !fullName?.trim() ||
       !email?.trim() ||
       !password?.trim() ||
       !gender?.trim() ||
-      !role?.trim() ||
+      !age?.trim() ||
       !phone?.trim() ||
-      !address?.trim()
+      !address?.trim() ||
+      !dob?.trim() ||
+      !diagnosis?.trim() ||
+      !prescription?.trim() ||
+      !condition?.trim()
     ) {
       toast.error("Enter all the fields!!!");
       return false;
@@ -81,6 +96,10 @@ const AddPatients = () => {
       return false;
     }
 
+    if (phone.length != 10) {
+      toast.error("Invalid phone no. It must be 10 digits.");
+    }
+
     return true;
   };
 
@@ -93,8 +112,9 @@ const AddPatients = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    console.log(patientDetails);
+    if (isFormValid()) {
+      console.log(patientDetails);
+    }
   };
 
   const imageUrl =
@@ -116,7 +136,7 @@ const AddPatients = () => {
               Patient Appointment Form
             </span>
           </div>
-          <div className="text-lg text-red-500 font-medium relative text-xl w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-red-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">
+          <div className="text-lg text-red-500 font-medium relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-red-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">
             Patient number:{" "}
             <span className="font-bold">{generateRandomNumber(4)}</span>
           </div>
