@@ -1,6 +1,7 @@
 import Doctor from "../models/DoctorModel.js";
 import OTP from "../models/OTPModel.js";
 import Outbreak from "../models/OutbreakModel.js";
+import Patient from "../models/PatientModel.js";
 import User from "../models/UserModel.js";
 
 export const getDocDashboardDetails = async (req, res) => {
@@ -73,3 +74,41 @@ export const updateOutbreak = async (req, res) => {
   }
 };
 
+export const addPatient = async (req, res) => {
+  try {
+    const doctor_id = req.user.doctor_id;
+    const {
+      fullName,
+      email,
+      patientId,
+      dob,
+      age,
+      gender,
+      phone,
+      address,
+      diagnosis,
+      prescription,
+      condition,
+      password,
+    } = req.body;
+
+    const registeredDoc = await Doctor.findOne({ _id: doctor_id });
+    if (!registeredDoc) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const isRegisteredPatient = await Patient.findOne({ email: email });
+    const isRegisteredUser = await User.findOne({ email: email });
+    if (isRegisteredPatient || isRegisteredUser) {
+      return res
+        .status(400)
+        .send({ message: "Email already registered. Try with new one.." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    console.log(req.body);
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};

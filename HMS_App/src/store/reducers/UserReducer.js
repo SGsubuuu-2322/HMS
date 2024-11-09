@@ -1,6 +1,7 @@
 import {
   addDoctor,
   addOutbreak,
+  addPatient,
   changeLoggedOutUserPassword,
   deleteOutbreak,
   getDoctors,
@@ -235,6 +236,12 @@ const userSlice = createSlice({
         state.outbreaks = [...action.payload.outbreaks];
       })
       .addCase(getOutbreaks.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(addPatient.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(addPatient.rejected, (state, action) => {
         console.log(action.error);
       });
   },

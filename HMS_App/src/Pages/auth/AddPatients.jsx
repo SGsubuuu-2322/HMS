@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { addPatient } from "@/helper/API/user";
 
 const AddPatients = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const AddPatients = () => {
   const [patientDetails, setpatientDetails] = useState({
     fullName: "",
     email: "",
+    patientId: "",
     dob: "",
     age: "",
     gender: "",
@@ -43,6 +45,7 @@ const AddPatients = () => {
     setpatientDetails({
       ...patientDetails,
       password: newPassword + generateRandomNumber(4),
+      patientId: generateRandomNumber(4),
     });
   }, [navigate]);
 
@@ -59,7 +62,6 @@ const AddPatients = () => {
       email,
       password,
       dob,
-      age,
       diagnosis,
       prescription,
       condition,
@@ -69,7 +71,6 @@ const AddPatients = () => {
       !email?.trim() ||
       !password?.trim() ||
       !gender?.trim() ||
-      !age?.trim() ||
       !phone?.trim() ||
       !address?.trim() ||
       !dob?.trim() ||
@@ -80,6 +81,8 @@ const AddPatients = () => {
       toast.error("Enter all the fields!!!");
       return false;
     }
+
+    setAge(patientDetails.dob);
 
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
@@ -98,6 +101,7 @@ const AddPatients = () => {
 
     if (phone.length != 10) {
       toast.error("Invalid phone no. It must be 10 digits.");
+      return false;
     }
 
     return true;
@@ -107,13 +111,34 @@ const AddPatients = () => {
     setpatientDetails({ ...patientDetails, gender: data });
   };
   const selectConditionChangeHandler = (data) => {
-    setpatientDetails({ ...patientDetails, gender: data });
+    setpatientDetails({ ...patientDetails, condition: data });
+  };
+
+  const setAge = (dob) => {
+    const todayDate = new Date();
+    const birthDate = new Date(dob);
+    let age = todayDate.getFullYear() - birthDate.getFullYear() + " years";
+    // Adjust if the birthday hasn't occurred yet this year
+    const monthDiff = todayDate.getMonth() - birthDate.getMonth();
+    const dayDiff = todayDate.getDate() - birthDate.getDate();
+
+    if (age == "0 years") {
+      age = monthDiff + " months";
+    }
+
+    if (age == "0 months") {
+      age = dayDiff + " days";
+    }
+
+    setpatientDetails({ ...patientDetails, age });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log(patientDetails);
+      const response = await dispatch(addPatient(patientDetails));
+
+      console.log(response);
     }
   };
 
@@ -138,7 +163,7 @@ const AddPatients = () => {
           </div>
           <div className="text-lg text-red-500 font-medium relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-red-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">
             Patient number:{" "}
-            <span className="font-bold">{generateRandomNumber(4)}</span>
+            <span className="font-bold">{patientDetails?.patientId}</span>
           </div>
           <div className="w-full h-10 flex items-center justify-between py-1">
             <label className="text-lg font-alice font-bold">Full Name</label>

@@ -406,3 +406,28 @@ export const getOutbreaks = createAsyncThunk(
     }
   }
 );
+
+export const addPatient = createAsyncThunk(
+  "add/patient",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) throw new Error("Token not found in localStorage");
+      const { doctor_id } = jwtDecode(token);
+      if (!doctor_id) throw new Error("Doctor-ID missing in token");
+      if (token && doctor_id) {
+        const response = await axios.post(`/doctor/add/patient/`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        return response?.data;
+      }
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
