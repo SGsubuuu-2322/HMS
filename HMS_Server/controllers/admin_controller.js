@@ -75,8 +75,8 @@ export const addDoctor = async (req, res) => {
     if (!user || !doctor) {
       throw new Error("Error in creating user in database...");
     } else {
-      user.save();
-      doctor.save();
+      await user.save();
+      await doctor.save();
       return res
         .status(201)
         .send({ message: "Doctor created successfully..." });
@@ -270,7 +270,9 @@ export const deleteOutbreak = async (req, res) => {
 
     await Outbreak.deleteOne({ _id: id });
 
-    return res.status(200).send({ message: "Outbreak deletion successfull..." });
+    return res
+      .status(200)
+      .send({ message: "Outbreak deletion successfull..." });
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

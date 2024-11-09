@@ -55,6 +55,7 @@ const AddPatients = () => {
 
   const isFormValid = () => {
     const {
+      patientId,
       fullName,
       gender,
       phone,
@@ -67,6 +68,7 @@ const AddPatients = () => {
       condition,
     } = patientDetails;
     if (
+      !patientId ||
       !fullName?.trim() ||
       !email?.trim() ||
       !password?.trim() ||
@@ -82,7 +84,7 @@ const AddPatients = () => {
       return false;
     }
 
-    setAge(patientDetails.dob);
+    // setAge(patientDetails.dob);
 
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
@@ -135,10 +137,28 @@ const AddPatients = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (isFormValid()) {
-      const response = await dispatch(addPatient(patientDetails));
+    try {
+      if (isFormValid()) {
+        const todayDate = new Date();
+        const birthDate = new Date(patientDetails.dob);
+        let age = todayDate.getFullYear() - birthDate.getFullYear() + " years";
+        // Adjust if the birthday hasn't occurred yet this year
+        const monthDiff = todayDate.getMonth() - birthDate.getMonth();
+        const dayDiff = todayDate.getDate() - birthDate.getDate();
 
-      console.log(response);
+        if (age == "0 years") {
+          age = monthDiff + " months";
+        }
+
+        if (age == "0 months") {
+          age = dayDiff + " days";
+        }
+
+        const response = await dispatch(addPatient({ ...patientDetails, age }));
+        console.log(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

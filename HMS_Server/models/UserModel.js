@@ -41,6 +41,12 @@ const UserSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    dob: {
+      type: String,
+    },
+    age: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

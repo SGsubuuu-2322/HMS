@@ -8,6 +8,7 @@ import {
   ShieldQuestion,
   LogOut,
   Wallet,
+  CalendarDays,
 } from "lucide-react";
 
 import {
@@ -53,9 +54,9 @@ const adminItems = [
     icon: BookUser,
   },
   {
-    title: "Appointments",
+    title: "View Appointments",
     url: "/user/appointments",
-    icon: AlarmClockCheck,
+    icon: CalendarDays,
   },
   {
     title: "Add Outbreak",
@@ -86,7 +87,7 @@ const doctorItems = [
     icon: SquareUser,
   },
   {
-    title: "Add Patient",
+    title: "Book Appointment",
     url: "/user/add/patient",
     icon: UserRoundPlus,
   },
@@ -96,9 +97,9 @@ const doctorItems = [
     icon: BookUser,
   },
   {
-    title: "Appointments",
+    title: "View Appointments",
     url: "/user/appointments",
-    icon: AlarmClockCheck,
+    icon: CalendarDays,
   },
   {
     title: "Likely Outbreaks",

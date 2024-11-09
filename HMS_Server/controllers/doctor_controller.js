@@ -1,8 +1,10 @@
+import Appointment from "../models/AppointmentModel.js";
 import Doctor from "../models/DoctorModel.js";
 import OTP from "../models/OTPModel.js";
 import Outbreak from "../models/OutbreakModel.js";
 import Patient from "../models/PatientModel.js";
 import User from "../models/UserModel.js";
+import bcrypt from "bcrypt";
 
 export const getDocDashboardDetails = async (req, res) => {
   try {
@@ -74,7 +76,7 @@ export const updateOutbreak = async (req, res) => {
   }
 };
 
-export const addPatient = async (req, res) => {
+export const addPatientAppointment = async (req, res) => {
   try {
     const doctor_id = req.user.doctor_id;
     const {
@@ -92,6 +94,44 @@ export const addPatient = async (req, res) => {
       password,
     } = req.body;
 
+    // Input validation to ensure that required fields are present
+    if (!fullName) {
+      return res.status(400).json({ message: "Username is required." });
+    }
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+    if (!password) {
+      return res.status(400).json({ message: "Password is required." });
+    }
+    if (!patientId) {
+      return res.status(400).json({ message: "PatientID is required." });
+    }
+    if (!gender) {
+      return res.status(400).json({ message: "Gender is required." });
+    }
+    if (!address) {
+      return res.status(400).json({ message: "Address is required." });
+    }
+    if (!phone) {
+      return res.status(400).json({ message: "Contact no. is required." });
+    }
+    if (!dob) {
+      return res.status(400).json({ message: "DOB is required." });
+    }
+    if (!age) {
+      return res.status(400).json({ message: "Age is required." });
+    }
+    if (!diagnosis) {
+      return res.status(400).json({ message: "Diagnosis is required." });
+    }
+    if (!prescription) {
+      return res.status(400).json({ message: "Prescription is required." });
+    }
+    if (!condition) {
+      return res.status(400).json({ message: "Condition is required." });
+    }
+
     const registeredDoc = await Doctor.findOne({ _id: doctor_id });
     if (!registeredDoc) {
       return res.status(404).send({ message: "Unauthorized action..." });
@@ -99,14 +139,85 @@ export const addPatient = async (req, res) => {
 
     const isRegisteredPatient = await Patient.findOne({ email: email });
     const isRegisteredUser = await User.findOne({ email: email });
-    if (isRegisteredPatient || isRegisteredUser) {
+    if (!isRegisteredPatient && !isRegisteredUser) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newPatient = await Patient.create({
+        username: fullName,
+        email,
+        patientId,
+        usertype: "P",
+        password: hashedPassword,
+        dob,
+        age,
+        gender,
+        phone,
+        address,
+      });
+      const newUser = await User.create({
+        username: fullName,
+        email,
+        patientId,
+        usertype: "P",
+        password: hashedPassword,
+        isVerified: true,
+        dob,
+        age,
+        gender,
+        phone,
+        address,
+      });
+
+      const newAppointment = await Appointment.create({
+        doctor: registeredDoc._id,
+        patient: newPatient._id,
+        username: fullName,
+        email,
+        patientId,
+        gender,
+        phone,
+        address,
+        dob,
+        age,
+        diagnosis,
+        prescription,
+        condition,
+        status: "completed",
+      });
+
+
+      return res.status(201).send({
+        message: "Appointment created successfully...",
+        newAppointment,
+        patientCreation: true,
+      });
+    } else if (isRegisteredPatient && isRegisteredUser) {
+      const newAppointment = await Appointment.create({
+        doctor: registeredDoc._id,
+        patient: isRegisteredPatient._id,
+        username: fullName,
+        email,
+        patientId,
+        gender,
+        phone,
+        address,
+        dob,
+        age,
+        diagnosis,
+        prescription,
+        condition,
+        status: "completed",
+      });
+
+      return res.status(201).send({
+        message: "Appointment created successfully...",
+        newAppointment,
+        patientCreation: false,
+      });
+    } else {
       return res
         .status(400)
         .send({ message: "Email already registered. Try with new one.." });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log(req.body);
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

@@ -23,10 +23,6 @@ const PatientSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    isVerified: {
-      type: Boolean,
-      required: true,
-    },
     gender: {
       type: String,
     },
@@ -37,6 +33,12 @@ const PatientSchema = new mongoose.Schema(
       type: String,
     },
     address: {
+      type: String,
+    },
+    dob: {
+      type: String,
+    },
+    age: {
       type: String,
     },
   },

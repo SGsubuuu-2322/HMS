@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  addPatient,
+  addPatientAppointment,
   getDocDashboardDetails,
   getOutbreaks,
   updateOutbreak,
@@ -27,6 +27,6 @@ router
 
 router
   .route("/add/patient")
-  .post(middleware.auth, authorizeRoles("D"), addPatient);
+  .post(middleware.auth, authorizeRoles("D"), addPatientAppointment);
 
 export default router;
