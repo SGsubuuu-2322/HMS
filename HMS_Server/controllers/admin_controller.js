@@ -2,6 +2,7 @@ import Admin from "../models/AdminModel.js";
 import Doctor from "../models/DoctorModel.js";
 import OTP from "../models/OTPModel.js";
 import Outbreak from "../models/OutbreakModel.js";
+import Patient from "../models/PatientModel.js";
 import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 
@@ -273,6 +274,37 @@ export const deleteOutbreak = async (req, res) => {
     return res
       .status(200)
       .send({ message: "Outbreak deletion successfull..." });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const getPatientsRecord = async (req, res) => {
+  try {
+    const { user_id, admin_id } = req.user;
+    if (!user_id || !admin_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedAdmin = await Admin.findOne({ _id: admin_id });
+
+    if (!storedUser || !storedAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const allPatients = await Patient.find({});
+
+    if (!allPatients) {
+      return res
+        .status(404)
+        .send({ message: "Error in finding all patients..." });
+    }
+
+    return res
+      .status(200)
+      .send({ message: "All patients found...", patients: allPatients });
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });

@@ -5,6 +5,7 @@ import {
   deleteOutbreak,
   getDoctors,
   getOutbreaks,
+  getPatientsRecord,
   removeDoctors,
   updateOutbreak,
   //   getAdDashboardDetails,
@@ -47,5 +48,9 @@ router
 router
   .route("/delete/outbreak/:id")
   .delete(middleware.auth, authorizeRoles("A"), deleteOutbreak);
+
+router
+  .route("/get/patients")
+  .get(middleware.auth, authorizeRoles("A"), getPatientsRecord);
 
 export default router;
