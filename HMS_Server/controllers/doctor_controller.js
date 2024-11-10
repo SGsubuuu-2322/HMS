@@ -168,11 +168,11 @@ export const addPatientAppointment = async (req, res) => {
       });
 
       const newAppointment = await Appointment.create({
+        appointmentNo: Number(patientId),
         doctor: registeredDoc._id,
         patient: newPatient._id,
         username: fullName,
         email,
-        patientId,
         gender,
         phone,
         address,
@@ -184,19 +184,19 @@ export const addPatientAppointment = async (req, res) => {
         status: "completed",
       });
 
-
       return res.status(201).send({
         message: "Appointment created successfully...",
         newAppointment,
         patientCreation: true,
       });
     } else if (isRegisteredPatient && isRegisteredUser) {
+      console.log(Number(patientId));
       const newAppointment = await Appointment.create({
+        appointmentNo: Number(patientId),
         doctor: registeredDoc._id,
         patient: isRegisteredPatient._id,
         username: fullName,
         email,
-        patientId,
         gender,
         phone,
         address,

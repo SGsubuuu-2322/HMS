@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { addPatient } from "@/helper/API/user";
+import { addPatient, mailerAPI } from "@/helper/API/user";
 
 const AddPatients = () => {
   const navigate = useNavigate();
@@ -154,8 +154,87 @@ const AddPatients = () => {
           age = dayDiff + " days";
         }
 
-        const response = await dispatch(addPatient({ ...patientDetails, age }));
-        console.log(response.payload);
+        const response = await dispatch(
+          addPatient({ ...patientDetails, age })
+        ).unwrap();
+
+        if (response && response?.patientCreation) {
+          await dispatch(
+            mailerAPI({
+              userName: patientDetails.fullName,
+              userEmail: patientDetails.email,
+              text: `Dear ${patientDetails.fullName},
+
+We are pleased to confirm your registration and provide you with the details of your today's appointment.
+
+Your account has been successfully created, and you can now access all our features. Here are your account details:
+
+Account Details:
+Email: ${patientDetails.email}
+Password: ${patientDetails.password}
+
+Appointment Details: 
+
+Appointment ID: ${patientDetails?.patientId}
+Doctor: Dr. ${user?.firstName}
+Date: ${new Date().toString().split(" ").slice(0, 4).join(" ")}
+Diagnosis: ${patientDetails?.diagnosis}
+Prescription: ${patientDetails?.prescription}
+
+Follow-Up Instructions: If Dr. ${
+                user?.firstName
+              } provided you with specific instructions or medications, please ensure to follow them carefully. Should you have any further questions or experience any issues related to your diagnosis, feel free to reach out to our clinic.
+
+Next Steps: If a follow-up appointment or additional treatment is recommended, please schedule your next visit at your convenience by contacting our office or visiting our website.
+To get started, please log in to your account using the above credentials and have a look into your appointment details. Should you need any assistance, our support team is here to help.
+Thank you for trusting us with your healthcare. We look forward to assisting you in the future.
+`,
+              subject:
+                "Successfully account creation and appointment registration!",
+            })
+          ).unwrap();
+
+          navigate("/user/appointments", {
+            state: {
+              message:
+                "Appointment registered and patient creation successfully...",
+            },
+          });
+        } else if (response && !response?.patientCreation) {
+          await dispatch(
+            mailerAPI({
+              userName: patientDetails.fullName,
+              userEmail: patientDetails.email,
+              text: `Dear ${patientDetails.fullName},
+
+We hope this message finds you well. We’re writing to confirm that your appointment scheduled today with Dr. ${
+                user?.firstName
+              } has been successfully completed.
+
+Appointent Details:
+
+Appointment ID: ${patientDetails?.patientId}
+Doctor: Dr. ${user?.firstName}
+Date: ${new Date().toString().split(" ").slice(0, 4).join(" ")}
+Diagnosis: ${patientDetails?.diagnosis}
+Prescription: ${patientDetails?.prescription}
+
+Follow-Up Instructions: If Dr. ${
+                user?.firstName
+              } provided you with specific instructions or medications, please ensure to follow them carefully. Should you have any further questions or experience any issues related to your diagnosis, feel free to reach out to our clinic.
+
+Next Steps: If a follow-up appointment or additional treatment is recommended, please schedule your next visit at your convenience by contacting our office or visiting our website.
+
+Thank you for trusting us with your healthcare. We look forward to assisting you in the future.`,
+              subject: "Your Appointment Today Has Been Completed Successfully",
+            })
+          ).unwrap();
+          navigate("/user/appointments", {
+            state: {
+              message: "Appointment registered successfully...",
+            },
+          });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -182,7 +261,7 @@ const AddPatients = () => {
             </span>
           </div>
           <div className="text-lg text-red-500 font-medium relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-red-500 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-left">
-            Patient number:{" "}
+            Appointment No:{" "}
             <span className="font-bold">{patientDetails?.patientId}</span>
           </div>
           <div className="w-full h-10 flex items-center justify-between py-1">
