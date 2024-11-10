@@ -441,14 +441,46 @@ export const getPatientsRecord = createAsyncThunk(
       const { usertype } = jwtDecode(token);
       if (!usertype) throw new Error("Usertype missing in token");
       if (usertype == "A") {
-        const response = await axios.get(`/admin/get/patients/`, {
+        const response = await axios.get(`/admin/get/patients`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set the authorization bearer token
           },
         });
         return response?.data;
       } else if (usertype == "D") {
-        const response = await axios.get(`/doctor/get/patients/`, {
+        const response = await axios.get(`/doctor/get/patients`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        return response?.data;
+      }
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
+export const getApptsRecord = createAsyncThunk(
+  "appointments/record",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) throw new Error("Token not found in localStorage");
+      const { usertype } = jwtDecode(token);
+      if (!usertype) throw new Error("Usertype missing in token");
+      if (usertype == "A") {
+        const response = await axios.get(`/admin/get/appointments`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        return response?.data;
+      } else if (usertype == "D") {
+        const response = await axios.get(`/doctor/get/appointments`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set the authorization bearer token
           },
