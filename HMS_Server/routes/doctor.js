@@ -1,8 +1,10 @@
 import { Router } from "express";
 import {
   addPatientAppointment,
+  getApptsRecord,
   getDocDashboardDetails,
   getOutbreaks,
+  getPatientsRecord,
   updateOutbreak,
 } from "../controllers/doctor_controller.js";
 import * as middleware from "../middlewares/auth.js";
@@ -28,5 +30,13 @@ router
 router
   .route("/add/patient")
   .post(middleware.auth, authorizeRoles("D"), addPatientAppointment);
+
+router
+  .route("/get/patients")
+  .get(middleware.auth, authorizeRoles("D"), getPatientsRecord);
+
+router
+  .route("/get/appointments")
+  .get(middleware.auth, authorizeRoles("D"), getApptsRecord);
 
 export default router;

@@ -38,7 +38,7 @@ const PatientBook = () => {
       }
     };
     fetchDoctors();
-  }, [dispatch, location]);
+  }, [dispatch, location, user?.usertype]);
 
   useEffect(() => {
     setPatientRecords([...patients]);

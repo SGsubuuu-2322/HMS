@@ -223,3 +223,81 @@ export const addPatientAppointment = async (req, res) => {
     return res.status(500).send({ message: "Internal server error...", error });
   }
 };
+
+export const getPatientsRecord = async (req, res) => {
+  try {
+    const { user_id, doctor_id } = req.user;
+    if (!user_id || !doctor_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedDoctor = await Doctor.findOne({ _id: doctor_id });
+
+    if (!storedUser || !storedDoctor) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    // Step 1: Find all appointments for the specific doctor
+    const appointments = await Appointment.find({ doctor: doctor_id }).select(
+      "patient"
+    );
+
+    // Step 2: Extract unique patient IDs
+    const patientIds = [
+      ...new Set(appointments.map((appt) => appt.patient.toString())),
+    ];
+
+    // Step 3: Query the Patient model for details on those unique IDs
+    const allPatients = await Patient.find({ _id: { $in: patientIds } }).select(
+      "-password"
+    );
+
+    if (!allPatients) {
+      return res
+        .status(404)
+        .send({ message: "Error in finding all patients..." });
+    }
+
+    return res
+      .status(200)
+      .send({ message: "All patients found...", patients: allPatients });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const getApptsRecord = async (req, res) => {
+  try {
+    const { user_id, doctor_id } = req.user;
+    if (!user_id || !doctor_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedDoctor = await Doctor.findOne({ _id: doctor_id });
+
+    if (!storedUser || !storedDoctor) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const allAppts = await Appointment.find({ doctor: doctor_id }).populate(
+      "doctor",
+      "username role email"
+    );
+
+    if (!allAppts) {
+      return res
+        .status(404)
+        .send({ message: "Error in finding all appointments..." });
+    }
+
+    return res
+      .status(200)
+      .send({ message: "All appointments found...", appointments: allAppts });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
