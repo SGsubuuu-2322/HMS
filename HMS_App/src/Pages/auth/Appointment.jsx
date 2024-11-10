@@ -67,14 +67,13 @@ const Appointment = () => {
             <TableCaption>A list of Patients in this hospital.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>Appt&apos;s ID</TableHead>
+                <TableHead>Appt&apos;s No.</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Age</TableHead>
                 <TableHead>Gender</TableHead>
                 <TableHead>Attended</TableHead>
                 <TableHead>Doctor</TableHead>
                 <TableHead>status</TableHead>
-                <TableHead></TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -88,10 +87,10 @@ const Appointment = () => {
                     <TableCell>{ar?.username}</TableCell>
                     <TableCell>{ar?.age}</TableCell>
                     <TableCell>{ar?.gender}</TableCell>
-                    <TableCell>{ar?.createdAt?.split("T")[0]}</TableCell>
-                    <TableCell>{`Dr. ${
-                      ar?.doctor?.username.split(" ")[0]
-                    }`}</TableCell>
+                    <TableCell>{ar?.createdAt.split("T")[0]}</TableCell>
+                    <TableCell>
+                      {"Dr. " + ar?.doctor?.username.split(" ")[0]}
+                    </TableCell>
                     <TableCell>{ar?.status}</TableCell>
                     <TableCell className="text-right">
                       <Button
