@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
-import { getPatientsRecord } from "@/helper/API/user";
+import { getPatientDetails, getPatientsRecord } from "@/helper/API/user";
 
 const PatientBook = () => {
   const dispatch = useDispatch();
@@ -47,6 +47,10 @@ const PatientBook = () => {
   const handleGetDetails = async (id) => {
     try {
       console.log(id);
+      const response = await dispatch(
+        getPatientDetails({ patient_id: id })
+      ).unwrap();
+      console.log(response);
     } catch (error) {
       console.error(error.message);
     }

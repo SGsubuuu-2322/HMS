@@ -10,6 +10,7 @@ import LikelyOutbreak from "@/Pages/auth/LikelyOutbreak";
 import OTP_Verification from "@/Pages/auth/OTP_Verification";
 import PasswordChange from "@/Pages/auth/PasswordChange";
 import PatientBook from "@/Pages/auth/PatientBook";
+import PatientDetails from "@/Pages/auth/PatientDetails";
 import Profile from "@/Pages/auth/Profile";
 import UpdateProfile from "@/Pages/auth/UpdateProfile";
 
@@ -38,6 +39,10 @@ export const AuthRoutes = [
   {
     path: "/user/patients/record",
     element: PatientBook,
+  },
+  {
+    path: "/user/patient/details",
+    element: PatientDetails,
   },
   {
     path: "/user/add/doctor",

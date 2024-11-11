@@ -432,6 +432,32 @@ export const addPatient = createAsyncThunk(
   }
 );
 
+export const getPatientDetails = createAsyncThunk(
+  "patient/details",
+  async (body, { rejectWithValue }) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) throw new Error("Token not found in localStorage");
+      if (token) {
+        const response = await axios.get(
+          `/admin/get/patient/details/${body.patient_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Set the authorization bearer token
+            },
+          }
+        );
+        return response?.data;
+      }
+    } catch (error) {
+      console.error("Client Error:", error.message); // Log client-side errors
+      return rejectWithValue(
+        error.response?.data || { message: error.message }
+      );
+    }
+  }
+);
+
 export const getPatientsRecord = createAsyncThunk(
   "patient/record",
   async (body, { rejectWithValue }) => {
