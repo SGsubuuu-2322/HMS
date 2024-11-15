@@ -116,25 +116,6 @@ const AddPatients = () => {
     setpatientDetails({ ...patientDetails, condition: data });
   };
 
-  const setAge = (dob) => {
-    const todayDate = new Date();
-    const birthDate = new Date(dob);
-    let age = todayDate.getFullYear() - birthDate.getFullYear() + " years";
-    // Adjust if the birthday hasn't occurred yet this year
-    const monthDiff = todayDate.getMonth() - birthDate.getMonth();
-    const dayDiff = todayDate.getDate() - birthDate.getDate();
-
-    if (age == "0 years") {
-      age = monthDiff + " months";
-    }
-
-    if (age == "0 months") {
-      age = dayDiff + " days";
-    }
-
-    setpatientDetails({ ...patientDetails, age });
-  };
-
   const submitHandler = async (e) => {
     e.preventDefault();
     try {

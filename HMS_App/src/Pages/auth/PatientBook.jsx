@@ -46,13 +46,19 @@ const PatientBook = () => {
 
   const handleGetDetails = async (id) => {
     try {
-      console.log(id);
       const response = await dispatch(
         getPatientDetails({ patient_id: id })
       ).unwrap();
-      console.log(response);
+      // console.log(response);
+      if (response) {
+        navigate("/user/patient/details", {
+          state: {
+            patient_id: id,
+          },
+        });
+      }
     } catch (error) {
-      console.error(error.message);
+      toast.error(error.message);
     }
   };
 

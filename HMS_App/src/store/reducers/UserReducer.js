@@ -197,7 +197,12 @@ const userSlice = createSlice({
         console.log(action.error);
       })
       .addCase(getPatientDetails.fulfilled, (state, action) => {
-        console.log(action.payload);
+        // console.log(action.payload);
+        state.patientDetails = {
+          ...state.patientDetails,
+          patient: action?.payload?.patient,
+          appointments: action?.payload?.appointments,
+        };
       })
       .addCase(getPatientDetails.rejected, (state, action) => {
         console.log(action.error);
