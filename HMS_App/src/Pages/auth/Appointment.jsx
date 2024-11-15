@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
-import { getApptsRecord } from "@/helper/API/user";
+import { getApptDetails, getApptsRecord } from "@/helper/API/user";
 
 const Appointment = () => {
   const dispatch = useDispatch();
@@ -46,9 +46,16 @@ const Appointment = () => {
 
   const handleGetDetails = async (id) => {
     try {
-      console.log(id);
+      const response = await dispatch(getApptDetails({ appt_id: id })).unwrap();
+      if (response) {
+        navigate("/user/appointment/details", {
+          state: {
+            appt_id: id,
+          },
+        });
+      }
     } catch (error) {
-      console.error(error.message);
+      toast.error(error.message);
     }
   };
 

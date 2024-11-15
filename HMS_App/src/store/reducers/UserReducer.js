@@ -4,6 +4,7 @@ import {
   addPatient,
   changeLoggedOutUserPassword,
   deleteOutbreak,
+  getApptDetails,
   getApptsRecord,
   getDoctors,
   getOutbreaks,
@@ -45,6 +46,7 @@ const initialState = {
   outbreaks: [],
   appointments: [],
   patientDetails: {},
+  apptDetails: {},
 };
 
 const userSlice = createSlice({
@@ -205,6 +207,16 @@ const userSlice = createSlice({
         };
       })
       .addCase(getPatientDetails.rejected, (state, action) => {
+        console.log(action.error);
+      })
+      .addCase(getApptDetails.fulfilled, (state, action) => {
+        // console.log(action.payload);
+        state.apptDetails = {
+          ...state.apptDetails,
+          ...action?.payload?.appt,
+        };
+      })
+      .addCase(getApptDetails.rejected, (state, action) => {
         console.log(action.error);
       })
       .addCase(getDoctors.fulfilled, (state, action) => {

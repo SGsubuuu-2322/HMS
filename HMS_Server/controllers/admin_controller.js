@@ -390,3 +390,38 @@ export const getApptsRecord = async (req, res) => {
     return res.status(500).send({ message: "Internal server error...", error });
   }
 };
+
+export const getApptDetails = async (req, res) => {
+  try {
+    const { user_id, admin_id } = req.user;
+    const { id: appt_id } = req.params;
+    if (!appt_id) {
+      return res.status(404).send({ message: "Appointment ID is required..." });
+    }
+    if (!user_id || !admin_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedAdmin = await Admin.findOne({ _id: admin_id });
+
+    if (!storedUser || !storedAdmin) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedAppointment = await Appointment.findOne({
+      _id: appt_id,
+    }).populate("doctor", "username");
+    if (!storedAppointment) {
+      return res.status(404).send({ message: "Appointment not found..." });
+    }
+
+    return res.status(200).send({
+      message: "Appointment details found successfully...",
+      appt: storedAppointment,
+    });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};

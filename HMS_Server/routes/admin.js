@@ -3,6 +3,7 @@ import {
   addDoctor,
   addOutbreak,
   deleteOutbreak,
+  getApptDetails,
   getApptsRecord,
   getDoctors,
   getOutbreaks,
@@ -62,5 +63,9 @@ router
 router
   .route("/get/appointments")
   .get(middleware.auth, authorizeRoles("A"), getApptsRecord);
+
+router
+  .route("/get/appointment/details/:id")
+  .get(middleware.auth, authorizeRoles("A"), getApptDetails);
 
 export default router;
