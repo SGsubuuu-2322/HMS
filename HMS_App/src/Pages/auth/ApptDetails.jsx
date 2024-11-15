@@ -71,12 +71,12 @@ const ApptDetails = () => {
   return (
     <div className="w-full h-screen bg p-10 flex items-center justify-center">
       <ToastContainer />
-      <div className="relative w-[60%] p-5 mt-16 shadow-lg shadow-black">
+      <div className="relative w-[60%] h-[80%] p-5 mt-16 shadow-lg shadow-black">
         <div
           className="absolute inset-0 bg-cover bg-center filter blur-[3px]"
           style={{ backgroundImage: `url(${imageUrl})` }}
         ></div>
-        <div className="relative z-10 w-full border-[3px] border-[#0077ff94] bg-[#ffffff88] rounded-md p-2 px-6">
+        <div className="relative z-10 w-full h-full overflow-hidden overflow-y-auto border-[3px] border-[#0077ff94] bg-[#ffffff88] rounded-md p-2 px-6">
           <div className="w-full h-20 flex justify-center items-center">
             <span>
               <img
