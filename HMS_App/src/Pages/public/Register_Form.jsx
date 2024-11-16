@@ -51,22 +51,22 @@ const Register_Form = () => {
   };
 
   const isFormValid = () => {
-    const { name, email, password1, password2, pin } = user;
+    const { name, email, password1, password2 } = user;
 
     if (userType === "A" || userType === "D" || userType === "P") {
-      if (!name || !email || !pin || !password1 || !password2) {
+      if (!name || !email || !password1 || !password2) {
         toast.error("Enter all the fields!!!");
         return false;
       }
     }
 
-    if (userType === "A" && pin !== "200114") {
-      toast.error("Incorrect admin pin.");
-      return false;
-    } else if (userType === "D" && pin !== "411002") {
-      toast.error("Incorrect doctor pin.");
-      return false;
-    }
+    // if (userType === "A" && pin !== "200114") {
+    //   toast.error("Incorrect admin pin.");
+    //   return false;
+    // } else if (userType === "D" && pin !== "411002") {
+    //   toast.error("Incorrect doctor pin.");
+    //   return false;
+    // }
 
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
@@ -213,7 +213,7 @@ const Register_Form = () => {
             className="bg-[#0077ff94] px-2 font-semibold placeholder-[#005CC8] text-white focus:outline-none"
           />
         </div>
-        {userType === "A" || userType === "D" ? (
+        {/* {userType === "A" || userType === "D" ? (
           <div className="input-container flex flex-col">
             <label htmlFor="name" className="text-xl font-bold text-black">
               {userType == "A" ? "Admin" : "Doctor"}-Pin:{" "}
@@ -229,7 +229,7 @@ const Register_Form = () => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
         {userType === "P" ? (
           <div className="input-container flex flex-col">
             <label htmlFor="name" className="text-xl font-bold text-black">

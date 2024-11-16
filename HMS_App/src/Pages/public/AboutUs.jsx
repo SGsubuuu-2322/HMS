@@ -24,19 +24,19 @@ const AboutUs = () => {
 
           <div className="my-10">
             <p className="font-alice text-lg mb-5 leading-relaxed">
-              SUM Hospital is the super speciality hospital of Siksha 'O'
+              MERCY Hospital is the super speciality hospital of Siksha 'O'
               Anusandhan Deemed to be University or SOA Deemed to be University.
               It provides affordable super speciality treatment to those who
               can&apos;t afford said treatment.
             </p>
             <p className="font-alice text-lg mb-5 leading-relaxed">
-              The SUM Hospital is an associate of Institute of Medical Sciences
-              and SUM Hospital, Siksha ‘O’ Anusandhan, Deemed to be University,
-              giving medical education in Undergraduate, Post Graduate and Super
-              Speciality courses.
+              The MERCY Hospital is an associate of Institute of Medical
+              Sciences and MERCY Hospital, Siksha ‘O’ Anusandhan, Deemed to be
+              University, giving medical education in Undergraduate, Post
+              Graduate and Super Speciality courses.
             </p>
             <p className="font-alice text-lg leading-relaxed">
-              SUM Hospital is one of the largest Hospitals in Odisha, providing
+              MERCY Hospital is one of the largest Hospitals in USA, providing
               General and Super Speciality medical services at affordable rates.
               It provides Super Speciality services including Cardiothoracic and
               Vascular Surgery, Cardiology, Critical Care Medicine,

@@ -54,8 +54,8 @@ const Home = () => {
               </h1>
               <p className="font-alice text-lg text-white leading-8 flex flex-col">
                 <span>
-                  SUM Hospital is an associate of Institute of Medical Sciences
-                  and SUM Hospital, Siksha ‘O’
+                  MERCY Hospital is an associate of Institute of Medical Sciences
+                  and MERCY Hospital, Siksha ‘O’
                 </span>
                 <span>
                   Anusandhan, Deemed to be University which provides medical
@@ -115,7 +115,7 @@ const Home = () => {
               <span>Services</span>
             </h1>
             <p className="font-alice text-lg leading-8 flex flex-col">
-              SUM Hospital is one of the largest Hospitals in Odisha, providing
+              MERCY Hospital is one of the largest Hospitals in USA, providing
               General and Super Speciality medical services at affordable rates.
               It provides Super Speciality services including Cardiothoracic and
               Vascular Surgery, Cardiology, Critical Care Medicine,
