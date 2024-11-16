@@ -113,6 +113,34 @@ const doctorItems = [
   },
 ];
 
+const patientItems = [
+  {
+    title: "Dashboard",
+    url: "/user/dashboard",
+    icon: Wallet,
+  },
+  {
+    title: "Profile",
+    url: "/user/profile",
+    icon: SquareUser,
+  },
+  {
+    title: "ApptDetails",
+    url: "/user/appt/details",
+    icon: SquareUser,
+  },
+  {
+    title: "Book Appointment",
+    url: "/user/book/appt",
+    icon: SquareUser,
+  },
+  {
+    title: "Logout",
+    url: "/",
+    icon: LogOut,
+  },
+];
+
 export function AppSidebar() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -190,7 +218,34 @@ export function AppSidebar() {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))
-                : doctorItems.map((item, index) => (
+                : user?.usertype == "Doctor"
+                ? doctorItems.map((item, index) => (
+                    <SidebarMenuItem
+                      key={item.title}
+                      className="last:absolute last:bottom-0 last:w-full last:mb-5"
+                    >
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.title}
+                        isActive={
+                          item.url == location.pathname ? "true" : "false"
+                        }
+                        className="hover:font-medium hover:text-[#0077ff94]"
+                        onClick={() => {
+                          if (index === doctorItems.length - 1)
+                            localStorage.removeItem("token");
+                        }}
+                      >
+                        <NavLink to={item.url}>
+                          <span className="text-xl">
+                            <item.icon />
+                          </span>
+                          <span className="text-base">{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))
+                : patientItems.map((item, index) => (
                     <SidebarMenuItem
                       key={item.title}
                       className="last:absolute last:bottom-0 last:w-full last:mb-5"

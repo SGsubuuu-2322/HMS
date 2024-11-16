@@ -101,7 +101,12 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
+          usertype:
+            action.payload?.user?.usertype == "A"
+              ? "Admin"
+              : action.payload?.user?.usertype == "D"
+              ? "Doctor"
+              : "Patient",
           gender: action.payload.user?.gender,
           role: action.payload.user?.role,
           email: action.payload.user?.email,
@@ -128,7 +133,12 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
+          usertype:
+            action.payload?.user?.usertype == "A"
+              ? "Admin"
+              : action.payload?.user?.usertype == "D"
+              ? "Doctor"
+              : "Patient",
           gender: action.payload.user?.gender,
           role: action.payload.user?.role,
           email: action.payload.user?.email,
@@ -155,7 +165,12 @@ const userSlice = createSlice({
             action.payload.user?.username.split(" ").length == 3
               ? action.payload.user?.username.split(" ")[2]
               : action.payload.user?.username.split(" ")[1],
-          usertype: action.payload?.user?.usertype == "A" ? "Admin" : "Doctor",
+          usertype:
+            action.payload?.user?.usertype == "A"
+              ? "Admin"
+              : action.payload?.user?.usertype == "D"
+              ? "Doctor"
+              : "Patient",
           gender: action.payload.user?.gender,
           role: action.payload.user?.role,
           email: action.payload.user?.email,
