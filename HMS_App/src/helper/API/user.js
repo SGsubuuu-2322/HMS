@@ -498,6 +498,16 @@ export const getApptDetails = createAsyncThunk(
             }
           );
           return response?.data;
+        } else if (usertype === "P") {
+          const response = await axios.get(
+            `/patient/get/appointment/details/${body.appt_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Set the authorization bearer token
+              },
+            }
+          );
+          return response?.data;
         }
       }
     } catch (error) {

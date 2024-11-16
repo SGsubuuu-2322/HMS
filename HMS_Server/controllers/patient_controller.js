@@ -52,19 +52,19 @@ export const getApptsRecord = async (req, res) => {
 
 export const getApptDetails = async (req, res) => {
   try {
-    const { user_id, admin_id } = req.user;
+    const { user_id, patient_id } = req.user;
     const { id: appt_id } = req.params;
     if (!appt_id) {
       return res.status(404).send({ message: "Appointment ID is required..." });
     }
-    if (!user_id || !admin_id) {
+    if (!user_id || !patient_id) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 
     const storedUser = await User.findOne({ _id: user_id });
-    const storedAdmin = await Admin.findOne({ _id: admin_id });
+    const storedPatient = await Patient.findOne({ _id: patient_id });
 
-    if (!storedUser || !storedAdmin) {
+    if (!storedUser || !storedPatient) {
       return res.status(404).send({ message: "Unauthorized action..." });
     }
 

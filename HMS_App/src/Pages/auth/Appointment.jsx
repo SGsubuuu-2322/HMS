@@ -25,9 +25,6 @@ const Appointment = () => {
 
   useEffect(() => {
     const fetchDoctors = async () => {
-      // if (user.usertype == "Patient") {
-      //   navigate(-1);
-      // }
       if (location?.state?.message) {
         toast.success(location.state.message);
       }
