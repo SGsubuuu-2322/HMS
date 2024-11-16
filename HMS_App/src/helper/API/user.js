@@ -450,7 +450,7 @@ export const getPatientDetails = createAsyncThunk(
             }
           );
           return response?.data;
-        }else if(usertype === "D"){
+        } else if (usertype === "D") {
           const response = await axios.get(
             `/doctor/get/patient/details/${body.patient_id}`,
             {
@@ -558,6 +558,13 @@ export const getApptsRecord = createAsyncThunk(
         return response?.data;
       } else if (usertype == "D") {
         const response = await axios.get(`/doctor/get/appointments`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set the authorization bearer token
+          },
+        });
+        return response?.data;
+      } else if (usertype == "P") {
+        const response = await axios.get(`/patient/get/appointments`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set the authorization bearer token
           },

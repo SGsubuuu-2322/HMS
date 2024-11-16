@@ -126,7 +126,7 @@ const patientItems = [
   },
   {
     title: "ApptDetails",
-    url: "/user/appt/details",
+    url: "/user/appointments",
     icon: SquareUser,
   },
   {
