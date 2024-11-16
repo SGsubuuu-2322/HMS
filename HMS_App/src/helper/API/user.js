@@ -439,15 +439,28 @@ export const getPatientDetails = createAsyncThunk(
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) throw new Error("Token not found in localStorage");
       if (token) {
-        const response = await axios.get(
-          `/admin/get/patient/details/${body.patient_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Set the authorization bearer token
-            },
-          }
-        );
-        return response?.data;
+        const { usertype } = jwtDecode(token);
+        if (usertype === "A") {
+          const response = await axios.get(
+            `/admin/get/patient/details/${body.patient_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Set the authorization bearer token
+              },
+            }
+          );
+          return response?.data;
+        }else if(usertype === "D"){
+          const response = await axios.get(
+            `/doctor/get/patient/details/${body.patient_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Set the authorization bearer token
+              },
+            }
+          );
+          return response?.data;
+        }
       }
     } catch (error) {
       console.error("Client Error:", error.message); // Log client-side errors
@@ -464,15 +477,28 @@ export const getApptDetails = createAsyncThunk(
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) throw new Error("Token not found in localStorage");
       if (token) {
-        const response = await axios.get(
-          `/admin/get/appointment/details/${body.appt_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Set the authorization bearer token
-            },
-          }
-        );
-        return response?.data;
+        const { usertype } = jwtDecode(token);
+        if (usertype === "A") {
+          const response = await axios.get(
+            `/admin/get/appointment/details/${body.appt_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Set the authorization bearer token
+              },
+            }
+          );
+          return response?.data;
+        } else if (usertype === "D") {
+          const response = await axios.get(
+            `/doctor/get/appointment/details/${body.appt_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Set the authorization bearer token
+              },
+            }
+          );
+          return response?.data;
+        }
       }
     } catch (error) {
       console.error("Client Error:", error.message); // Log client-side errors

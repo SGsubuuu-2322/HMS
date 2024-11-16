@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
   addPatientAppointment,
+  getApptDetails,
   getApptsRecord,
   getDocDashboardDetails,
   getOutbreaks,
+  getPatientDetails,
   getPatientsRecord,
   updateOutbreak,
 } from "../controllers/doctor_controller.js";
@@ -36,7 +38,15 @@ router
   .get(middleware.auth, authorizeRoles("D"), getPatientsRecord);
 
 router
+  .route("/get/patient/details/:id")
+  .get(middleware.auth, authorizeRoles("D"), getPatientDetails);
+
+router
   .route("/get/appointments")
   .get(middleware.auth, authorizeRoles("D"), getApptsRecord);
+
+router
+  .route("/get/appointment/details/:id")
+  .get(middleware.auth, authorizeRoles("D"), getApptDetails);
 
 export default router;

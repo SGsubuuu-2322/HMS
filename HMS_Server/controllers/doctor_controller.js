@@ -268,6 +268,51 @@ export const getPatientsRecord = async (req, res) => {
   }
 };
 
+export const getPatientDetails = async (req, res) => {
+  try {
+    const { user_id, doctor_id } = req.user;
+    const { id: patient_id } = req.params;
+    if (!patient_id) {
+      return res.status(404).send({ message: "Patient ID is required..." });
+    }
+    if (!user_id || !doctor_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedDoctor = await Doctor.findOne({ _id: doctor_id });
+
+    if (!storedUser || !storedDoctor) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedPatient = await Patient.findOne({ _id: patient_id }).select(
+      "-password"
+    );
+    if (!storedPatient) {
+      return res.status(404).send({ message: "Patient not found..." });
+    }
+
+    const storedAppointments = await Appointment.find({
+      email: storedPatient.email,
+    });
+    if (!storedAppointments) {
+      return res
+        .status(404)
+        .send({ message: "Requested patient doesn't got any appointments..." });
+    }
+
+    return res.status(200).send({
+      message: "Patient details found successfully...",
+      patient: storedPatient,
+      appointments: storedAppointments,
+    });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
 export const getApptsRecord = async (req, res) => {
   try {
     const { user_id, doctor_id } = req.user;
@@ -296,6 +341,41 @@ export const getApptsRecord = async (req, res) => {
     return res
       .status(200)
       .send({ message: "All appointments found...", appointments: allAppts });
+  } catch (error) {
+    console.log(`System error happens: ${error.message}`);
+    return res.status(500).send({ message: "Internal server error...", error });
+  }
+};
+
+export const getApptDetails = async (req, res) => {
+  try {
+    const { user_id, doctor_id } = req.user;
+    const { id: appt_id } = req.params;
+    if (!appt_id) {
+      return res.status(404).send({ message: "Appointment ID is required..." });
+    }
+    if (!user_id || !doctor_id) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedUser = await User.findOne({ _id: user_id });
+    const storedDoctor = await Doctor.findOne({ _id: doctor_id });
+
+    if (!storedUser || !storedDoctor) {
+      return res.status(404).send({ message: "Unauthorized action..." });
+    }
+
+    const storedAppointment = await Appointment.findOne({
+      _id: appt_id,
+    }).populate("doctor", "username");
+    if (!storedAppointment) {
+      return res.status(404).send({ message: "Appointment not found..." });
+    }
+
+    return res.status(200).send({
+      message: "Appointment details found successfully...",
+      appt: storedAppointment,
+    });
   } catch (error) {
     console.log(`System error happens: ${error.message}`);
     return res.status(500).send({ message: "Internal server error...", error });
