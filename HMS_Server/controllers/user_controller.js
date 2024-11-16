@@ -490,6 +490,23 @@ export const updateUserDetails = async (req, res) => {
       return res
         .status(201)
         .send({ message: "Successfully updated!!!", user: rest });
+    } else {
+      const patient_id = req.user.doctor_id;
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: id },
+        { username, email, phone, address, role, gender, profilePicture },
+        { new: true } // Returns the updated document
+      );
+      const updatedDoctor = await Doctor.findByIdAndUpdate(
+        patient_id,
+        { username, email, phone, address, role, gender, profilePicture },
+        { new: true } // Returns the updated document
+      );
+
+      const { password, ...rest } = updatedUser.toObject(); // Removes the password field
+      return res
+        .status(201)
+        .send({ message: "Successfully updated!!!", user: rest });
     }
   } catch (error) {
     console.log(error.message);

@@ -75,6 +75,8 @@ const UpdateProfile = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // console.log(userDetails);
     try {
       let username =
         userDetails.firstName +
@@ -94,6 +96,8 @@ const UpdateProfile = () => {
           profilePicture: file || userDetails?.profilePicture || "",
         })
       ).unwrap();
+
+      console.log(profileUpdationResponse);
 
       if (profileUpdationResponse) {
         navigate("/user/profile", {
@@ -195,14 +199,14 @@ const UpdateProfile = () => {
               <input
                 readOnly
                 type="text"
-                placeholder="Enter your role..."
+                placeholder="Admin"
                 name="role"
                 value={userDetails?.usertype}
                 onChange={inputChangeHandler}
                 className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm"
               />
             </div>
-          ) : (
+          ) : user.usertype == "Doctor" ? (
             <div className="w-full h-10 flex items-center justify-between py-1">
               <label className="text-lg font-alice font-bold">Role</label>
               <div className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm overflow-hidden">
@@ -267,6 +271,8 @@ const UpdateProfile = () => {
                 </Select>
               </div>
             </div>
+          ) : (
+            <></>
           )}
 
           <div className="w-full h-10 flex items-center justify-between py-1">

@@ -69,12 +69,17 @@ const Profile = () => {
               {user?.gender}
             </span>
           </div>
-          <div className="w-full h-10 flex items-center justify-between py-1">
-            <span className="text-lg font-alice font-bold">Role</span>
-            <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm">
-              {user?.usertype === "Admin" ? user?.usertype : user?.role}
-            </span>
-          </div>
+          {user.usertype == "Admin" || user.usertype == "Doctor" ? (
+            <div className="w-full h-10 flex items-center justify-between py-1">
+              <span className="text-lg font-alice font-bold">Role</span>
+              <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm">
+                {user?.usertype === "Admin" ? user?.usertype : user?.role}
+              </span>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <div className="w-full h-10 flex items-center justify-between py-1">
             <span className="text-lg font-alice font-bold">Email</span>
             <span className="border-[3px] border-slate-400 h-full w-[70%] bg-[#d0cdcdb6] rounded-sm">
