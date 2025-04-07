@@ -40,6 +40,7 @@ const initialState = {
     doctorsNum: "",
     patientsNum: "",
     outbreaksNum: "",
+    appointmentsNum: "",
   },
   doctors: [],
   patients: [],
@@ -148,6 +149,7 @@ const userSlice = createSlice({
           doctorsNum: action?.payload?.user?.doctorsNum,
           patientsNum: action?.payload?.user?.patientsNum,
           outbreaksNum: action?.payload?.user?.outbreaksNum,
+          appointmentsNum: action?.payload?.user?.appointmentsNum,
         };
       })
       .addCase(getUserDetails.rejected, (state, action) => {

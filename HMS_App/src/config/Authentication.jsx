@@ -20,16 +20,10 @@ const Authentication = () => {
       Navigate("/login");
     }
   }, [Navigate]);
-  if (location.pathname == "/register/otp-verify") {
-    return (
-      verified && (
-        <div className="w-full h-screen">
-          <PublicNav />
-          <Outlet />
-        </div>
-      )
-    );
-  } else if (location.pathname == "/user/password/change") {
+  if (
+    location.pathname == "/register/otp-verify" ||
+    location.pathname == "/user/password/change"
+  ) {
     return (
       verified && (
         <div className="w-full h-screen">

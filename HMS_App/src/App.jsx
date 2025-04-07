@@ -14,8 +14,8 @@ const App = () => {
         })}
       </Route>
       <Route element={<Authentication />}>
-        {AuthRoutes.map((pr, i) => {
-          return <Route key={i} path={pr.path} element={<pr.element />} />;
+        {AuthRoutes.map((ar, i) => {
+          return <Route key={i} path={ar.path} element={<ar.element />} />;
         })}
       </Route>
     </Routes>

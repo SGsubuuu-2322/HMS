@@ -27,7 +27,7 @@ const PublicNav = () => {
           <div className="admin-container h-20 w-10 flex flex-col justify-center gap-1">
             <div className="image h-10 w-10 overflow-hidden rounded-md">
               <img
-                src="https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/user-preferences-icon.png"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ7TKHo1NrGHSRkso1dt1oE04qoPOGEKCiUA&s"
                 alt="admin-image"
                 className="object-cover bg-white"
               />

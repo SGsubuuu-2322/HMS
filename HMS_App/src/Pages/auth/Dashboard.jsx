@@ -70,7 +70,9 @@ const Dashboard = () => {
 
           <div className="bg-[#ffffff88] aspect-video border-2 border-[#0077ff94] rounded-lg flex flex-col items-center justify-around hover:p-1 hover:bg-[#ffffffac]">
             <h1 className="font-bold text-[#0077ff94]">Appointments</h1>
-            <div className="text-4xl text-red-600 font-bold">0</div>
+            <div className="text-4xl text-red-600 font-bold">
+              {user?.appointmentsNum || 0}
+            </div>
             <NavLink
               to={"/user/appointments"}
               className="cursor-pointer hover:underline decoration-2 decoration-blue-500 hover:underline-offset-4 hover:underline-blue"

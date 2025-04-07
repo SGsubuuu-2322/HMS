@@ -8,6 +8,7 @@ import Doctor from "../models/DoctorModel.js";
 import Admin from "../models/AdminModel.js";
 import Patient from "../models/PatientModel.js";
 import Outbreak from "../models/OutbreakModel.js";
+import Appointments from "../models/AppointmentModel.js";
 
 // POST: http://localhost:7001/api/user/register
 // @param: {
@@ -409,19 +410,25 @@ export const getUserDetails = async (req, res) => {
       const doctors = await Doctor.find({});
       const patients = await Patient.find({});
       const outbreaks = await Outbreak.find({});
+      const appointments = await Appointments.find({});
       rest = {
         ...rest,
         doctorsNum: doctors.length,
         patientsNum: patients.length,
         outbreaksNum: outbreaks.length,
+        appointmentsNum: appointments.length,
       };
     } else if (userdetails.usertype == "D") {
       const patients = await Patient.find({});
       const outbreaks = await Outbreak.find({});
+      const appointments = await Appointments.find({ doctor: userdetails._id });
+      console.log(appointments);
+
       rest = {
         ...rest,
         patientsNum: patients.length,
         outbreaksNum: outbreaks.length,
+        appointmentsNum: appointments.length,
       };
     }
     return res
